@@ -1,11 +1,13 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { StreakProvider } from './contexts/StreakContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
 
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import PageTransition from './components/common/PageTransition';
 import BadgeUnlockModal from './components/gamification/BadgeUnlockModal';
 import ChatbotIcon from './components/chat/ChatbotIcon';
 
@@ -29,48 +31,51 @@ import EmergencyContactsPage from './pages/EmergencyContactsPage';
 
 const AppRoutes: React.FC = () => {
   const { user, isLoading } = useAuth();
+  const location = useLocation();
 
   return (
     <>
-      <Routes>
-        {/* Public — Landing page (home) */}
-        <Route
-          path="/"
-          element={
-            isLoading ? null : user ? <Navigate to="/dashboard" replace /> : <LandingPage />
-          }
-        />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* Public — Landing page (home) */}
+          <Route
+            path="/"
+            element={
+              isLoading ? null : user ? <Navigate to="/dashboard" replace /> : <PageTransition><LandingPage /></PageTransition>
+            }
+          />
 
-        {/* Public — Login / Signup */}
-        <Route
-          path="/login"
-          element={
-            isLoading ? null : user ? <Navigate to="/dashboard" replace /> : <LoginPage />
-          }
-        />
+          {/* Public — Login / Signup */}
+          <Route
+            path="/login"
+            element={
+              isLoading ? null : user ? <Navigate to="/dashboard" replace /> : <PageTransition><LoginPage /></PageTransition>
+            }
+          />
 
-        {/* Protected Routes */}
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/bmi" element={<ProtectedRoute><BMIPage /></ProtectedRoute>} />
-        <Route path="/water-tracker" element={<ProtectedRoute><WaterTrackerPage /></ProtectedRoute>} />
-        <Route path="/medications" element={<ProtectedRoute><MedicationsPage /></ProtectedRoute>} />
-        <Route path="/workout" element={<ProtectedRoute><WorkoutPage /></ProtectedRoute>} />
-        <Route path="/menstruation" element={<ProtectedRoute><MenstruationPage /></ProtectedRoute>} />
-        <Route path="/mental-health" element={<ProtectedRoute><MentalWellnessPage /></ProtectedRoute>} />
-        <Route path="/reports" element={<ProtectedRoute><ReportDecoderPage /></ProtectedRoute>} />
-        <Route path="/achievements" element={<ProtectedRoute><AchievementsPage /></ProtectedRoute>} />
-        <Route path="/habit-tracker" element={<ProtectedRoute><HabitTrackerPage /></ProtectedRoute>} />
-        <Route path="/nearby" element={<ProtectedRoute><NearbyHospitalsPage /></ProtectedRoute>} />
-        <Route path="/ai-assistant" element={<ProtectedRoute><AIAssistantPage /></ProtectedRoute>} />
-        <Route path="/ai-mood-companion" element={<ProtectedRoute><AIMoodCompanionPage /></ProtectedRoute>} />
-        <Route path="/emergency-contacts" element={<ProtectedRoute><EmergencyContactsPage /></ProtectedRoute>} />
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><PageTransition><Dashboard /></PageTransition></ProtectedRoute>} />
+          <Route path="/bmi" element={<ProtectedRoute><PageTransition><BMIPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/water-tracker" element={<ProtectedRoute><PageTransition><WaterTrackerPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/medications" element={<ProtectedRoute><PageTransition><MedicationsPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/workout" element={<ProtectedRoute><PageTransition><WorkoutPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/menstruation" element={<ProtectedRoute><PageTransition><MenstruationPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/mental-health" element={<ProtectedRoute><PageTransition><MentalWellnessPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/reports" element={<ProtectedRoute><PageTransition><ReportDecoderPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/achievements" element={<ProtectedRoute><PageTransition><AchievementsPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/habit-tracker" element={<ProtectedRoute><PageTransition><HabitTrackerPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/nearby" element={<ProtectedRoute><PageTransition><NearbyHospitalsPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/ai-assistant" element={<ProtectedRoute><PageTransition><AIAssistantPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/ai-mood-companion" element={<ProtectedRoute><PageTransition><AIMoodCompanionPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/emergency-contacts" element={<ProtectedRoute><PageTransition><EmergencyContactsPage /></PageTransition></ProtectedRoute>} />
 
-        {/* Public */}
-        <Route path="/deployment" element={<LiveDeploymentPage />} />
+          {/* Public */}
+          <Route path="/deployment" element={<PageTransition><LiveDeploymentPage /></PageTransition>} />
 
-        {/* Catch-all → redirect to root */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          {/* Catch-all → redirect to root */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AnimatePresence>
 
       {/* Global floating elements — only show when user is logged in */}
       {user && <ChatbotIcon />}

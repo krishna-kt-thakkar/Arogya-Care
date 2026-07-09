@@ -105,6 +105,46 @@
 }
 
 @layer components {
+  /* 3D Premium Glossy Colorful Icon Container */
+  .icon-3d-box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .icon-3d-front {
+    position: relative;
+    z-index: 2;
+    transform: translateZ(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      inset 0 1px 1px rgba(255,255,255,0.4),
+      0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  .icon-3d-back {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    transform: translateZ(0);
+    filter: blur(8px);
+    opacity: 0.75;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+  }
+
+  .group:hover .icon-3d-box {
+    transform: rotateY(15deg) rotateX(-10deg) translateZ(5px);
+  }
+
+  .group:hover .icon-3d-back {
+    transform: translateZ(-6px) scale(1.2);
+    filter: blur(12px);
+  }
+
   /* Glassmorphism card responding to current theme */
   .glass-card {
     background-color: var(--card-bg);

@@ -37,71 +37,67 @@ const Dashboard: React.FC = () => {
       title: 'Habit Tracker',
       description: 'Build powerful daily habits that transform your life',
       icon: CheckSquare,
-      color: 'text-purple-600 dark:text-purple-400',
-      bgColor: 'bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20',
+      color: 'from-fuchsia-500 to-purple-600',
+      bgColor: 'rgba(217, 70, 239, 0.25)',
       route: '/habit-tracker'
     },
     {
       title: t('bmiVitalStats'),
       description: t('bmiDescription'),
       icon: Scale,
-      color: 'text-blue-600 dark:text-blue-400',
-      bgColor: 'bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20',
+      color: 'from-blue-500 to-indigo-600',
+      bgColor: 'rgba(59, 130, 246, 0.25)',
       route: '/bmi'
     },
     {
       title: t('medicationReminder'),
       description: t('medicationDescription'),
       icon: Pill,
-      color: 'text-green-600 dark:text-green-400',
-      bgColor: 'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20',
+      color: 'from-emerald-400 to-teal-600',
+      bgColor: 'rgba(16, 185, 129, 0.25)',
       route: '/medications'
     },
     {
       title: t('workoutDietPlans'),
       description: t('workoutDescription'),
       icon: Dumbbell,
-      color: 'text-orange-600 dark:text-orange-400',
-      bgColor: 'bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20',
+      color: 'from-amber-500 to-orange-600',
+      bgColor: 'rgba(245, 158, 11, 0.25)',
       route: '/workout'
     },
     {
       title: t('mentalWellness'),
       description: t('mentalDescription'),
       icon: Brain,
-      color: 'text-purple-600 dark:text-purple-400',
-      bgColor: 'bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20',
+      color: 'from-violet-500 to-purple-700',
+      bgColor: 'rgba(139, 92, 246, 0.25)',
       route: '/mental-health'
+    },
+    {
+      title: t('menstruationTracker'),
+      description: t('menstruationDescription'),
+      icon: Calendar,
+      color: 'from-pink-500 to-rose-600',
+      bgColor: 'rgba(236, 72, 153, 0.25)',
+      route: '/menstruation'
     },
     {
       title: t('reportDecoder'),
       description: t('reportDescription'),
       icon: FileText,
-      color: 'text-indigo-600 dark:text-indigo-400',
-      bgColor: 'bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20',
+      color: 'from-cyan-500 to-blue-600',
+      bgColor: 'rgba(6, 182, 212, 0.25)',
       route: '/reports'
     },
     {
       title: t('nearbyServices'),
       description: t('nearbyDescription'),
       icon: MapPin,
-      color: 'text-red-600 dark:text-red-400',
-      bgColor: 'bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20',
+      color: 'from-red-500 to-rose-700',
+      bgColor: 'rgba(239, 68, 68, 0.25)',
       route: '/nearby'
     }
   ];
-
-  // Add menstruation tracker for female users
-  if (user.gender === 'female') {
-    healthCards.splice(5, 0, {
-      title: t('menstruationTracker'),
-      description: t('menstruationDescription'),
-      icon: Calendar,
-      color: 'text-pink-600 dark:text-pink-400',
-      bgColor: 'bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20',
-      route: '/menstruation'
-    });
-  }
 
   return (
     <div className="min-h-screen bg-brand-bg text-primary-custom transition-colors duration-500 flex flex-col">
@@ -131,13 +127,14 @@ const Dashboard: React.FC = () => {
 
         {/* Welcome Section */}
         <motion.div
-          className="mb-8"
+          className="mb-8 relative"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
+          <div className="absolute -top-6 -left-6 w-20 h-20 rounded-full bg-brand-from/10 blur-2xl pointer-events-none" />
           <h2 className="text-3xl font-black tracking-tight text-primary-custom mb-1">
-            {t('welcomeBack')}, {user.name}! 👋
+            {t('welcomeBack')}, <span className="text-brand-color">{user.name}</span>
           </h2>
           <p className="text-sm font-medium text-secondary-custom">
             {t('readyToContinue')}
@@ -159,7 +156,15 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Health Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.07 } }
+          }}
+        >
           {healthCards.map((card, index) => (
             <HealthCard
               key={card.title}
@@ -168,11 +173,11 @@ const Dashboard: React.FC = () => {
               icon={card.icon}
               color={card.color}
               bgColor={card.bgColor}
-              delay={index * 0.1}
+              delay={index * 0.07}
               onClick={() => navigate(card.route)}
             />
           ))}
-        </div>
+        </motion.div>
 
         {/* Achievements Button */}
         <motion.div
@@ -183,13 +188,17 @@ const Dashboard: React.FC = () => {
         >
           <motion.button
             onClick={() => navigate('/achievements')}
-            className="bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-600 dark:to-orange-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all flex items-center space-x-3 mx-auto"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            className="relative bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-2xl transition-all flex items-center space-x-3 mx-auto overflow-hidden"
+            whileHover={{ scale: 1.06, y: -3 }}
+            whileTap={{ scale: 0.94 }}
+            style={{ boxShadow: '0 8px 30px rgba(245, 158, 11, 0.35)' }}
           >
-            <Trophy className="h-6 w-6" />
-            <span>View Your Achievements</span>
-            <span className="bg-white/20 px-2 py-1 rounded-full text-sm">🏆</span>
+            {/* Glass reflection */}
+            <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/20 to-transparent rounded-t-2xl pointer-events-none" />
+            <div className="relative p-1.5 bg-white/20 rounded-lg">
+              <Trophy className="h-5 w-5" />
+            </div>
+            <span className="relative">View Your Achievements</span>
           </motion.button>
         </motion.div>
       </main>
