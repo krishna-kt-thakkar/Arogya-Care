@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Heart, Droplets, Moon, Footprints, Pill, Brain, Scale,
   Shield, Sparkles, ArrowRight, ChevronDown,
@@ -69,11 +69,17 @@ const StatCard: React.FC<{ value: string; label: string; delay: number }> = ({ v
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { theme, setTheme } = useTheme();
-  const { login, signup, signInWithGoogle, sendOtp, verifyOtp, resetPassword, continueAsGuest } = useAuth();
+  const { user, isLoading, login, signup, signInWithGoogle, sendOtp, verifyOtp, resetPassword, continueAsGuest } = useAuth();
+
+  // Read initial auth mode from URL search params (for browser back button support)
+  const urlMode = searchParams.get('mode') as AuthMode | null;
+  const validModes: AuthMode[] = ['login', 'signup', 'otp-send', 'otp-verify', 'forgot', 'email-sent'];
+  const initialMode: AuthMode = (urlMode && validModes.includes(urlMode)) ? urlMode : 'login';
 
   // Auth portal state
-  const [authMode, setAuthMode] = useState<AuthMode>('login');
+  const [authMode, setAuthMode] = useState<AuthMode>(initialMode);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -85,6 +91,23 @@ const LandingPage: React.FC = () => {
   const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
+
+  // Centralized navigation: whenever user becomes truthy, go to dashboard
+  useEffect(() => {
+    if (user && !isLoading) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [user, isLoading, navigate]);
+
+  // Sync authMode from URL search params when browser back/forward is pressed
+  useEffect(() => {
+    const modeFromUrl = searchParams.get('mode') as AuthMode | null;
+    if (modeFromUrl && validModes.includes(modeFromUrl) && modeFromUrl !== authMode) {
+      setAuthMode(modeFromUrl);
+      setAuthError('');
+      setAuthSuccess('');
+    }
+  }, [searchParams]);
 
   // Auto-scroll to auth portal if requested (e.g. from /login URL proxy)
   useEffect(() => {
@@ -136,11 +159,10 @@ const LandingPage: React.FC = () => {
 
     setIsSubmitting(true);
     const result = await login(email, password);
-    if (result.success) {
-      navigate('/dashboard');
-    } else {
+    if (!result.success) {
       setAuthError(result.error || 'Login failed');
     }
+    // Navigation happens automatically via the centralized useEffect when user becomes truthy
     setIsSubmitting(false);
   };
 
@@ -155,13 +177,18 @@ const LandingPage: React.FC = () => {
     const result = await signup(name, email, password, gender);
     if (result.success) {
       if (result.needsEmailConfirmation) {
-        setAuthMode('email-sent');
+        switchAuthTo('email-sent');
         setAuthSuccess(`Verification email sent to ${email}. Please check your inbox and click the confirmation link.`);
-      } else {
-        navigate('/dashboard');
       }
+      // If no email confirmation needed, navigation happens automatically via centralized useEffect
     } else {
-      setAuthError(result.error || 'Sign up failed');
+      // If the error says account already exists, auto-switch to login mode with email pre-filled
+      if (result.error && result.error.includes('already exists')) {
+        setAuthError(result.error);
+        switchAuthTo('login');
+      } else {
+        setAuthError(result.error || 'Sign up failed');
+      }
     }
     setIsSubmitting(false);
   };
@@ -174,7 +201,7 @@ const LandingPage: React.FC = () => {
     setIsSubmitting(true);
     const result = await sendOtp(email);
     if (result.success) {
-      setAuthMode('otp-verify');
+      switchAuthTo('otp-verify');
       setAuthSuccess(`OTP sent to ${email}`);
     } else {
       setAuthError(result.error || 'Failed to send OTP');
@@ -190,11 +217,10 @@ const LandingPage: React.FC = () => {
 
     setIsSubmitting(true);
     const result = await verifyOtp(email, code);
-    if (result.success) {
-      navigate('/dashboard');
-    } else {
+    if (!result.success) {
       setAuthError(result.error || 'Invalid OTP');
     }
+    // Navigation happens automatically via centralized useEffect
     setIsSubmitting(false);
   };
 
@@ -206,7 +232,7 @@ const LandingPage: React.FC = () => {
     setIsSubmitting(true);
     const result = await resetPassword(email);
     if (result.success) {
-      setAuthMode('email-sent');
+      switchAuthTo('email-sent');
       setAuthSuccess(`Password reset link sent to ${email}. Please check your inbox.`);
     } else {
       setAuthError(result.error || 'Failed to send reset link');
@@ -216,19 +242,27 @@ const LandingPage: React.FC = () => {
 
   const handleGoogleSignIn = async () => {
     setAuthError('');
+    setIsSubmitting(true);
     const result = await signInWithGoogle();
-    if (!result) setAuthError('Google Sign-In failed. Please try again.');
+    if (!result) {
+      setAuthError('Google Sign-In failed. Please check Supabase Google OAuth configuration.');
+      setIsSubmitting(false);
+    }
+    // If successful, the browser will redirect to Google — no further action needed here.
+    // On return, onAuthStateChange detects the session and the centralized useEffect navigates to dashboard.
   };
 
   const handleGuestMode = () => {
     continueAsGuest();
-    navigate('/dashboard');
+    // Navigation happens automatically via centralized useEffect when user becomes truthy
   };
 
   const switchAuthTo = (m: AuthMode) => {
     setAuthMode(m);
     setAuthError('');
     setAuthSuccess('');
+    // Push mode to URL for browser back button support
+    setSearchParams({ mode: m }, { replace: false });
   };
 
   const scrollToAuth = () => {

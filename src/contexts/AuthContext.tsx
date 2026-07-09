@@ -71,9 +71,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
       setUser(mappedUser);
     } else {
+      // Check for guest session only — no mock users
       const guestSession = sessionStorage.getItem('arogya_guest_mode');
       if (guestSession) {
-        setUser(JSON.parse(guestSession));
+        try {
+          const parsed = JSON.parse(guestSession);
+          // Only restore if it was a genuine guest session (isGuest === true)
+          if (parsed.isGuest === true) {
+            setUser(parsed);
+          } else {
+            sessionStorage.removeItem('arogya_guest_mode');
+            setUser(null);
+          }
+        } catch {
+          sessionStorage.removeItem('arogya_guest_mode');
+          setUser(null);
+        }
       } else {
         setUser(null);
       }
@@ -81,123 +94,131 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, [supabaseUser, supabaseLoading]);
 
+  // --- Real auth functions — no mock fallbacks ---
+
   const login = async (email: string, password: string): Promise<AuthResult> => {
-    try {
-      if (hasSupabaseConfig) {
-        await signIn(email, password);
-        return { success: true };
-      }
-    } catch (error: any) {
-      console.warn('Real login failed, trying fallback simulation:', error?.message);
+    if (!hasSupabaseConfig) {
+      return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
 
-    // Simulate successful login if database keys are unconfigured or fail
-    const mockUser: User = {
-      id: 'mock-' + Date.now(),
-      name: email.split('@')[0].toUpperCase(),
-      email: email,
-      gender: 'other',
-      isGuest: false,
-    };
-    sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-    setUser(mockUser);
-    return { success: true };
+    try {
+      await signIn(email, password);
+      return { success: true };
+    } catch (error: any) {
+      console.error('Login error:', error);
+      const message = error?.message || 'Login failed';
+      if (message.includes('Invalid login credentials')) {
+        return { success: false, error: 'Wrong email or password. Please try again.' };
+      }
+      if (message.includes('Email not confirmed')) {
+        return { success: false, error: 'Please verify your email before logging in. Check your inbox for the confirmation link.' };
+      }
+      return { success: false, error: message };
+    }
   };
 
   const signup = async (name: string, email: string, password: string, gender: 'male' | 'female' | 'other'): Promise<AuthResult> => {
-    try {
-      if (hasSupabaseConfig) {
-        const data = await signUp(email, password, name, gender);
-        if (data.user && !data.session) {
-          return {
-            success: true,
-            needsEmailConfirmation: true,
-          };
-        }
-        return { success: true };
-      }
-    } catch (error: any) {
-      console.warn('Real signup failed, trying fallback simulation:', error?.message);
+    if (!hasSupabaseConfig) {
+      return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
 
-    // Simulate successful signup
-    const mockUser: User = {
-      id: 'mock-' + Date.now(),
-      name: name,
-      email: email,
-      gender: gender,
-      isGuest: false,
-    };
-    sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-    setUser(mockUser);
-    return { success: true };
+    try {
+      const data = await signUp(email, password, name, gender);
+
+      // Check for duplicate email: Supabase returns a user with empty identities array
+      if (data.user && data.user.identities && data.user.identities.length === 0) {
+        return { success: false, error: 'An account with this email already exists. Please log in instead.' };
+      }
+
+      if (data.user && !data.session) {
+        return {
+          success: true,
+          needsEmailConfirmation: true,
+        };
+      }
+      return { success: true };
+    } catch (error: any) {
+      console.error('Signup error:', error);
+      const message = error?.message || 'Signup failed';
+      if (message.includes('already registered') || message.includes('already been registered')) {
+        return { success: false, error: 'An account with this email already exists. Please log in instead.' };
+      }
+      if (message.includes('valid email')) {
+        return { success: false, error: 'Please enter a valid email address.' };
+      }
+      if (message.includes('at least')) {
+        return { success: false, error: 'Password must be at least 6 characters long.' };
+      }
+      return { success: false, error: message };
+    }
   };
 
   const sendOtp = async (email: string): Promise<AuthResult> => {
-    try {
-      if (hasSupabaseConfig) {
-        await signInWithOtp(email);
-        return { success: true };
-      }
-    } catch (error: any) {
-      console.warn('Real OTP send failed, using simulated helper:', error?.message);
+    if (!hasSupabaseConfig) {
+      return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
-    // Simulated OTP send is always successful for demo environments
-    return { success: true };
+
+    try {
+      await signInWithOtp(email);
+      return { success: true };
+    } catch (error: any) {
+      console.error('OTP send error:', error);
+      return { success: false, error: error?.message || 'Failed to send OTP. Please try again.' };
+    }
   };
 
   const verifyOtp = async (email: string, token: string): Promise<AuthResult> => {
-    try {
-      if (hasSupabaseConfig) {
-        await supabaseVerifyOtp(email, token);
-        return { success: true };
-      }
-    } catch (error: any) {
-      console.warn('Real OTP verification failed, bypassing with fallback:', error?.message);
+    if (!hasSupabaseConfig) {
+      return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
 
-    // Simulator: Accept any 6-digit code to allow testing
-    const mockUser: User = {
-      id: 'mock-' + Date.now(),
-      name: email.split('@')[0].toUpperCase(),
-      email: email,
-      gender: 'other',
-      isGuest: false,
-    };
-    sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-    setUser(mockUser);
-    return { success: true };
+    try {
+      await supabaseVerifyOtp(email, token);
+      return { success: true };
+    } catch (error: any) {
+      console.error('OTP verification error:', error);
+      const message = error?.message || 'Invalid OTP';
+      if (message.includes('expired')) {
+        return { success: false, error: 'OTP has expired. Please request a new one.' };
+      }
+      if (message.includes('invalid') || message.includes('Token')) {
+        return { success: false, error: 'Invalid OTP code. Please check and try again.' };
+      }
+      return { success: false, error: message };
+    }
   };
 
   const resetPassword = async (email: string): Promise<AuthResult> => {
-    try {
-      if (hasSupabaseConfig) {
-        await supabaseResetPassword(email);
-        return { success: true };
-      }
-    } catch (error: any) {
-      console.warn('Real reset password failed, using mock success:', error?.message);
+    if (!hasSupabaseConfig) {
+      return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
-    return { success: true };
+
+    try {
+      await supabaseResetPassword(email);
+      return { success: true };
+    } catch (error: any) {
+      console.error('Reset password error:', error);
+      return { success: false, error: error?.message || 'Failed to send reset link. Please try again.' };
+    }
   };
 
   const signInWithGoogle = async (): Promise<boolean> => {
-    // Instantly simulate a successful Google user login
-    // This avoids redirecting the browser to unconfigured Supabase OAuth URLs which return 404 errors.
+    if (!hasSupabaseConfig) {
+      console.error('Google Sign-In unavailable: Supabase not configured.');
+      return false;
+    }
+
     try {
-      console.log('Simulating Google Sign-in...');
-      const mockUser: User = {
-        id: 'google-mock-' + Date.now(),
-        name: 'Google User',
-        email: 'google-user@gmail.com',
-        gender: 'other',
-        isGuest: false,
-      };
-      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-      setUser(mockUser);
+      const { error } = await supabaseSignInWithGoogle();
+      if (error) {
+        console.error('Google Sign-In error:', error.message);
+        return false;
+      }
+      // OAuth is a redirect flow — browser navigates away to Google.
+      // On return, onAuthStateChange in useSupabaseAuth will detect the session.
       return true;
-    } catch (error) {
-      console.error('Google sign in simulation error:', error);
+    } catch (error: any) {
+      console.error('Google Sign-In error:', error);
       return false;
     }
   };
