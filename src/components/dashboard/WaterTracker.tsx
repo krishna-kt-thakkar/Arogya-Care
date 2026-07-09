@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Droplets, Plus, Minus } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
-import { useHealthData } from '../../hooks/useHealthData';
+import { useHealthData } from '../../backend/useHealthData';
 import { useAuth } from '../../contexts/AuthContext';
 import { useStreak } from '../../contexts/StreakContext';
 

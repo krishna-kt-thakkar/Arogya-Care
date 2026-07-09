@@ -14,7 +14,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useStreak } from '../../contexts/StreakContext';
-import { useHealthData } from '../../hooks/useHealthData';
+import { useHealthData } from '../../backend/useHealthData';
 import { useAuth } from '../../contexts/AuthContext';
 
 const StepsTracker: React.FC = () => {

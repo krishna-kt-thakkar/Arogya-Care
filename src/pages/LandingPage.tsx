@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme, Theme } from '../contexts/ThemeContext';
-import { hasFirebaseConfig } from '../lib/firebase';
+import { hasFirebaseConfig } from '../backend/firebase';
 
 type AuthMode = 'login' | 'signup' | 'otp-send' | 'otp-verify' | 'forgot' | 'email-sent';
 

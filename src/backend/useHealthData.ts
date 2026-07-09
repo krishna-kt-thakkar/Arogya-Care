@@ -4,7 +4,7 @@ import {
   collection, query, where, orderBy,
   deleteDoc
 } from 'firebase/firestore';
-import { db, hasFirebaseConfig } from '../lib/firebase';
+import { db, hasFirebaseConfig } from './firebase';
 import { useAuth } from '../contexts/AuthContext';
 
 export function useHealthData() {

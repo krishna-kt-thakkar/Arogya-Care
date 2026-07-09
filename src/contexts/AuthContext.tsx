@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
-import { hasFirebaseConfig } from '../lib/firebase';
+import { useFirebaseAuth } from '../backend/useFirebaseAuth';
+import { hasFirebaseConfig } from '../backend/firebase';
 
 interface User {
   id: string;
