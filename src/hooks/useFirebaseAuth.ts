@@ -17,6 +17,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 
 const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 export function useFirebaseAuth() {
   const [user, setUser] = useState<User | null>(null);

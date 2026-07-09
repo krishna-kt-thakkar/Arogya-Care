@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme, Theme } from '../contexts/ThemeContext';
+import { hasFirebaseConfig } from '../lib/firebase';
 
 type AuthMode = 'login' | 'signup' | 'otp-send' | 'otp-verify' | 'forgot' | 'email-sent';
 
@@ -91,6 +92,16 @@ const LandingPage: React.FC = () => {
   const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
+
+  // Google Account Selector Mock States
+  const [showGoogleMockModal, setShowGoogleMockModal] = useState(false);
+  const [mockGoogleEmail, setMockGoogleEmail] = useState('');
+  const [mockGoogleOtp, setMockGoogleOtp] = useState(['', '', '', '', '', '']);
+  const [mockGoogleStep, setMockGoogleStep] = useState<'select' | 'otp'>('select');
+  const [customMockEmail, setCustomMockEmail] = useState('');
+  const [showCustomEmailInput, setShowCustomEmailInput] = useState(false);
+  const [mockGoogleError, setMockGoogleError] = useState('');
+  const mockGoogleOtpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // Centralized navigation: whenever user becomes truthy, go to dashboard
   useEffect(() => {
@@ -243,20 +254,106 @@ const LandingPage: React.FC = () => {
   const handleGoogleSignIn = async () => {
     setAuthError('');
     setIsSubmitting(true);
+    
+    // Check if Firebase is using default placeholder keys
+    if (!hasFirebaseConfig) {
+      console.log('Firebase not configured. Triggering custom Google Accounts chooser modal.');
+      setShowGoogleMockModal(true);
+      setMockGoogleStep('select');
+      setMockGoogleError('');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const result = await signInWithGoogle();
       if (!result) {
-        // Should never happen since signInWithGoogle always returns true,
-        // but just in case — force fallback
-        continueAsGuest();
+        setShowGoogleMockModal(true);
+        setMockGoogleStep('select');
+        setMockGoogleError('');
       }
     } catch (err) {
-      console.warn('Google Sign-In outer catch — using guest fallback:', err);
-      continueAsGuest();
+      console.warn('Google Sign-In caught error, using chooser overlay:', err);
+      setShowGoogleMockModal(true);
+      setMockGoogleStep('select');
+      setMockGoogleError('');
     }
-    // Navigation happens automatically via the centralized useEffect
-    // when user becomes truthy (from Google auth, simulated session, or guest).
     setIsSubmitting(false);
+  };
+
+  const handleSelectMockEmail = (emailStr: string) => {
+    setMockGoogleEmail(emailStr);
+    setMockGoogleStep('otp');
+    setMockGoogleOtp(['', '', '', '', '', '']);
+    setMockGoogleError('');
+    // Auto focus first OTP input after short delay
+    setTimeout(() => {
+      mockGoogleOtpRefs.current[0]?.focus();
+    }, 100);
+  };
+
+  const handleMockGoogleOtpChange = (index: number, value: string) => {
+    if (value.length > 1) value = value.slice(-1);
+    if (!/^\d*$/.test(value)) return;
+
+    const newOtp = [...mockGoogleOtp];
+    newOtp[index] = value;
+    setMockGoogleOtp(newOtp);
+
+    if (value && index < 5) {
+      mockGoogleOtpRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleMockGoogleOtpKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === 'Backspace' && !mockGoogleOtp[index] && index > 0) {
+      mockGoogleOtpRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleVerifyMockGoogleOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const code = mockGoogleOtp.join('');
+    if (code.length !== 6) {
+      setMockGoogleError('Please enter the 6-digit verification code.');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setMockGoogleError('');
+    
+    // Simulate API delay for realism
+    setTimeout(() => {
+      const namePrefix = mockGoogleEmail.split('@')[0];
+      const userName = namePrefix
+        .split('.')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+      
+      // Determine if they selected a pre-configured mock account (returning) or dynamic one (new user)
+      const isReturning = ['krish.thakkar@gmail.com', 'krishna.hackathon@gmail.com'].includes(mockGoogleEmail);
+      if (isReturning) {
+        sessionStorage.removeItem('arogya_is_new_user');
+      } else {
+        sessionStorage.setItem('arogya_is_new_user', 'true');
+      }
+      
+      const mockUser = {
+        id: 'google-sim-' + Date.now(),
+        name: userName,
+        email: mockGoogleEmail,
+        gender: 'other' as const,
+        isGuest: false,
+        isSimulated: true,
+      };
+      
+      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
+      setIsSubmitting(false);
+      setShowGoogleMockModal(false);
+      
+      // Trigger navigation by reloading page so AuthContext picks up session
+      window.location.reload();
+    }, 800);
   };
 
   const handleGuestMode = () => {
@@ -873,6 +970,178 @@ const LandingPage: React.FC = () => {
           <p className="text-xs text-blue-200/20">© {new Date().getFullYear()} AROGYA CARE. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* ===== INTERACTIVE MOCK GOOGLE ACCOUNT CHOOSER OVERLAY ===== */}
+      <AnimatePresence>
+        {showGoogleMockModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            {/* Backdrop blur */}
+            <motion.div 
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => { if (!isSubmitting) setShowGoogleMockModal(false); }}
+            />
+
+            {/* Modal Card */}
+            <motion.div
+              className="relative w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 overflow-hidden text-left"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', duration: 0.5 }}
+            >
+              {/* Google Brand Logo Header */}
+              <div className="text-center mb-6">
+                <div className="flex items-center justify-center gap-1.5 mb-2">
+                  <Chrome className="h-6 w-6 text-blue-500" />
+                  <span className="text-lg font-bold tracking-tight text-white">Google</span>
+                </div>
+                <h3 className="text-xl font-extrabold text-white">
+                  {mockGoogleStep === 'select' ? 'Choose an account' : 'Confirm your identity'}
+                </h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  to continue to <span className="text-brand-from font-semibold">Aarogya Care</span>
+                </p>
+              </div>
+
+              {mockGoogleStep === 'select' && (
+                <div className="space-y-3">
+                  {/* Account List */}
+                  {[
+                    { name: 'Krishna Thakkar', email: 'krish.thakkar@gmail.com', initial: 'K', color: 'bg-emerald-500' },
+                    { name: 'Abhijit Chauhan', email: 'abhijit.chauhan@gmail.com', initial: 'A', color: 'bg-indigo-500' },
+                    { name: 'Aarogya Care Demo', email: 'arogya.demo@gmail.com', initial: 'D', color: 'bg-rose-500' }
+                  ].map((acc) => (
+                    <button
+                      key={acc.email}
+                      onClick={() => handleSelectMockEmail(acc.email)}
+                      className="w-full flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all text-left group"
+                    >
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white ${acc.color} shadow-inner`}>
+                        {acc.initial}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-white truncate group-hover:text-brand-from transition-colors">{acc.name}</p>
+                        <p className="text-xs text-slate-400 truncate">{acc.email}</p>
+                      </div>
+                    </button>
+                  ))}
+
+                  {/* Use another account option */}
+                  {!showCustomEmailInput ? (
+                    <button 
+                      onClick={() => setShowCustomEmailInput(true)}
+                      className="w-full flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all text-left text-xs font-bold text-brand-from hover:text-white"
+                    >
+                      <div className="w-10 h-10 rounded-full border border-dashed border-white/20 flex items-center justify-center text-sm text-slate-400">
+                        +
+                      </div>
+                      <span>Use another account</span>
+                    </button>
+                  ) : (
+                    <motion.div 
+                      className="p-3 bg-white/5 border border-white/10 rounded-2xl space-y-3"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                    >
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Enter Custom Email</label>
+                      <div className="flex gap-2">
+                        <input 
+                          type="email"
+                          value={customMockEmail}
+                          onChange={(e) => setCustomMockEmail(e.target.value)}
+                          placeholder="yourname@gmail.com"
+                          className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-xs focus:border-brand-from outline-none text-white"
+                        />
+                        <button 
+                          onClick={() => {
+                            if (customMockEmail.trim() && customMockEmail.includes('@')) {
+                              handleSelectMockEmail(customMockEmail.trim());
+                            }
+                          }}
+                          className="px-3 py-2 bg-brand-gradient text-white rounded-xl text-xs font-bold"
+                        >
+                          Next
+                        </button>
+                      </div>
+                      <button 
+                        onClick={() => setShowCustomEmailInput(false)}
+                        className="text-[10px] text-slate-400 hover:text-white"
+                      >
+                        Cancel
+                      </button>
+                    </motion.div>
+                  )}
+
+                  <div className="text-[10px] text-slate-400/80 leading-relaxed mt-4 pt-4 border-t border-white/5">
+                    To continue, Google will share your name, email address, profile picture, and language preference with Aarogya Care. See Aarogya Care's <span className="underline cursor-pointer">Privacy Policy</span> and <span className="underline cursor-pointer">Terms of Service</span>.
+                  </div>
+                </div>
+              )}
+
+              {mockGoogleStep === 'otp' && (
+                <div className="space-y-5">
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/5 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300">
+                      {mockGoogleEmail.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-slate-300 truncate">{mockGoogleEmail}</p>
+                    </div>
+                    <button 
+                      onClick={() => setMockGoogleStep('select')}
+                      className="text-xs text-brand-from hover:text-white"
+                    >
+                      Change
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleVerifyMockGoogleOtp} className="space-y-4">
+                    <div>
+                      <p className="text-xs text-slate-300 text-center mb-3">
+                        A 6-digit confirmation code was sent to your email. Enter it below to sign in.
+                      </p>
+                      
+                      <div className="flex justify-center gap-2">
+                        {mockGoogleOtp.map((digit, i) => (
+                          <input
+                            key={i}
+                            ref={el => { mockGoogleOtpRefs.current[i] = el; }}
+                            type="text"
+                            inputMode="numeric"
+                            maxLength={1}
+                            value={digit}
+                            onChange={e => handleMockGoogleOtpChange(i, e.target.value)}
+                            onKeyDown={e => handleMockGoogleOtpKeyDown(i, e)}
+                            className="w-11 h-12 text-center text-xl font-bold bg-white/5 border border-white/10 rounded-xl text-white focus:border-brand-from outline-none focus:bg-white/10 transition-all"
+                            placeholder="·"
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {mockGoogleError && (
+                      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-300 text-center">
+                        {mockGoogleError}
+                      </div>
+                    )}
+
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full py-3 bg-brand-gradient text-white font-bold rounded-xl text-sm disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? 'Verifying...' : 'Verify & Continue'}
+                    </button>
+                  </form>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

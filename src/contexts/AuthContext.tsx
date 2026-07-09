@@ -94,6 +94,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [firebaseUser, firebaseLoading]);
 
   const login = async (email: string, password: string): Promise<AuthResult> => {
+    sessionStorage.removeItem('arogya_is_new_user');
     // Fail-safe fallback if keys are missing
     if (!hasFirebaseConfig) {
       console.warn('Firebase not configured. Performing instant simulated login.');
@@ -130,6 +131,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signup = async (name: string, email: string, password: string, gender: 'male' | 'female' | 'other'): Promise<AuthResult> => {
+    sessionStorage.setItem('arogya_is_new_user', 'true');
     // Fail-safe fallback if keys are missing
     if (!hasFirebaseConfig) {
       console.warn('Firebase not configured. Performing instant simulated signup.');

@@ -133,12 +133,25 @@ const Dashboard: React.FC = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="absolute -top-6 -left-6 w-20 h-20 rounded-full bg-brand-from/10 blur-2xl pointer-events-none" />
-          <h2 className="text-3xl font-black tracking-tight text-primary-custom mb-1">
-            {t('welcomeBack')}, <span className="text-brand-color">{user.name}</span>
-          </h2>
-          <p className="text-sm font-medium text-secondary-custom">
-            {t('readyToContinue')}
-          </p>
+          {sessionStorage.getItem('arogya_is_new_user') === 'true' ? (
+            <>
+              <h2 className="text-3xl font-black tracking-tight text-primary-custom mb-1">
+                Welcome to Arogya Care, <span className="text-brand-color">{user.name}</span>
+              </h2>
+              <p className="text-sm font-medium text-secondary-custom">
+                We're excited to help you build healthy habits today.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="text-3xl font-black tracking-tight text-primary-custom mb-1">
+                {t('welcomeBack')}, <span className="text-brand-color">{user.name}</span>
+              </h2>
+              <p className="text-sm font-medium text-secondary-custom">
+                {t('readyToContinue')}
+              </p>
+            </>
+          )}
         </motion.div>
 
         {/* Streak Display */}
