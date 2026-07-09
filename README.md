@@ -72,26 +72,61 @@ The application supports multiple users with secure authentication, stores healt
 The application follows a client-side rendered single-page application (SPA) architecture with a cloud backend for authentication and data persistence.
 
 ```mermaid
-graph TD
-    A[User Browser] -->|HTTPS| B[Vercel CDN]
-    B --> C[React SPA - Vite Build]
-    C --> D[React Router v6]
-    D --> E[Protected Routes]
-    D --> F[Public Routes]
-    E --> G[Dashboard]
-    E --> H[Health Modules]
-    C --> I[Firebase Auth SDK]
-    C --> J[Cloud Firestore SDK]
-    I -->|Authentication| K[Firebase Auth Service]
-    J -->|Read/Write| L[Cloud Firestore Database]
-    K --> M[Email/Password Provider]
-    K --> N[Google OAuth Provider]
-    L --> O[users/userId/water_intake]
-    L --> P[users/userId/steps_tracking]
-    L --> Q[users/userId/sleep_tracking]
-    L --> R[users/userId/medications]
-    L --> S[users/userId/vital_stats]
-    L --> T[users/userId/bmi_records]
+flowchart TB
+    subgraph Client ["Client Side (React Single Page Application)"]
+        subgraph UI ["User Interface Layer"]
+            LP["Landing Page / Auth Portal"]
+            DB["Dashboard (Steps, Sleep, Water)"]
+            HM["Health Modules (BMI, Meds, Mental, Period)"]
+        end
+        subgraph State ["State & Context Providers"]
+            AC["AuthContext (User Session)"]
+            SC["StreakContext (Gamification)"]
+            TC["ThemeContext (Sunset, Deep Space, Emerald, Neon)"]
+        end
+        subgraph Hooks ["Custom Hooks & Services"]
+            UF["useFirebaseAuth (Firebase Auth SDK)"]
+            HD["useHealthData (Firestore CRUD)"]
+        end
+    end
+
+    subgraph Hosting ["Hosting & Deployment"]
+        VC["Vercel Edge Network"]
+        CDN["Vercel Global CDN"]
+    end
+
+    subgraph Cloud ["Cloud Backend Services (Firebase Ecosystem)"]
+        subgraph Auth ["Firebase Authentication"]
+            EP["Email & Password Auth"]
+            GG["Google OAuth 2.0 Provider"]
+        end
+        subgraph Database ["Cloud Firestore Database"]
+            FS["Firestore NoSQL Engine"]
+            subgraph Schema ["User Isolated Collections"]
+                W["/users/{uid}/water_intake"]
+                S["/users/{uid}/steps_tracking"]
+                M["/users/{uid}/medications"]
+            end
+        end
+    end
+
+    %% Client and UI connections
+    LP --> AC
+    DB --> AC
+    HM --> AC
+    AC --> UF
+    DB --> SC
+    HM --> HD
+
+    %% Routing
+    VC --> CDN
+    CDN --> LP
+
+    %% Cloud connections
+    UF --> Auth
+    HD --> Database
+    Database --> FS
+    FS --> Schema
 ```
 
 ### Data Flow
