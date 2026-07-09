@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabase, WaterIntake, StepsTracking, SleepTracking, VitalStats, BMIRecord, Medication, MedicationLog } from '../lib/supabase'
 import { useSupabaseAuth } from './useSupabaseAuth'
 
@@ -7,7 +7,7 @@ export function useHealthData() {
   const [loading, setLoading] = useState(false)
 
   // Water Intake
-  const getWaterIntake = async (date: string = new Date().toISOString().split('T')[0]) => {
+  const getWaterIntake = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return null
 
     const { data, error } = await supabase
@@ -19,9 +19,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const updateWaterIntake = async (glasses: number, date: string = new Date().toISOString().split('T')[0]) => {
+  const updateWaterIntake = useCallback(async (glasses: number, date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return
 
     const { data, error } = await supabase
@@ -36,9 +36,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const getWeeklyWaterIntake = async () => {
+  const getWeeklyWaterIntake = useCallback(async () => {
     if (!user) return []
 
     const endDate = new Date()
@@ -55,10 +55,10 @@ export function useHealthData() {
 
     if (error) throw error
     return data || []
-  }
+  }, [user?.id])
 
   // Steps Tracking
-  const getStepsTracking = async (date: string = new Date().toISOString().split('T')[0]) => {
+  const getStepsTracking = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return null
 
     const { data, error } = await supabase
@@ -70,9 +70,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const updateStepsTracking = async (steps: number, source: 'manual' | 'device' | 'gps' = 'manual', date: string = new Date().toISOString().split('T')[0]) => {
+  const updateStepsTracking = useCallback(async (steps: number, source: 'manual' | 'device' | 'gps' = 'manual', date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return
 
     const { data, error } = await supabase
@@ -88,9 +88,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const getWeeklyStepsTracking = async () => {
+  const getWeeklyStepsTracking = useCallback(async () => {
     if (!user) return []
 
     const endDate = new Date()
@@ -107,10 +107,10 @@ export function useHealthData() {
 
     if (error) throw error
     return data || []
-  }
+  }, [user?.id])
 
   // Sleep Tracking
-  const getSleepTracking = async (date: string = new Date().toISOString().split('T')[0]) => {
+  const getSleepTracking = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return null
 
     const { data, error } = await supabase
@@ -122,9 +122,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const updateSleepTracking = async (sleepData: Partial<SleepTracking>, date: string = new Date().toISOString().split('T')[0]) => {
+  const updateSleepTracking = useCallback(async (sleepData: Partial<SleepTracking>, date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return
 
     const { data, error } = await supabase
@@ -139,9 +139,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const getWeeklySleepTracking = async () => {
+  const getWeeklySleepTracking = useCallback(async () => {
     if (!user) return []
 
     const endDate = new Date()
@@ -158,10 +158,10 @@ export function useHealthData() {
 
     if (error) throw error
     return data || []
-  }
+  }, [user?.id])
 
   // Vital Stats
-  const getLatestVitalStats = async () => {
+  const getLatestVitalStats = useCallback(async () => {
     if (!user) return null
 
     const { data, error } = await supabase
@@ -174,9 +174,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const saveVitalStats = async (vitalData: Partial<VitalStats>) => {
+  const saveVitalStats = useCallback(async (vitalData: Partial<VitalStats>) => {
     if (!user) return
 
     const { data, error } = await supabase
@@ -190,10 +190,10 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
   // BMI Records
-  const getBMIHistory = async (limit: number = 10) => {
+  const getBMIHistory = useCallback(async (limit: number = 10) => {
     if (!user) return []
 
     const { data, error } = await supabase
@@ -205,9 +205,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data || []
-  }
+  }, [user?.id])
 
-  const saveBMIRecord = async (bmiData: Partial<BMIRecord>) => {
+  const saveBMIRecord = useCallback(async (bmiData: Partial<BMIRecord>) => {
     if (!user) return
 
     const { data, error } = await supabase
@@ -221,10 +221,10 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
   // Medications
-  const getMedications = async () => {
+  const getMedications = useCallback(async () => {
     if (!user) return []
 
     const { data, error } = await supabase
@@ -236,9 +236,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data || []
-  }
+  }, [user?.id])
 
-  const addMedication = async (medicationData: Partial<Medication>) => {
+  const addMedication = useCallback(async (medicationData: Partial<Medication>) => {
     if (!user) return
 
     const { data, error } = await supabase
@@ -252,9 +252,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const deleteMedication = async (medicationId: string) => {
+  const deleteMedication = useCallback(async (medicationId: string) => {
     if (!user) return
 
     const { error } = await supabase
@@ -264,9 +264,9 @@ export function useHealthData() {
       .eq('user_id', user.id)
 
     if (error) throw error
-  }
+  }, [user?.id])
 
-  const getMedicationLogs = async (date: string = new Date().toISOString().split('T')[0]) => {
+  const getMedicationLogs = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return []
 
     const { data, error } = await supabase
@@ -277,9 +277,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data || []
-  }
+  }, [user?.id])
 
-  const logMedicationTaken = async (medicationId: string, date: string = new Date().toISOString().split('T')[0]) => {
+  const logMedicationTaken = useCallback(async (medicationId: string, date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return
 
     const { data, error } = await supabase
@@ -294,9 +294,9 @@ export function useHealthData() {
 
     if (error) throw error
     return data
-  }
+  }, [user?.id])
 
-  const removeMedicationLog = async (medicationId: string, date: string = new Date().toISOString().split('T')[0]) => {
+  const removeMedicationLog = useCallback(async (medicationId: string, date: string = new Date().toISOString().split('T')[0]) => {
     if (!user) return
 
     const { error } = await supabase
@@ -307,7 +307,7 @@ export function useHealthData() {
       .eq('date', date)
 
     if (error) throw error
-  }
+  }, [user?.id])
 
   return {
     loading,
