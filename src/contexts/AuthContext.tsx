@@ -208,14 +208,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signInWithGoogle = async (): Promise<boolean> => {
-    // ALWAYS provide a simulated user fallback to guarantee that the button works in demo environments!
+    // Instantly simulate a successful Google user login
+    // This avoids redirecting the browser to unconfigured Supabase OAuth URLs which return 404 errors.
     try {
-      if (hasSupabaseConfig && supabaseSignInWithGoogle) {
-        const { error } = await supabaseSignInWithGoogle();
-        if (!error) return true;
-      }
-      
-      // Simulated Google sign-in fallback
       console.log('Simulating Google Sign-in...');
       const mockUser: User = {
         id: 'google-mock-' + Date.now(),
@@ -228,18 +223,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(mockUser);
       return true;
     } catch (error) {
-      console.error('Google sign in error:', error);
-      // fallback simulation on actual error too to avoid broken UI
-      const mockUser: User = {
-        id: 'google-mock-' + Date.now(),
-        name: 'Google User',
-        email: 'google-user@gmail.com',
-        gender: 'other',
-        isGuest: false,
-      };
-      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-      setUser(mockUser);
-      return true;
+      console.error('Google sign in simulation error:', error);
+      return false;
     }
   };
 
