@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useSupabaseAuth } from '../hooks/useSupabaseAuth';
-import { hasSupabaseConfig } from '../lib/supabase';
+import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
+import { hasFirebaseConfig } from '../lib/firebase';
 
 interface User {
   id: string;
@@ -41,42 +41,40 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const {
-    user: supabaseUser,
-    loading: supabaseLoading,
+    user: firebaseUser,
+    loading: firebaseLoading,
     signIn,
     signUp,
     signOut,
     signInWithOtp,
-    verifyOtp: supabaseVerifyOtp,
-    resetPassword: supabaseResetPassword,
-    signInWithGoogle: supabaseSignInWithGoogle,
-  } = useSupabaseAuth();
+    signInWithGoogle: firebaseSignInWithGoogle,
+    resetPassword: firebaseResetPassword,
+  } = useFirebaseAuth();
 
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Map Supabase user to our User interface when auth state changes
+  // Map Firebase user to our User interface when auth state changes
   useEffect(() => {
-    if (supabaseLoading) {
+    if (firebaseLoading) {
       return;
     }
 
-    if (supabaseUser) {
+    if (firebaseUser) {
       const mappedUser: User = {
-        id: supabaseUser.id,
-        name: supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'User',
-        email: supabaseUser.email || '',
-        gender: supabaseUser.user_metadata?.gender || 'other',
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
+        email: firebaseUser.email || '',
+        gender: 'other',
         isGuest: false,
       };
       setUser(mappedUser);
     } else {
-      // Check for guest session only — no mock users
+      // Check for guest session only
       const guestSession = sessionStorage.getItem('arogya_guest_mode');
       if (guestSession) {
         try {
           const parsed = JSON.parse(guestSession);
-          // Only restore if it was a genuine guest session (isGuest === true)
           if (parsed.isGuest === true) {
             setUser(parsed);
           } else {
@@ -92,12 +90,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
     setIsLoading(false);
-  }, [supabaseUser, supabaseLoading]);
-
-  // --- Real auth functions — no mock fallbacks ---
+  }, [firebaseUser, firebaseLoading]);
 
   const login = async (email: string, password: string): Promise<AuthResult> => {
-    if (!hasSupabaseConfig) {
+    if (!hasFirebaseConfig) {
       return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
 
@@ -106,55 +102,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: true };
     } catch (error: any) {
       console.error('Login error:', error);
-      const message = error?.message || 'Login failed';
-      if (message.includes('Invalid login credentials')) {
+      const code = error?.code || '';
+      if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
         return { success: false, error: 'Wrong email or password. Please try again.' };
       }
-      if (message.includes('Email not confirmed')) {
-        return { success: false, error: 'Please verify your email before logging in. Check your inbox for the confirmation link.' };
+      if (code === 'auth/too-many-requests') {
+        return { success: false, error: 'Too many failed attempts. Please try again later.' };
       }
-      return { success: false, error: message };
+      if (code === 'auth/user-disabled') {
+        return { success: false, error: 'This account has been disabled.' };
+      }
+      return { success: false, error: error?.message || 'Login failed' };
     }
   };
 
   const signup = async (name: string, email: string, password: string, gender: 'male' | 'female' | 'other'): Promise<AuthResult> => {
-    if (!hasSupabaseConfig) {
+    if (!hasFirebaseConfig) {
       return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
 
     try {
-      const data = await signUp(email, password, name, gender);
-
-      // Check for duplicate email: Supabase returns a user with empty identities array
-      if (data.user && data.user.identities && data.user.identities.length === 0) {
-        return { success: false, error: 'An account with this email already exists. Please log in instead.' };
-      }
-
-      if (data.user && !data.session) {
-        return {
-          success: true,
-          needsEmailConfirmation: true,
-        };
-      }
+      await signUp(email, password, name, gender);
       return { success: true };
     } catch (error: any) {
       console.error('Signup error:', error);
-      const message = error?.message || 'Signup failed';
-      if (message.includes('already registered') || message.includes('already been registered')) {
+      const code = error?.code || '';
+      if (code === 'auth/email-already-in-use') {
         return { success: false, error: 'An account with this email already exists. Please log in instead.' };
       }
-      if (message.includes('valid email')) {
-        return { success: false, error: 'Please enter a valid email address.' };
-      }
-      if (message.includes('at least')) {
+      if (code === 'auth/weak-password') {
         return { success: false, error: 'Password must be at least 6 characters long.' };
       }
-      return { success: false, error: message };
+      if (code === 'auth/invalid-email') {
+        return { success: false, error: 'Please enter a valid email address.' };
+      }
+      return { success: false, error: error?.message || 'Signup failed' };
     }
   };
 
   const sendOtp = async (email: string): Promise<AuthResult> => {
-    if (!hasSupabaseConfig) {
+    if (!hasFirebaseConfig) {
       return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
 
@@ -163,62 +150,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: true };
     } catch (error: any) {
       console.error('OTP send error:', error);
-      return { success: false, error: error?.message || 'Failed to send OTP. Please try again.' };
+      return { success: false, error: error?.message || 'Failed to send sign-in link. Please try again.' };
     }
   };
 
-  const verifyOtp = async (email: string, token: string): Promise<AuthResult> => {
-    if (!hasSupabaseConfig) {
-      return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
-    }
-
-    try {
-      await supabaseVerifyOtp(email, token);
-      return { success: true };
-    } catch (error: any) {
-      console.error('OTP verification error:', error);
-      const message = error?.message || 'Invalid OTP';
-      if (message.includes('expired')) {
-        return { success: false, error: 'OTP has expired. Please request a new one.' };
-      }
-      if (message.includes('invalid') || message.includes('Token')) {
-        return { success: false, error: 'Invalid OTP code. Please check and try again.' };
-      }
-      return { success: false, error: message };
-    }
+  const verifyOtp = async (_email: string, _token: string): Promise<AuthResult> => {
+    // Firebase email link sign-in is handled automatically in useFirebaseAuth
+    // when the user clicks the link and returns to the app.
+    // This function is kept for interface compatibility.
+    // The auth state change will be detected by onAuthStateChanged.
+    return { success: true };
   };
 
   const resetPassword = async (email: string): Promise<AuthResult> => {
-    if (!hasSupabaseConfig) {
+    if (!hasFirebaseConfig) {
       return { success: false, error: 'Service temporarily unavailable. Please try again shortly.' };
     }
 
     try {
-      await supabaseResetPassword(email);
+      await firebaseResetPassword(email);
       return { success: true };
     } catch (error: any) {
       console.error('Reset password error:', error);
+      const code = error?.code || '';
+      if (code === 'auth/user-not-found') {
+        return { success: false, error: 'No account found with this email address.' };
+      }
       return { success: false, error: error?.message || 'Failed to send reset link. Please try again.' };
     }
   };
 
   const signInWithGoogle = async (): Promise<boolean> => {
-    if (!hasSupabaseConfig) {
-      console.error('Google Sign-In unavailable: Supabase not configured.');
+    if (!hasFirebaseConfig) {
+      console.error('Google Sign-In unavailable: Firebase not configured.');
       return false;
     }
 
     try {
-      const { error } = await supabaseSignInWithGoogle();
-      if (error) {
-        console.error('Google Sign-In error:', error.message);
-        return false;
-      }
-      // OAuth is a redirect flow — browser navigates away to Google.
-      // On return, onAuthStateChange in useSupabaseAuth will detect the session.
+      await firebaseSignInWithGoogle();
+      // onAuthStateChanged will detect the new user and update state
       return true;
     } catch (error: any) {
       console.error('Google Sign-In error:', error);
+      if (error?.code === 'auth/popup-closed-by-user') {
+        return false; // User closed the popup, not a real error
+      }
       return false;
     }
   };

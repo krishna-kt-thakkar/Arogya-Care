@@ -15,12 +15,11 @@ import {
 } from 'lucide-react';
 import { useStreak } from '../../contexts/StreakContext';
 import { useHealthData } from '../../hooks/useHealthData';
-import { useSupabaseAuth } from '../../hooks/useSupabaseAuth';
-import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
 
 const StepsTracker: React.FC = () => {
   const { addActivity } = useStreak();
-  const { user } = useSupabaseAuth();
+  const { user } = useAuth();
   const { getStepsTracking, updateStepsTracking, getWeeklyStepsTracking } = useHealthData();
   
   const [currentSteps, setCurrentSteps] = useState(0);
@@ -42,9 +41,7 @@ const StepsTracker: React.FC = () => {
   // Load steps data
   useEffect(() => {
     const loadStepsData = async () => {
-      // Check if Supabase is configured first
-      if (!supabase) {
-        setError('Database connection not configured. Using offline mode.');
+      if (!user) {
         // Load from localStorage as fallback
         const savedData = localStorage.getItem('steps_tracker_data');
         if (savedData) {
@@ -93,7 +90,7 @@ const StepsTracker: React.FC = () => {
   // Save data
   const saveStepsData = async (steps: number, source: 'manual' | 'device' | 'gps' = 'manual') => {
     try {
-      if (user && supabase) {
+      if (user) {
         await updateStepsTracking(steps, source);
         setError(''); // Clear error on successful save
       }

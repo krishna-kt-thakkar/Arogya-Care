@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Droplets, Plus, Minus } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useHealthData } from '../../hooks/useHealthData';
-import { useSupabaseAuth } from '../../hooks/useSupabaseAuth';
+import { useAuth } from '../../contexts/AuthContext';
 import { useStreak } from '../../contexts/StreakContext';
 
 const WaterTracker: React.FC = () => {
@@ -11,7 +11,7 @@ const WaterTracker: React.FC = () => {
   const [animateWater, setAnimateWater] = useState(false);
   const [showSaveAnimation, setShowSaveAnimation] = useState(false);
   const { t } = useLanguage();
-  const { user } = useSupabaseAuth();
+  const { user } = useAuth();
   const { getWaterIntake, updateWaterIntake } = useHealthData();
   const { addActivity } = useStreak();
   const waterGoal = 8;
@@ -45,7 +45,7 @@ const WaterTracker: React.FC = () => {
     loadWaterData();
   }, [user, getWaterIntake]);
 
-  // Save data to Supabase and localStorage as backup
+  // Save data to database and localStorage as backup
   const saveWaterData = async (newIntake: number) => {
     try {
       if (user) {
@@ -72,7 +72,7 @@ const WaterTracker: React.FC = () => {
       }
     } catch (error) {
       console.error('Error saving water data:', error);
-      // Still save to localStorage if Supabase fails
+      // Still save to localStorage if database fails
       const today = new Date().toISOString().split('T')[0];
       const data = {
         date: today,

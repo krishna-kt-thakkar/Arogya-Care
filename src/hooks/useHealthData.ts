@@ -1,316 +1,232 @@
-import { useState, useEffect, useCallback } from 'react'
-import { supabase, WaterIntake, StepsTracking, SleepTracking, VitalStats, BMIRecord, Medication, MedicationLog } from '../lib/supabase'
-import { useSupabaseAuth } from './useSupabaseAuth'
+import { useCallback } from 'react';
+import {
+  doc, getDoc, setDoc, getDocs,
+  collection, query, where, orderBy,
+  deleteDoc, Timestamp
+} from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 export function useHealthData() {
-  const { user } = useSupabaseAuth()
-  const [loading, setLoading] = useState(false)
+  const { user } = useAuth();
 
-  // Water Intake
+  // Helper: get user's subcollection reference
+  const userCol = useCallback((colName: string) => {
+    if (!user) return null;
+    return collection(db, 'users', user.id, colName);
+  }, [user?.id]);
+
+  // ---- Water Intake ----
   const getWaterIntake = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return null
-
-    const { data, error } = await supabase
-      .from('water_intake')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('date', date)
-      .maybeSingle()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
+    if (!user) return null;
+    const ref = doc(db, 'users', user.id, 'water_intake', date);
+    const snap = await getDoc(ref);
+    return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+  }, [user?.id]);
 
   const updateWaterIntake = useCallback(async (glasses: number, date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return
-
-    const { data, error } = await supabase
-      .from('water_intake')
-      .upsert({
-        user_id: user.id,
-        glasses_consumed: glasses,
-        date,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
+    if (!user) return;
+    const ref = doc(db, 'users', user.id, 'water_intake', date);
+    await setDoc(ref, {
+      user_id: user.id,
+      glasses_consumed: glasses,
+      goal: 8,
+      date,
+      updated_at: new Date().toISOString(),
+    }, { merge: true });
+  }, [user?.id]);
 
   const getWeeklyWaterIntake = useCallback(async () => {
-    if (!user) return []
+    if (!user) return [];
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 6);
+    const startStr = startDate.toISOString().split('T')[0];
+    const endStr = endDate.toISOString().split('T')[0];
 
-    const endDate = new Date()
-    const startDate = new Date()
-    startDate.setDate(endDate.getDate() - 6)
+    const col = userCol('water_intake');
+    if (!col) return [];
+    const q = query(col, where('date', '>=', startStr), where('date', '<=', endStr), orderBy('date', 'asc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }, [user?.id, userCol]);
 
-    const { data, error } = await supabase
-      .from('water_intake')
-      .select('*')
-      .eq('user_id', user.id)
-      .gte('date', startDate.toISOString().split('T')[0])
-      .lte('date', endDate.toISOString().split('T')[0])
-      .order('date', { ascending: true })
-
-    if (error) throw error
-    return data || []
-  }, [user?.id])
-
-  // Steps Tracking
+  // ---- Steps Tracking ----
   const getStepsTracking = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return null
-
-    const { data, error } = await supabase
-      .from('steps_tracking')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('date', date)
-      .maybeSingle()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
+    if (!user) return null;
+    const ref = doc(db, 'users', user.id, 'steps_tracking', date);
+    const snap = await getDoc(ref);
+    return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+  }, [user?.id]);
 
   const updateStepsTracking = useCallback(async (steps: number, source: 'manual' | 'device' | 'gps' = 'manual', date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return
-
-    const { data, error } = await supabase
-      .from('steps_tracking')
-      .upsert({
-        user_id: user.id,
-        steps,
-        source,
-        date,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
+    if (!user) return;
+    const ref = doc(db, 'users', user.id, 'steps_tracking', date);
+    await setDoc(ref, {
+      user_id: user.id,
+      steps,
+      goal: 10000,
+      source,
+      date,
+      updated_at: new Date().toISOString(),
+    }, { merge: true });
+  }, [user?.id]);
 
   const getWeeklyStepsTracking = useCallback(async () => {
-    if (!user) return []
+    if (!user) return [];
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 6);
+    const startStr = startDate.toISOString().split('T')[0];
+    const endStr = endDate.toISOString().split('T')[0];
 
-    const endDate = new Date()
-    const startDate = new Date()
-    startDate.setDate(endDate.getDate() - 6)
+    const col = userCol('steps_tracking');
+    if (!col) return [];
+    const q = query(col, where('date', '>=', startStr), where('date', '<=', endStr), orderBy('date', 'asc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }, [user?.id, userCol]);
 
-    const { data, error } = await supabase
-      .from('steps_tracking')
-      .select('*')
-      .eq('user_id', user.id)
-      .gte('date', startDate.toISOString().split('T')[0])
-      .lte('date', endDate.toISOString().split('T')[0])
-      .order('date', { ascending: true })
-
-    if (error) throw error
-    return data || []
-  }, [user?.id])
-
-  // Sleep Tracking
+  // ---- Sleep Tracking ----
   const getSleepTracking = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return null
+    if (!user) return null;
+    const ref = doc(db, 'users', user.id, 'sleep_tracking', date);
+    const snap = await getDoc(ref);
+    return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+  }, [user?.id]);
 
-    const { data, error } = await supabase
-      .from('sleep_tracking')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('date', date)
-      .maybeSingle()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
-
-  const updateSleepTracking = useCallback(async (sleepData: Partial<SleepTracking>, date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return
-
-    const { data, error } = await supabase
-      .from('sleep_tracking')
-      .upsert({
-        user_id: user.id,
-        ...sleepData,
-        date,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
+  const updateSleepTracking = useCallback(async (sleepData: any, date: string = new Date().toISOString().split('T')[0]) => {
+    if (!user) return;
+    const ref = doc(db, 'users', user.id, 'sleep_tracking', date);
+    await setDoc(ref, {
+      user_id: user.id,
+      ...sleepData,
+      date,
+      updated_at: new Date().toISOString(),
+    }, { merge: true });
+  }, [user?.id]);
 
   const getWeeklySleepTracking = useCallback(async () => {
-    if (!user) return []
+    if (!user) return [];
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 6);
+    const startStr = startDate.toISOString().split('T')[0];
+    const endStr = endDate.toISOString().split('T')[0];
 
-    const endDate = new Date()
-    const startDate = new Date()
-    startDate.setDate(endDate.getDate() - 6)
+    const col = userCol('sleep_tracking');
+    if (!col) return [];
+    const q = query(col, where('date', '>=', startStr), where('date', '<=', endStr), orderBy('date', 'asc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }, [user?.id, userCol]);
 
-    const { data, error } = await supabase
-      .from('sleep_tracking')
-      .select('*')
-      .eq('user_id', user.id)
-      .gte('date', startDate.toISOString().split('T')[0])
-      .lte('date', endDate.toISOString().split('T')[0])
-      .order('date', { ascending: true })
-
-    if (error) throw error
-    return data || []
-  }, [user?.id])
-
-  // Vital Stats
+  // ---- Vital Stats ----
   const getLatestVitalStats = useCallback(async () => {
-    if (!user) return null
+    if (!user) return null;
+    const col = userCol('vital_stats');
+    if (!col) return null;
+    const q = query(col, orderBy('recorded_at', 'desc'));
+    const snap = await getDocs(q);
+    if (snap.empty) return null;
+    const d = snap.docs[0];
+    return { id: d.id, ...d.data() };
+  }, [user?.id, userCol]);
 
-    const { data, error } = await supabase
-      .from('vital_stats')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('recorded_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
+  const saveVitalStats = useCallback(async (vitalData: any) => {
+    if (!user) return;
+    const id = new Date().toISOString();
+    const ref = doc(db, 'users', user.id, 'vital_stats', id);
+    await setDoc(ref, {
+      user_id: user.id,
+      ...vitalData,
+      recorded_at: id,
+      created_at: id,
+    });
+  }, [user?.id]);
 
-    if (error) throw error
-    return data
-  }, [user?.id])
-
-  const saveVitalStats = useCallback(async (vitalData: Partial<VitalStats>) => {
-    if (!user) return
-
-    const { data, error } = await supabase
-      .from('vital_stats')
-      .insert({
-        user_id: user.id,
-        ...vitalData,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
-
-  // BMI Records
+  // ---- BMI Records ----
   const getBMIHistory = useCallback(async (limit: number = 10) => {
-    if (!user) return []
+    if (!user) return [];
+    const col = userCol('bmi_records');
+    if (!col) return [];
+    const q = query(col, orderBy('recorded_at', 'desc'));
+    const snap = await getDocs(q);
+    return snap.docs.slice(0, limit).map(d => ({ id: d.id, ...d.data() }));
+  }, [user?.id, userCol]);
 
-    const { data, error } = await supabase
-      .from('bmi_records')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('recorded_at', { ascending: false })
-      .limit(limit)
+  const saveBMIRecord = useCallback(async (bmiData: any) => {
+    if (!user) return;
+    const id = new Date().toISOString();
+    const ref = doc(db, 'users', user.id, 'bmi_records', id);
+    await setDoc(ref, {
+      user_id: user.id,
+      ...bmiData,
+      recorded_at: id,
+      created_at: id,
+    });
+  }, [user?.id]);
 
-    if (error) throw error
-    return data || []
-  }, [user?.id])
-
-  const saveBMIRecord = useCallback(async (bmiData: Partial<BMIRecord>) => {
-    if (!user) return
-
-    const { data, error } = await supabase
-      .from('bmi_records')
-      .insert({
-        user_id: user.id,
-        ...bmiData,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
-
-  // Medications
+  // ---- Medications ----
   const getMedications = useCallback(async () => {
-    if (!user) return []
+    if (!user) return [];
+    const col = userCol('medications');
+    if (!col) return [];
+    const q = query(col, where('is_active', '==', true), orderBy('created_at', 'asc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }, [user?.id, userCol]);
 
-    const { data, error } = await supabase
-      .from('medications')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('is_active', true)
-      .order('created_at', { ascending: true })
-
-    if (error) throw error
-    return data || []
-  }, [user?.id])
-
-  const addMedication = useCallback(async (medicationData: Partial<Medication>) => {
-    if (!user) return
-
-    const { data, error } = await supabase
-      .from('medications')
-      .insert({
-        user_id: user.id,
-        ...medicationData,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
+  const addMedication = useCallback(async (medicationData: any) => {
+    if (!user) return;
+    const id = 'med-' + Date.now();
+    const ref = doc(db, 'users', user.id, 'medications', id);
+    await setDoc(ref, {
+      user_id: user.id,
+      ...medicationData,
+      is_active: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    });
+  }, [user?.id]);
 
   const deleteMedication = useCallback(async (medicationId: string) => {
-    if (!user) return
-
-    const { error } = await supabase
-      .from('medications')
-      .update({ is_active: false })
-      .eq('id', medicationId)
-      .eq('user_id', user.id)
-
-    if (error) throw error
-  }, [user?.id])
+    if (!user) return;
+    const ref = doc(db, 'users', user.id, 'medications', medicationId);
+    await setDoc(ref, { is_active: false, updated_at: new Date().toISOString() }, { merge: true });
+  }, [user?.id]);
 
   const getMedicationLogs = useCallback(async (date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return []
-
-    const { data, error } = await supabase
-      .from('medication_logs')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('date', date)
-
-    if (error) throw error
-    return data || []
-  }, [user?.id])
+    if (!user) return [];
+    const col = userCol('medication_logs');
+    if (!col) return [];
+    const q = query(col, where('date', '==', date));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }, [user?.id, userCol]);
 
   const logMedicationTaken = useCallback(async (medicationId: string, date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return
-
-    const { data, error } = await supabase
-      .from('medication_logs')
-      .upsert({
-        medication_id: medicationId,
-        user_id: user.id,
-        date,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data
-  }, [user?.id])
+    if (!user) return;
+    const id = `${medicationId}_${date}`;
+    const ref = doc(db, 'users', user.id, 'medication_logs', id);
+    await setDoc(ref, {
+      medication_id: medicationId,
+      user_id: user.id,
+      date,
+      taken_at: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+    }, { merge: true });
+  }, [user?.id]);
 
   const removeMedicationLog = useCallback(async (medicationId: string, date: string = new Date().toISOString().split('T')[0]) => {
-    if (!user) return
-
-    const { error } = await supabase
-      .from('medication_logs')
-      .delete()
-      .eq('medication_id', medicationId)
-      .eq('user_id', user.id)
-      .eq('date', date)
-
-    if (error) throw error
-  }, [user?.id])
+    if (!user) return;
+    const id = `${medicationId}_${date}`;
+    const ref = doc(db, 'users', user.id, 'medication_logs', id);
+    await deleteDoc(ref);
+  }, [user?.id]);
 
   return {
-    loading,
+    loading: false,
     // Water
     getWaterIntake,
     updateWaterIntake,
@@ -336,5 +252,5 @@ export function useHealthData() {
     getMedicationLogs,
     logMedicationTaken,
     removeMedicationLog,
-  }
+  };
 }
