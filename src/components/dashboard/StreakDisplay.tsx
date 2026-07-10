@@ -1,7 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Flame, Trophy, Target, Download } from 'lucide-react';
+import { Flame, Trophy, Target, Download, Sparkles, Zap, Shield, Activity, Award, TrendingUp } from 'lucide-react';
 import { useStreak } from '../../contexts/StreakContext';
+
+const getBadgeIcon = (id: string) => {
+  switch (id) {
+    case 'spark': return Sparkles;
+    case 'warrior': return Zap;
+    case 'centurion': return Shield;
+    case 'iron': return Activity;
+    case 'titan': return Trophy;
+    case 'eternal': return Flame;
+    case 'immortal': return Award;
+    case 'infinite': return TrendingUp;
+    case 'legacy': return Trophy;
+    default: return Trophy;
+  }
+};
 
 interface StreakDisplayProps {
   compact?: boolean;
@@ -122,7 +137,10 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
           </div>
           
           <div className="flex items-center space-x-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-xl transition-colors duration-300">
-            <span className="text-2xl">{nextBadge.symbol}</span>
+            {(() => {
+              const IconComp = getBadgeIcon(nextBadge.id);
+              return <IconComp className={`h-6 w-6 ${nextBadge.color}`} />;
+            })()}
             <div>
               <p className="font-semibold text-purple-800 dark:text-purple-300 transition-colors duration-300">{nextBadge.name}</p>
               <p className="text-sm text-purple-600 dark:text-purple-400 transition-colors duration-300">
@@ -154,7 +172,10 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <span className="text-lg">{badge.symbol}</span>
+                {(() => {
+                  const IconComp = getBadgeIcon(badge.id);
+                  return <IconComp className={`h-4 w-4 ${badge.color}`} />;
+                })()}
                 <span className={`text-sm font-medium ${badge.color} transition-colors duration-300`}>
                   {badge.name}
                 </span>

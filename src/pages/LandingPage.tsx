@@ -7,7 +7,7 @@ import {
   Trophy, Activity, Bot, MapPin, FileText, CheckCircle,
   Palette, Users, TrendingUp, Clock,
   Mail, Lock, User, Eye, EyeOff, AlertCircle, Chrome,
-  KeyRound, Send, ArrowLeft
+  KeyRound, Send, ArrowLeft, ShieldAlert, X, Check
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme, Theme } from '../contexts/ThemeContext';
@@ -96,6 +96,18 @@ const LandingPage: React.FC = () => {
   const [signupOtpCode, setSignupOtpCode] = useState(['', '', '', '', '', '']);
   const signupOtpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
+  const [captchaPassed, setCaptchaPassed] = useState(false);
+  const [showCaptchaModal, setShowCaptchaModal] = useState(false);
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 0, num2: 0, sum: 0 });
+
+  const generateCaptcha = () => {
+    const num1 = Math.floor(Math.random() * 9) + 1;
+    const num2 = Math.floor(Math.random() * 9) + 1;
+    setCaptchaQuestion({ num1, num2, sum: num1 + num2 });
+    setCaptchaAnswer('');
+  };
+
 
 
   // Centralized navigation: whenever user becomes truthy, route appropriately
@@ -165,6 +177,7 @@ const LandingPage: React.FC = () => {
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
+    if (!captchaPassed) { setAuthError('Please verify you are not a robot first.'); return; }
     if (!isValidEmail(email)) { setAuthError('Please enter a valid email address'); return; }
     if (!isValidPassword(password)) { setAuthError('Password must be at least 6 characters'); return; }
 
@@ -180,6 +193,7 @@ const LandingPage: React.FC = () => {
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
+    if (!captchaPassed) { setAuthError('Please verify you are not a robot first.'); return; }
     if (!name.trim()) { setAuthError('Please enter your name'); return; }
     if (!isValidEmail(email)) { setAuthError('Please enter a valid email address'); return; }
     if (!isValidPassword(password)) { setAuthError('Password must be at least 6 characters'); return; }
@@ -988,6 +1002,33 @@ const LandingPage: React.FC = () => {
                     )}
                   </AnimatePresence>
 
+                  {/* Custom reCAPTCHA Widget */}
+                  <div className="bg-white/5 border border-card-custom rounded-xl p-3 flex items-center justify-between mt-2">
+                    <div className="flex items-center space-x-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!captchaPassed) {
+                            generateCaptcha();
+                            setShowCaptchaModal(true);
+                          }
+                        }}
+                        className={`w-6 h-6 rounded border transition-all flex items-center justify-center ${
+                          captchaPassed 
+                            ? 'bg-emerald-500 border-emerald-400' 
+                            : 'border-white/20 hover:border-brand-from'
+                        }`}
+                      >
+                        {captchaPassed && <Check className="h-4 w-4 text-white" />}
+                      </button>
+                      <span className="text-xs text-blue-200/80 font-bold">I am not a robot</span>
+                    </div>
+                    <div className="flex flex-col items-end opacity-40">
+                      <ShieldAlert className="h-5 w-5 text-blue-200" />
+                      <span className="text-[7px] text-blue-200/60 uppercase font-black tracking-widest mt-0.5">Secure CAPTCHA</span>
+                    </div>
+                  </div>
+
                   <button type="submit" disabled={isSubmitting} className="w-full py-3.5 btn-brand rounded-xl text-sm disabled:opacity-50 mt-4 flex items-center justify-center gap-2">
                     {isSubmitting ? 'Loading...' : authMode === 'login' ? 'Sign In' : 'Register Account'}
                     <ArrowRight className="h-4 w-4" />
@@ -1028,12 +1069,88 @@ const LandingPage: React.FC = () => {
               <span className="text-brand-color">AROGYA</span> <span className="text-primary-custom">CARE</span>
             </span>
           </div>
-          <p className="text-xs text-blue-200/30">
-            Made with <span className="text-red-400">❤</span> by <span className="text-blue-200/50 font-bold">Abhijit Chauhan & Krishna</span> for MSME IDEA Hackathon 6.0
+          <p className="text-xs text-blue-200/30 flex items-center justify-center">
+            Made with <Heart className="h-3 w-3 text-red-500 fill-red-500 mx-1" /> by <span className="text-blue-200/50 font-bold ml-1">Abhijit & Krishna</span>
           </p>
           <p className="text-xs text-blue-200/20">© {new Date().getFullYear()} AROGYA CARE. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Secure CAPTCHA Modal */}
+      <AnimatePresence>
+        {showCaptchaModal && (
+          <motion.div
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-slate-900 border border-slate-700/50 rounded-3xl p-6 w-full max-w-sm shadow-2xl relative"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+            >
+              <button
+                onClick={() => setShowCaptchaModal(false)}
+                className="absolute top-4 right-4 text-blue-200/40 hover:text-white"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <h3 className="text-lg font-black text-white mb-2">Human Verification</h3>
+              <p className="text-xs text-blue-200/60 leading-relaxed mb-6">
+                Please solve the math puzzle below to confirm you are not an automated program.
+              </p>
+
+              <div className="bg-white/5 border border-card-custom rounded-2xl p-6 text-center mb-6">
+                <span className="text-2xl font-black text-white tracking-wider">
+                  {captchaQuestion.num1} + {captchaQuestion.num2} = ?
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                <input
+                  type="number"
+                  value={captchaAnswer}
+                  onChange={(e) => setCaptchaAnswer(e.target.value)}
+                  placeholder="Enter sum"
+                  className="w-full px-4 py-3 bg-white/5 border border-card-custom rounded-xl text-center text-lg font-black text-white focus:border-brand-from outline-none focus:bg-white/10 transition-all"
+                  autoFocus
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const ans = parseInt(captchaAnswer);
+                      if (ans === captchaQuestion.sum) {
+                        setCaptchaPassed(true);
+                        setShowCaptchaModal(false);
+                      } else {
+                        alert('Incorrect answer. Please try again.');
+                        generateCaptcha();
+                      }
+                    }
+                  }}
+                />
+
+                <button
+                  onClick={() => {
+                    const ans = parseInt(captchaAnswer);
+                    if (ans === captchaQuestion.sum) {
+                      setCaptchaPassed(true);
+                      setShowCaptchaModal(false);
+                    } else {
+                      alert('Incorrect answer. Please try again.');
+                      generateCaptcha();
+                    }
+                  }}
+                  className="w-full py-3.5 btn-brand rounded-xl text-xs font-bold shadow-lg"
+                >
+                  Verify & Proceed
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

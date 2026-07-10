@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Target, Clock, Utensils, Dumbbell, Camera, Type, Calculator, X, Calendar, Plus, Trash2, Edit3, ChevronLeft, ChevronRight, TrendingDown, TrendingUp, Activity, Leaf, Egg, Beef, ChefHat, GraduationCap, Briefcase, Home, User } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Target, Clock, Utensils, Dumbbell, Camera, Type, Calculator, X, Calendar, Plus, Trash2, Edit3, ChevronLeft, ChevronRight, TrendingDown, TrendingUp, Activity, Leaf, Egg, Beef, ChefHat, GraduationCap, Briefcase, Home, User, Scale } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 import Header from '../components/layout/Header';
@@ -387,7 +387,7 @@ const WorkoutPage: React.FC = () => {
     if (!isValidFood) {
       setIsAnalyzing(false);
       return {
-        error: "⚠️ Please upload a valid food photo to estimate calories.",
+        error: "Please upload a valid food photo to estimate calories.",
         isFood: false
       };
     }
@@ -451,7 +451,7 @@ const WorkoutPage: React.FC = () => {
     setCalorieInput('');
     
     // Show success message
-    alert(`Added ${calorieResult.food} to ${selectedMeal}! 🎉`);
+    alert(`Added ${calorieResult.food} to ${selectedMeal}!`);
   };
 
   const addManualEntry = () => {
@@ -470,7 +470,7 @@ const WorkoutPage: React.FC = () => {
 
     setCalorieEntries(prev => [...prev, newEntry]);
     setManualEntry({ foodName: '', calories: '', meal: 'breakfast' });
-    alert(`Added ${newEntry.foodName} to ${newEntry.meal}! 🎉`);
+    alert(`Added ${newEntry.foodName} to ${newEntry.meal}!`);
   };
 
   const deleteEntry = (id: string) => {
@@ -872,7 +872,7 @@ const WorkoutPage: React.FC = () => {
         >
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-3xl font-bold mb-2">🎯 Your Fitness Journey</h2>
+              <h2 className="text-3xl font-bold mb-2">Your Fitness Journey</h2>
               <p className="text-teal-100">Personalized plan based on your preferences</p>
             </div>
             <button
@@ -884,34 +884,34 @@ const WorkoutPage: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/10 rounded-2xl p-4">
-              <div className="text-2xl mb-2">⚖️</div>
-              <div className="font-semibold">Current Weight</div>
-              <div className="text-2xl font-bold">{quizData.currentWeight} kg</div>
+            <div className="bg-white/10 rounded-2xl p-4 flex flex-col items-start justify-center">
+              <Scale className="h-6 w-6 text-teal-200 mb-2" />
+              <div className="font-semibold text-teal-50">Current Weight</div>
+              <div className="text-2xl font-bold text-white">{quizData.currentWeight} kg</div>
             </div>
-            <div className="bg-white/10 rounded-2xl p-4">
-              <div className="text-2xl mb-2">🎯</div>
-              <div className="font-semibold">Target Weight</div>
-              <div className="text-2xl font-bold">{targetWeight} kg</div>
+            <div className="bg-white/10 rounded-2xl p-4 flex flex-col items-start justify-center">
+              <Target className="h-6 w-6 text-teal-200 mb-2" />
+              <div className="font-semibold text-teal-50">Target Weight</div>
+              <div className="text-2xl font-bold text-white">{targetWeight} kg</div>
             </div>
-            <div className="bg-white/10 rounded-2xl p-4">
-              <div className="text-2xl mb-2">⏰</div>
-              <div className="font-semibold">Timeline</div>
-              <div className="text-2xl font-bold">{quizData.duration} months</div>
+            <div className="bg-white/10 rounded-2xl p-4 flex flex-col items-start justify-center">
+              <Clock className="h-6 w-6 text-teal-200 mb-2" />
+              <div className="font-semibold text-teal-50">Timeline</div>
+              <div className="text-2xl font-bold text-white">{quizData.duration} months</div>
             </div>
           </div>
         </motion.div>
 
         {/* Diet Plan */}
         <motion.div
-          className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100"
+          className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
           <div className="flex items-center mb-6">
-            <Utensils className="h-8 w-8 text-green-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">🥗 Weekly Diet Plan</h2>
+            <Utensils className="h-8 w-8 text-green-600 dark:text-green-400 mr-3" />
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Weekly Diet Plan</h2>
           </div>
           
           <div className="space-y-6">
@@ -968,7 +968,7 @@ const WorkoutPage: React.FC = () => {
                           rel="noopener noreferrer"
                           className="inline-block bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-semibold hover:bg-red-600 transition-colors"
                         >
-                          📺 Watch Video
+                          Watch Video
                         </a>
                       )}
                     </div>
@@ -984,18 +984,18 @@ const WorkoutPage: React.FC = () => {
 
   const renderCalorieEstimator = () => (
     <motion.div
-      className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100"
+      className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <Calculator className="h-8 w-8 text-purple-600 mr-3" />
-          <h2 className="text-2xl font-bold text-gray-800">🔢 AI Calorie Estimator</h2>
+          <Calculator className="h-8 w-8 text-purple-600 dark:text-purple-400 mr-3" />
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">AI Calorie Estimator</h2>
         </div>
         <button
           onClick={() => setShowCalorieEstimator(false)}
-          className="text-gray-500 hover:text-gray-700"
+          className="text-gray-500 hover:text-gray-700 dark:text-gray-400"
         >
           <X className="h-6 w-6" />
         </button>
@@ -1003,11 +1003,11 @@ const WorkoutPage: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">📸 Upload Food Photo</h3>
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Upload Food Photo</h3>
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center">
+            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center">
               <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 mb-4">Take a photo or upload image</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">Take a photo or upload image</p>
               <input
                 type="file"
                 accept="image/*"
@@ -1024,16 +1024,16 @@ const WorkoutPage: React.FC = () => {
             </div>
             
             {uploadedPhoto && (
-              <div className="border border-gray-200 rounded-xl p-4">
+              <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
                 <img src={uploadedPhoto} alt="Uploaded food" className="w-full h-48 object-cover rounded-lg mb-4" />
-                <p className="text-sm text-gray-600 text-center">Photo uploaded successfully!</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 text-center">Photo uploaded successfully!</p>
               </div>
             )}
           </div>
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">✍️ Type Food Name</h3>
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Type Food Name</h3>
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Type className="h-5 w-5 text-gray-400" />
@@ -1041,7 +1041,7 @@ const WorkoutPage: React.FC = () => {
                 type="text"
                 value={calorieInput}
                 onChange={(e) => setCalorieInput(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="flex-1 px-4 py-3 border border-gray-200 dark:border-gray-750 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 placeholder="e.g., rice, chicken, apple..."
               />
             </div>
@@ -1059,7 +1059,7 @@ const WorkoutPage: React.FC = () => {
       {isAnalyzing && (
         <div className="mt-8 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">🤖 AI is analyzing your food...</p>
+          <p className="text-gray-600 dark:text-gray-400">AI is analyzing your food...</p>
         </div>
       )}
 
@@ -1070,18 +1070,18 @@ const WorkoutPage: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
         >
           {calorieResult.error ? (
-            <div className="p-6 bg-red-50 rounded-2xl border border-red-200 text-center">
-              <div className="text-4xl mb-4">⚠️</div>
-              <p className="text-red-800 font-semibold">{calorieResult.error}</p>
-              <p className="text-red-600 mt-2">Please try uploading a clearer food photo or use the text input.</p>
+            <div className="p-6 bg-red-50 dark:bg-red-950/20 rounded-2xl border border-red-200 dark:border-red-900 text-center">
+              <div className="text-red-500 font-bold text-lg mb-2">Notice</div>
+              <p className="text-red-800 dark:text-red-200 font-semibold">{calorieResult.error}</p>
+              <p className="text-red-600 dark:text-red-400 mt-2">Please try uploading a clearer food photo or use the text input.</p>
             </div>
           ) : (
-            <div className="p-6 bg-purple-50 rounded-2xl border border-purple-200">
+            <div className="p-6 bg-purple-50 dark:bg-purple-950/20 rounded-2xl border border-purple-200 dark:border-purple-900">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-purple-800">📊 Nutrition Analysis: {calorieResult.food}</h3>
+                <h3 className="text-xl font-bold text-purple-800 dark:text-purple-300">Nutrition Analysis: {calorieResult.food}</h3>
                 {calorieResult.confidence && (
                   <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                    calorieResult.confidence > 0.9 ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                    calorieResult.confidence > 0.9 ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
                   }`}>
                     {Math.round(calorieResult.confidence * 100)}% confidence
                   </span>
@@ -1090,48 +1090,48 @@ const WorkoutPage: React.FC = () => {
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600">{calorieResult.calories}</div>
-                  <div className="text-sm text-gray-600">Calories</div>
+                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{calorieResult.calories}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-450">Calories</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">{calorieResult.protein}g</div>
-                  <div className="text-sm text-gray-600">Protein</div>
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{calorieResult.protein}g</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-450">Protein</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">{calorieResult.carbs}g</div>
-                  <div className="text-sm text-gray-600">Carbs</div>
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">{calorieResult.carbs}g</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-450">Carbs</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-600">{calorieResult.fat}g</div>
-                  <div className="text-sm text-gray-600">Fat</div>
+                  <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{calorieResult.fat}g</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-450">Fat</div>
                 </div>
               </div>
               
               {calorieResult.portionSize && (
                 <div className="mb-4 text-center">
-                  <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-semibold">
+                  <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-semibold">
                     Portion: {calorieResult.portionSize}
                   </span>
                 </div>
               )}
               
-              <div className="bg-white rounded-xl p-4 mb-4">
-                <h4 className="font-semibold text-gray-800 mb-2">💡 Analysis Notes:</h4>
-                <p className="text-gray-600">{calorieResult.tips}</p>
+              <div className="bg-white dark:bg-gray-700 rounded-xl p-4 mb-4">
+                <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Analysis Notes:</h4>
+                <p className="text-gray-600 dark:text-gray-300">{calorieResult.tips}</p>
               </div>
 
               <div className="flex items-center space-x-4">
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Add to meal:</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Add to meal:</label>
                   <select
                     value={selectedMeal}
                     onChange={(e) => setSelectedMeal(e.target.value as any)}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   >
-                    <option value="breakfast">🌅 Breakfast</option>
-                    <option value="lunch">🌞 Lunch</option>
-                    <option value="snacks">🍎 Snacks</option>
-                    <option value="dinner">🌙 Dinner</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="dinner">Dinner</option>
                   </select>
                 </div>
                 <button
@@ -1147,32 +1147,32 @@ const WorkoutPage: React.FC = () => {
       )}
 
       {/* Manual Entry Section */}
-      <div className="mt-8 p-6 bg-gray-50 rounded-2xl border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">✍️ Manual Entry</h3>
+      <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Manual Entry</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <input
             type="text"
             value={manualEntry.foodName}
             onChange={(e) => setManualEntry({...manualEntry, foodName: e.target.value})}
-            className="px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+            className="px-4 py-2 border border-gray-200 dark:border-gray-650 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             placeholder="Food name"
           />
           <input
             type="number"
             value={manualEntry.calories}
             onChange={(e) => setManualEntry({...manualEntry, calories: e.target.value})}
-            className="px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+            className="px-4 py-2 border border-gray-200 dark:border-gray-650 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             placeholder="Calories"
           />
           <select
             value={manualEntry.meal}
             onChange={(e) => setManualEntry({...manualEntry, meal: e.target.value as any})}
-            className="px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+            className="px-4 py-2 border border-gray-200 dark:border-gray-650 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
           >
-            <option value="breakfast">🌅 Breakfast</option>
-            <option value="lunch">🌞 Lunch</option>
-            <option value="snacks">🍎 Snacks</option>
-            <option value="dinner">🌙 Dinner</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="snacks">Snacks</option>
+            <option value="dinner">Dinner</option>
           </select>
         </div>
         <button
@@ -1198,11 +1198,11 @@ const WorkoutPage: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <Calendar className="h-8 w-8 text-indigo-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">📅 Calorie Calendar</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Calorie Calendar</h2>
           </div>
           <button
             onClick={() => setShowCalorieCalendar(false)}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400"
           >
             <X className="h-6 w-6" />
           </button>
@@ -1212,25 +1212,25 @@ const WorkoutPage: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => setCurrentWeek(new Date(currentWeek.getTime() - 7 * 24 * 60 * 60 * 1000))}
-            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           </button>
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
             Week of {weekDates[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {weekDates[6].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
           </h3>
           <button
             onClick={() => setCurrentWeek(new Date(currentWeek.getTime() + 7 * 24 * 60 * 60 * 1000))}
-            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
 
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-4 mb-6">
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
-            <div key={day} className="text-center font-semibold text-gray-600 py-2">
+            <div key={day} className="text-center font-semibold text-gray-600 dark:text-gray-400 py-2">
               {day}
             </div>
           ))}
@@ -1244,15 +1244,15 @@ const WorkoutPage: React.FC = () => {
               <div
                 key={index}
                 className={`border rounded-xl p-3 min-h-[120px] ${
-                  isToday ? 'border-indigo-300 bg-indigo-50' : 'border-gray-200 bg-white'
+                  isToday ? 'border-indigo-300 bg-indigo-50 dark:bg-indigo-950/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'
                 }`}
               >
                 <div className="text-center mb-2">
-                  <div className={`text-lg font-semibold ${isToday ? 'text-indigo-600' : 'text-gray-800'}`}>
+                  <div className={`text-lg font-semibold ${isToday ? 'text-indigo-600' : 'text-gray-800 dark:text-gray-250'}`}>
                     {date.getDate()}
                   </div>
                   {totalCalories > 0 && (
-                    <div className="text-xs text-gray-600">
+                    <div className="text-xs text-gray-600 dark:text-gray-400">
                       {totalCalories} / {recommendedCalories} kcal
                     </div>
                   )}
@@ -1262,12 +1262,12 @@ const WorkoutPage: React.FC = () => {
                   {['breakfast', 'lunch', 'snacks', 'dinner'].map((meal) => {
                     const mealEntries = dayEntries.filter(entry => entry.meal === meal);
                     const mealCalories = mealEntries.reduce((sum, entry) => sum + entry.calories, 0);
-                    const mealIcon = meal === 'breakfast' ? '🌅' : meal === 'lunch' ? '🌞' : meal === 'snacks' ? '🍎' : '🌙';
+                    const mealCode = meal === 'breakfast' ? 'B' : meal === 'lunch' ? 'L' : meal === 'snacks' ? 'S' : 'D';
                     
                     return (
                       <div key={meal} className="flex items-center justify-between text-xs">
-                        <span>{mealIcon}</span>
-                        <span className={mealCalories > 0 ? 'text-green-600 font-semibold' : 'text-gray-400'}>
+                        <span className="font-bold text-gray-400 dark:text-gray-500 mr-1">{mealCode}</span>
+                        <span className={mealCalories > 0 ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-gray-400 dark:text-gray-600'}>
                           {mealCalories || '-'}
                         </span>
                       </div>
@@ -1277,10 +1277,10 @@ const WorkoutPage: React.FC = () => {
                 
                 {totalCalories > 0 && (
                   <div className="mt-2">
-                    <div className="w-full bg-gray-200 rounded-full h-1">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1">
                       <div
                         className={`h-1 rounded-full ${
-                          totalCalories > recommendedCalories ? 'bg-red-400' : 'bg-green-400'
+                          totalCalories > recommendedCalories ? 'bg-red-450' : 'bg-green-450'
                         }`}
                         style={{ width: `${Math.min((totalCalories / recommendedCalories) * 100, 100)}%` }}
                       />
@@ -1293,25 +1293,24 @@ const WorkoutPage: React.FC = () => {
         </div>
 
         {/* Today's Detailed View */}
-        <div className="border-t pt-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">📋 Today's Meals</h3>
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Today's Meals</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {['breakfast', 'lunch', 'snacks', 'dinner'].map((meal) => {
               const todayEntries = getEntriesForDate(new Date()).filter(entry => entry.meal === meal);
-              const mealIcon = meal === 'breakfast' ? '🌅' : meal === 'lunch' ? '🌞' : meal === 'snacks' ? '🍎' : '🌙';
               
               return (
-                <div key={meal} className="bg-gray-50 rounded-xl p-4">
-                  <h4 className="font-semibold text-gray-800 mb-3 capitalize">
-                    {mealIcon} {meal}
+                <div key={meal} className="bg-gray-50 dark:bg-gray-900/40 rounded-xl p-4">
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-3 capitalize">
+                    {meal}
                   </h4>
                   <div className="space-y-2">
                     {todayEntries.length > 0 ? (
                       todayEntries.map((entry) => (
-                        <div key={entry.id} className="flex items-center justify-between bg-white rounded-lg p-2">
+                        <div key={entry.id} className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-2 border border-gray-150 dark:border-gray-705">
                           <div className="flex-1">
-                            <div className="font-medium text-sm text-gray-800">{entry.foodName}</div>
-                            <div className="text-xs text-gray-600">{entry.calories} kcal</div>
+                            <div className="font-medium text-sm text-gray-800 dark:text-gray-200">{entry.foodName}</div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">{entry.calories} kcal</div>
                           </div>
                           {entry.photo && (
                             <img src={entry.photo} alt={entry.foodName} className="w-8 h-8 rounded object-cover mr-2" />
@@ -1325,7 +1324,7 @@ const WorkoutPage: React.FC = () => {
                         </div>
                       ))
                     ) : (
-                      <div className="text-gray-400 text-sm text-center py-4">
+                      <div className="text-gray-400 dark:text-gray-600 text-sm text-center py-4">
                         No meals logged
                       </div>
                     )}
@@ -1338,21 +1337,21 @@ const WorkoutPage: React.FC = () => {
 
         {/* Summary Stats */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-blue-50 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{getTotalCaloriesForDate(new Date())}</div>
-            <div className="text-sm text-blue-800">Today's Calories</div>
+          <div className="bg-blue-50 dark:bg-blue-950/20 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{getTotalCaloriesForDate(new Date())}</div>
+            <div className="text-sm text-blue-800 dark:text-blue-300">Today's Calories</div>
           </div>
-          <div className="bg-green-50 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-green-600">{recommendedCalories}</div>
-            <div className="text-sm text-green-800">Recommended</div>
+          <div className="bg-green-50 dark:bg-green-950/20 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">{recommendedCalories}</div>
+            <div className="text-sm text-green-800 dark:text-green-300">Recommended</div>
           </div>
-          <div className="bg-purple-50 rounded-xl p-4 text-center">
+          <div className="bg-purple-50 dark:bg-purple-950/20 rounded-xl p-4 text-center">
             <div className={`text-2xl font-bold ${
               getTotalCaloriesForDate(new Date()) > recommendedCalories ? 'text-red-600' : 'text-purple-600'
             }`}>
               {getTotalCaloriesForDate(new Date()) - recommendedCalories > 0 ? '+' : ''}{getTotalCaloriesForDate(new Date()) - recommendedCalories}
             </div>
-            <div className="text-sm text-purple-800">Surplus/Deficit</div>
+            <div className="text-sm text-purple-800 dark:text-purple-300">Surplus/Deficit</div>
           </div>
         </div>
       </motion.div>
@@ -1368,18 +1367,18 @@ const WorkoutPage: React.FC = () => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white rounded-3xl p-8 w-full max-w-md text-center"
+        className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md text-center"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
       >
-        <div className="text-6xl mb-4">💪</div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          We truly appreciate your motivation and energy 💪!
+        <Clock className="h-16 w-16 text-teal-600 dark:text-teal-400 mx-auto mb-4" />
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+          We truly appreciate your motivation and energy!
         </h2>
-        <p className="text-gray-600 mb-6 leading-relaxed">
+        <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
           But to keep you safe and healthy, we recommend setting a more realistic goal.
-          It's better to grow slowly and sustainably than burn out quickly. 💚
+          It's better to grow slowly and sustainably than burn out quickly.
         </p>
         
         <motion.button

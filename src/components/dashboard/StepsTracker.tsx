@@ -224,7 +224,7 @@ const StepsTracker: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0, y: -10 }}
         >
-          ✓ Saved
+          Saved
         </motion.div>
       )}
 
@@ -350,7 +350,7 @@ const StepsTracker: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="mt-2 text-green-600 dark:text-green-400 font-semibold text-sm"
           >
-            🎉 Goal achieved!
+            Goal achieved!
           </motion.div>
         )}
       </div>
@@ -467,7 +467,7 @@ const StepsTracker: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
-                📥 Enter Step Count
+                Enter Step Count
               </h3>
               
               <input

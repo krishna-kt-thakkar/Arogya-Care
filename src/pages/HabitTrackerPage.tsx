@@ -31,6 +31,19 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useStreak } from '../contexts/StreakContext';
 import Header from '../components/layout/Header';
 
+const getCategoryIcon = (category: string) => {
+  switch (category?.toLowerCase()) {
+    case 'discipline': return Shield;
+    case 'productivity': return Zap;
+    case 'screen-time': case 'digital wellness': case 'reduce screen time': return Eye;
+    case 'relationships': return Users;
+    case 'self-care': return Heart;
+    case 'confidence': case 'confidence building': return Award;
+    case 'mindfulness': return Brain;
+    default: return Target;
+  }
+};
+
 interface Habit {
   id: string;
   title: string;
@@ -80,7 +93,7 @@ const HabitTrackerPage: React.FC = () => {
   // New habit form
   const [newHabit, setNewHabit] = useState({
     title: '',
-    emoji: '✅',
+    emoji: 'bg-purple-500',
     frequency: 'daily' as 'daily' | 'custom',
     customDays: [] as string[],
     reminderTime: '09:00',
@@ -103,46 +116,46 @@ const HabitTrackerPage: React.FC = () => {
   // GPT-powered habit suggestions based on goals
   const habitSuggestions: { [key: string]: HabitSuggestion[] } = {
     discipline: [
-      { title: 'Make bed immediately after waking', emoji: '🛏️', description: 'Start your day with a small win', category: 'Discipline' },
-      { title: 'No phone for first 30 minutes', emoji: '📵', description: 'Begin day mindfully without distractions', category: 'Discipline' },
-      { title: 'Cold shower for 2 minutes', emoji: '🚿', description: 'Build mental toughness daily', category: 'Discipline' },
-      { title: 'Complete one difficult task first', emoji: '🎯', description: 'Tackle your biggest challenge early', category: 'Discipline' }
+      { title: 'Make bed immediately after waking', emoji: 'bg-red-500', description: 'Start your day with a small win', category: 'Discipline' },
+      { title: 'No phone for first 30 minutes', emoji: 'bg-red-500', description: 'Begin day mindfully without distractions', category: 'Discipline' },
+      { title: 'Cold shower for 2 minutes', emoji: 'bg-red-500', description: 'Build mental toughness daily', category: 'Discipline' },
+      { title: 'Complete one difficult task first', emoji: 'bg-red-500', description: 'Tackle your biggest challenge early', category: 'Discipline' }
     ],
     productivity: [
-      { title: 'Write 3 priorities for tomorrow', emoji: '📝', description: 'Plan ahead for focused days', category: 'Productivity' },
-      { title: 'Time-block calendar for next day', emoji: '⏰', description: 'Structure your time intentionally', category: 'Productivity' },
-      { title: 'Clear desk before leaving', emoji: '🗂️', description: 'Organized space, organized mind', category: 'Productivity' },
-      { title: 'Review and close all browser tabs', emoji: '💻', description: 'Digital declutter for focus', category: 'Productivity' }
+      { title: 'Write 3 priorities for tomorrow', emoji: 'bg-blue-500', description: 'Plan ahead for focused days', category: 'Productivity' },
+      { title: 'Time-block calendar for next day', emoji: 'bg-blue-500', description: 'Structure your time intentionally', category: 'Productivity' },
+      { title: 'Clear desk before leaving', emoji: 'bg-blue-500', description: 'Organized space, organized mind', category: 'Productivity' },
+      { title: 'Review and close all browser tabs', emoji: 'bg-blue-500', description: 'Digital declutter for focus', category: 'Productivity' }
     ],
     'screen-time': [
-      { title: 'No social media after 10 PM', emoji: '📵', description: 'Protect your evening peace', category: 'Digital Wellness' },
-      { title: 'Phone in another room while working', emoji: '📱', description: 'Remove temptation, boost focus', category: 'Digital Wellness' },
-      { title: 'Read physical book for 15 minutes', emoji: '📖', description: 'Replace scrolling with learning', category: 'Digital Wellness' },
-      { title: 'Take hourly 5-minute screen breaks', emoji: '👀', description: 'Rest your eyes and mind', category: 'Digital Wellness' }
+      { title: 'No social media after 10 PM', emoji: 'bg-purple-500', description: 'Protect your evening peace', category: 'Digital Wellness' },
+      { title: 'Phone in another room while working', emoji: 'bg-purple-500', description: 'Remove temptation, boost focus', category: 'Digital Wellness' },
+      { title: 'Read physical book for 15 minutes', emoji: 'bg-purple-500', description: 'Replace scrolling with learning', category: 'Digital Wellness' },
+      { title: 'Take hourly 5-minute screen breaks', emoji: 'bg-purple-500', description: 'Rest your eyes and mind', category: 'Digital Wellness' }
     ],
     relationships: [
-      { title: 'Compliment one person genuinely', emoji: '😊', description: 'Spread positivity and connection', category: 'Relationships' },
-      { title: 'Call family member for 10 minutes', emoji: '☎️', description: 'Strengthen family bonds', category: 'Relationships' },
-      { title: 'Send appreciation message to someone', emoji: '💌', description: 'Express gratitude to others', category: 'Relationships' },
-      { title: 'Listen without interrupting in conversations', emoji: '👂', description: 'Practice active listening', category: 'Relationships' }
+      { title: 'Compliment one person genuinely', emoji: 'bg-pink-500', description: 'Spread positivity and connection', category: 'Relationships' },
+      { title: 'Call family member for 10 minutes', emoji: 'bg-pink-500', description: 'Strengthen family bonds', category: 'Relationships' },
+      { title: 'Send appreciation message to someone', emoji: 'bg-pink-500', description: 'Express gratitude to others', category: 'Relationships' },
+      { title: 'Listen without interrupting in conversations', emoji: 'bg-pink-500', description: 'Practice active listening', category: 'Relationships' }
     ],
     'self-care': [
-      { title: 'Apply skincare routine mindfully', emoji: '🧴', description: 'Nurture your skin with intention', category: 'Self-Care' },
-      { title: 'Take 10 deep breaths before meals', emoji: '🫁', description: 'Center yourself before eating', category: 'Self-Care' },
-      { title: 'Stretch for 5 minutes', emoji: '🤸', description: 'Keep your body flexible', category: 'Self-Care' },
-      { title: 'Write down 3 things you did well', emoji: '⭐', description: 'Celebrate your daily wins', category: 'Self-Care' }
+      { title: 'Apply skincare routine mindfully', emoji: 'bg-green-500', description: 'Nurture your skin with intention', category: 'Self-Care' },
+      { title: 'Take 10 deep breaths before meals', emoji: 'bg-green-500', description: 'Center yourself before eating', category: 'Self-Care' },
+      { title: 'Stretch for 5 minutes', emoji: 'bg-green-500', description: 'Keep your body flexible', category: 'Self-Care' },
+      { title: 'Write down 3 things you did well', emoji: 'bg-green-500', description: 'Celebrate your daily wins', category: 'Self-Care' }
     ],
     confidence: [
-      { title: 'Stand in power pose for 2 minutes', emoji: '💪', description: 'Embody confidence physically', category: 'Confidence' },
-      { title: 'Speak up in one meeting/conversation', emoji: '🗣️', description: 'Practice sharing your voice', category: 'Confidence' },
-      { title: 'Wear something that makes you feel good', emoji: '👗', description: 'Dress for confidence', category: 'Confidence' },
-      { title: 'Write one accomplishment from today', emoji: '🏆', description: 'Acknowledge your achievements', category: 'Confidence' }
+      { title: 'Stand in power pose for 2 minutes', emoji: 'bg-yellow-500', description: 'Embody confidence physically', category: 'Confidence' },
+      { title: 'Speak up in one meeting/conversation', emoji: 'bg-yellow-500', description: 'Practice sharing your voice', category: 'Confidence' },
+      { title: 'Wear something that makes you feel good', emoji: 'bg-yellow-500', description: 'Dress for confidence', category: 'Confidence' },
+      { title: 'Write one accomplishment from today', emoji: 'bg-yellow-500', description: 'Acknowledge your achievements', category: 'Confidence' }
     ],
     mindfulness: [
-      { title: 'Notice 5 things you can see right now', emoji: '👁️', description: 'Practice present moment awareness', category: 'Mindfulness' },
-      { title: 'Eat one meal without distractions', emoji: '🍽️', description: 'Mindful eating practice', category: 'Mindfulness' },
-      { title: 'Take 3 conscious breaths before responding', emoji: '🧘', description: 'Pause before reacting', category: 'Mindfulness' },
-      { title: 'Write one thing you\'re grateful for', emoji: '🙏', description: 'Cultivate appreciation', category: 'Mindfulness' }
+      { title: 'Notice 5 things you can see right now', emoji: 'bg-indigo-500', description: 'Practice present moment awareness', category: 'Mindfulness' },
+      { title: 'Eat one meal without distractions', emoji: 'bg-indigo-500', description: 'Mindful eating practice', category: 'Mindfulness' },
+      { title: 'Take 3 conscious breaths before responding', emoji: 'bg-indigo-500', description: 'Pause before reacting', category: 'Mindfulness' },
+      { title: 'Write one thing you\'re grateful for', emoji: 'bg-indigo-500', description: 'Cultivate appreciation', category: 'Mindfulness' }
     ]
   };
 
@@ -486,21 +499,20 @@ const HabitTrackerPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Emoji
+              Color Theme
             </label>
             <div className="flex space-x-2">
-              {['✅', '📖', '💪', '🧘', '🎯', '💡', '🌟', '🔥'].map(emoji => (
+              {['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'].map(colorClass => (
                 <button
-                  key={emoji}
-                  onClick={() => setNewHabit({...newHabit, emoji})}
-                  className={`p-3 rounded-xl border-2 transition-all ${
-                    newHabit.emoji === emoji
-                      ? 'border-purple-500 bg-purple-100 dark:bg-purple-900/30'
-                      : 'border-gray-200 dark:border-gray-600 hover:border-purple-300'
+                  key={colorClass}
+                  type="button"
+                  onClick={() => setNewHabit({...newHabit, emoji: colorClass})}
+                  className={`h-8 w-8 rounded-full border-2 transition-all ${colorClass} ${
+                    newHabit.emoji === colorClass
+                      ? 'border-black dark:border-white scale-110 shadow-md'
+                      : 'border-transparent hover:scale-105'
                   }`}
-                >
-                  <span className="text-xl">{emoji}</span>
-                </button>
+                />
               ))}
             </div>
           </div>
@@ -626,7 +638,7 @@ const HabitTrackerPage: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="mt-4 text-center text-green-600 dark:text-green-400 font-semibold"
             >
-              🎉 All habits completed! Amazing work!
+              All habits completed! Amazing work!
             </motion.div>
           )}
         </motion.div>
@@ -688,7 +700,14 @@ const HabitTrackerPage: React.FC = () => {
                       </motion.button>
                       
                       <div className="flex items-center space-x-3 flex-1">
-                        <span className="text-2xl">{habit.emoji}</span>
+                        {(() => {
+                          const IconComp = getCategoryIcon(habit.category);
+                          return (
+                            <div className={`p-2 rounded-xl text-white ${habit.emoji?.startsWith('bg-') ? habit.emoji : 'bg-purple-500'}`}>
+                              <IconComp className="h-5 w-5" />
+                            </div>
+                          );
+                        })()}
                         <div className="flex-1">
                           <h4 className={`font-semibold transition-all ${
                             isCompleted 
@@ -833,7 +852,14 @@ const HabitTrackerPage: React.FC = () => {
                   transition={{ delay: index * 0.1 }}
                 >
                   <div className="flex items-center space-x-3">
-                    <span className="text-xl">{habit.emoji}</span>
+                    {(() => {
+                      const IconComp = getCategoryIcon(habit.category);
+                      return (
+                        <div className={`p-1.5 rounded-lg text-white ${habit.emoji?.startsWith('bg-') ? habit.emoji : 'bg-purple-500'}`}>
+                          <IconComp className="h-4 w-4" />
+                        </div>
+                      );
+                    })()}
                     <div>
                       <p className="font-medium text-gray-800 dark:text-gray-100">{habit.title}</p>
                       <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -871,7 +897,7 @@ const HabitTrackerPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 100 }}
           >
-            ✓ Habits data saved
+            Habits data saved
           </motion.div>
         )}
 
@@ -890,7 +916,7 @@ const HabitTrackerPage: React.FC = () => {
               <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Habit Tracker 🧱</h1>
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Habit Tracker</h1>
               <p className="text-gray-600 dark:text-gray-300 mt-1">Build powerful habits that transform your life</p>
             </div>
           </div>

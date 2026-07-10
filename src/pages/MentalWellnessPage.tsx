@@ -607,7 +607,7 @@ const MentalWellnessPage: React.FC = () => {
             <h3 className="text-lg font-semibold text-purple-800">Daily Reflection</h3>
           </div>
           <p className="text-purple-700 leading-relaxed">
-            Take a moment to breathe. Write something you're grateful for today 💛
+            Take a moment to breathe. Write something you're grateful for today.
           </p>
         </motion.div>
 
@@ -708,7 +708,7 @@ const MentalWellnessPage: React.FC = () => {
             {/* Journal entry */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-3">
-                Tell your diary about your day 📝
+                Tell your diary about your day
               </label>
               <textarea
                 value={currentEntry}
@@ -769,7 +769,7 @@ const MentalWellnessPage: React.FC = () => {
                 <Feather className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-green-800">Today's Entry Complete! ✨</h3>
+                <h3 className="font-semibold text-green-800">Today's Entry Complete!</h3>
                 <p className="text-sm text-green-600">
                   {new Date().toLocaleDateString('en-US', { 
                     weekday: 'long', 
@@ -833,7 +833,7 @@ const MentalWellnessPage: React.FC = () => {
                 className="space-y-4 max-h-96 overflow-y-auto"
               >
                 {journalEntries.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">No entries yet. Start writing! ✍️</p>
+                  <p className="text-gray-500 text-center py-8">No entries yet. Start writing!</p>
                 ) : (
                   journalEntries.map((entry, index) => (
                     <motion.div
@@ -896,7 +896,7 @@ const MentalWellnessPage: React.FC = () => {
           <h3 className="text-lg font-semibold text-blue-800">Recommended Reading</h3>
         </div>
         <p className="text-blue-700">
-          Discover books that can transform your mindset and improve your mental well-being 📚
+          Discover books that can transform your mindset and improve your mental well-being.
         </p>
       </motion.div>
 
@@ -942,7 +942,7 @@ const MentalWellnessPage: React.FC = () => {
               whileTap={{ scale: 0.98 }}
             >
               <BookOpen className="h-5 w-5" />
-              <span>📖 View on Amazon</span>
+              <span>View on Amazon</span>
               <ExternalLink className="h-4 w-4" />
             </motion.a>
           </motion.div>
@@ -973,7 +973,7 @@ const MentalWellnessPage: React.FC = () => {
             <h3 className="text-lg font-semibold text-green-800">Daily Yoga Practice</h3>
           </div>
           <p className="text-green-700 leading-relaxed">
-            Your breath anchors you. Flow gently today. 🌿
+            Your breath anchors you. Flow gently today.
           </p>
         </motion.div>
 
@@ -1084,7 +1084,7 @@ const MentalWellnessPage: React.FC = () => {
                         ? 'bg-yellow-100 text-yellow-800' 
                         : 'bg-indigo-100 text-indigo-800'
                     }`}>
-                      {video.type === 'morning' ? '🌅 Morning' : '🌙 Evening'}
+                      {video.type === 'morning' ? 'Morning' : 'Evening'}
                     </span>
                   </div>
 
@@ -1131,7 +1131,7 @@ const MentalWellnessPage: React.FC = () => {
               <ArrowLeft className="h-6 w-6 text-gray-600" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Mental Wellness 🧠</h1>
+              <h1 className="text-3xl font-black text-primary-custom">Mental Wellness</h1>
               <p className="text-gray-600 mt-1">Nurture your mind, body, and soul</p>
             </div>
           </div>
@@ -1162,7 +1162,7 @@ const MentalWellnessPage: React.FC = () => {
                   <Bell className="h-5 w-5 text-purple-600" />
                   <div>
                     <span className="text-gray-700 font-medium">Daily Journal Reminder</span>
-                    <p className="text-sm text-gray-500">Get reminded at 9 PM: "How did your day go? Tell your diary 💌"</p>
+                    <p className="text-sm text-gray-500">Get reminded at 9 PM: "How did your day go? Tell your diary"</p>
                   </div>
                 </div>
                 <button
@@ -1245,31 +1245,30 @@ const MentalWellnessPage: React.FC = () => {
         {/* Saving animation overlay */}
         {isSaving && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
             <motion.div
-              className="bg-white rounded-3xl p-8 shadow-2xl text-center"
-              initial={{ scale: 0.8, opacity: 0 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
             >
               <motion.div
                 className="mb-4"
                 animate={{ 
-                  y: [0, -10, 0],
-                  rotate: [0, 5, -5, 0]
+                  rotate: 360,
+                  scale: [1, 1.1, 1]
                 }}
                 transition={{ 
-                  duration: 2, 
-                  repeat: Infinity,
-                  ease: "easeInOut"
+                  rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 1, repeat: Infinity, ease: "easeInOut" }
                 }}
               >
                 <Feather className="h-12 w-12 text-purple-600 mx-auto" />
               </motion.div>
               <p className="text-lg font-semibold text-gray-800">Saving your thoughts...</p>
-              <p className="text-gray-600 mt-2">Your words are precious ✨</p>
+              <p className="text-gray-600 mt-2">Your words are precious</p>
             </motion.div>
           </motion.div>
         )}

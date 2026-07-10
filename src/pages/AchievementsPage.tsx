@@ -31,11 +31,11 @@ const AchievementsPage: React.FC = () => {
     if (navigator.share) {
       navigator.share({
         title: `I unlocked the ${badge.name} badge!`,
-        text: `🎉 Just achieved the ${badge.symbol} ${badge.name} badge in Arogya Care! ${badge.description}`,
+        text: `Just achieved the ${badge.name} badge in Arogya Care! ${badge.description}`,
         url: window.location.origin
       });
     } else {
-      const text = `🎉 Just achieved the ${badge.symbol} ${badge.name} badge in Arogya Care! ${badge.description}`;
+      const text = `Just achieved the ${badge.name} badge in Arogya Care! ${badge.description}`;
       navigator.clipboard.writeText(text);
       alert('Achievement copied to clipboard!');
     }
@@ -75,8 +75,8 @@ const AchievementsPage: React.FC = () => {
             <ArrowLeft className="h-6 w-6 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Your Achievements 🏆</h1>
-            <p className="text-gray-600 mt-1">Celebrate your incredible journey of consistency</p>
+            <h1 className="text-3xl font-black text-primary-custom">Your Achievements</h1>
+            <p className="text-sm text-secondary-custom mt-1">Celebrate your incredible journey of consistency</p>
           </div>
         </motion.div>
 
@@ -188,7 +188,10 @@ const AchievementsPage: React.FC = () => {
               <div className="flex items-center justify-center">
                 <div className={`p-6 ${nextBadge.bgColor} rounded-2xl border-2 border-dashed border-purple-300`}>
                   <div className="text-center">
-                    <span className="text-4xl block mb-2">{nextBadge.symbol}</span>
+                    {(() => {
+                      const NextIcon = getBadgeIcon(nextBadge.id);
+                      return <NextIcon className="h-10 w-10 text-purple-600 mx-auto mb-2" />;
+                    })()}
                     <p className={`font-bold ${nextBadge.color}`}>{nextBadge.name}</p>
                   </div>
                 </div>
@@ -228,7 +231,7 @@ const AchievementsPage: React.FC = () => {
                   >
                     <div className="text-center">
                       <div className={`inline-flex items-center justify-center w-16 h-16 ${badge.bgColor} rounded-full mb-4 shadow-lg`}>
-                        <span className="text-2xl">{badge.symbol}</span>
+                        <IconComponent className="h-8 w-8 text-yellow-600" />
                       </div>
                       
                       <h3 className={`text-lg font-bold ${badge.color} mb-2`}>
@@ -351,7 +354,10 @@ const AchievementsPage: React.FC = () => {
               >
                 <div className="text-center">
                   <div className={`inline-flex items-center justify-center w-20 h-20 ${selectedBadge.bgColor} rounded-full mb-6 shadow-lg ${selectedBadge.aura}`}>
-                    <span className="text-3xl">{selectedBadge.symbol}</span>
+                    {(() => {
+                      const IconComp = getBadgeIcon(selectedBadge.id);
+                      return <IconComp className={`h-10 w-10 ${selectedBadge.color}`} />;
+                    })()}
                   </div>
                   
                   <h3 className={`text-2xl font-bold ${selectedBadge.color} mb-4`}>

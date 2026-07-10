@@ -169,7 +169,7 @@ const WaterTracker: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="mt-2 text-green-600 dark:text-green-400 font-semibold text-sm transition-colors duration-300"
           >
-            🎉 Goal {t('completed')}!
+            Goal {t('completed')}!
           </motion.div>
         )}
       </div>
@@ -182,7 +182,7 @@ const WaterTracker: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0, y: -10 }}
         >
-          ✓ Saved
+          Saved
         </motion.div>
       )}
     </motion.div>

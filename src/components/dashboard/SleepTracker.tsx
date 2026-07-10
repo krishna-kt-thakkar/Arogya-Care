@@ -261,10 +261,10 @@ const SleepTracker: React.FC = () => {
   // Get sleep status message
   const getSleepStatus = () => {
     if (sleepDuration === 0) return 'No sleep logged yet';
-    if (sleepDuration < 6) return 'Try to get more rest tonight 😴';
-    if (sleepDuration >= 7 && sleepDuration <= 9) return 'Great sleep! 😌';
-    if (sleepDuration > 9) return 'Well rested! 😊';
-    return 'Could use more sleep 💤';
+    if (sleepDuration < 6) return 'Try to get more rest tonight';
+    if (sleepDuration >= 7 && sleepDuration <= 9) return 'Great sleep!';
+    if (sleepDuration > 9) return 'Well rested!';
+    return 'Could use more sleep';
   };
 
   const formatLastUpdated = (timestamp: string) => {
@@ -298,7 +298,7 @@ const SleepTracker: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0, y: -10 }}
         >
-          ✓ Saved
+          Saved
         </motion.div>
       )}
 
@@ -385,7 +385,7 @@ const SleepTracker: React.FC = () => {
                 ease: "easeOut"
               }}
             >
-              <div className="text-lg">💤</div>
+              <Moon className="h-5 w-5 text-indigo-500" />
             </motion.div>
           </div>
         </motion.div>
@@ -445,7 +445,7 @@ const SleepTracker: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="mt-2 text-indigo-600 dark:text-indigo-400 font-semibold text-sm"
           >
-            😌 Well rested!
+            Well rested!
           </motion.div>
         )}
       </div>
@@ -536,7 +536,7 @@ const SleepTracker: React.FC = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          💭 View Sleep Notes
+          View Sleep Notes
         </motion.button>
       )}
 
@@ -558,7 +558,7 @@ const SleepTracker: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
-                🕒 Log Sleep Hours
+                Log Sleep Hours
               </h3>
               
               <div className="space-y-4">
@@ -742,7 +742,7 @@ const SleepTracker: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
-                💭 Sleep Notes
+                Sleep Notes
               </h3>
               
               <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-200 dark:border-indigo-700">

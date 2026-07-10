@@ -57,11 +57,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const getThemeMessage = (t: Theme): string => {
     switch (t) {
-      case 'light': return '☀️ Pristine Light: Crisp, clean, and legible.';
-      case 'dark': return '🌙 Classic Dark: Deep space elegance.';
-      case 'emerald': return '🌿 Emerald Forest: Restorative green energy.';
-      case 'sunset': return '🌅 Sunset Glow: Energetic orange-rose warmth.';
-      case 'neon': return '⚡ Cyberpunk Neon: High-contrast electric pulse.';
+      case 'light': return 'Pristine Light: Crisp, clean, and legible.';
+      case 'dark': return 'Classic Dark: Deep space elegance.';
+      case 'emerald': return 'Emerald Forest: Restorative green energy.';
+      case 'sunset': return 'Sunset Glow: Energetic orange-rose warmth.';
+      case 'neon': return 'Cyberpunk Neon: High-contrast electric pulse.';
       default: return 'Theme Updated!';
     }
   };

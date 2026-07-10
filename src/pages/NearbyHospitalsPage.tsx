@@ -346,7 +346,7 @@ const NearbyHospitalsPage: React.FC = () => {
       }));
 
       // Show success toast
-      setShowToast(`✅ Found ${filteredHospitals.length} hospitals using ${activeProvider.toUpperCase()}`);
+      setShowToast(`Found ${filteredHospitals.length} hospitals using ${activeProvider.toUpperCase()}`);
       setTimeout(() => setShowToast(''), 3000);
 
     } catch (err) {
@@ -365,7 +365,7 @@ const NearbyHospitalsPage: React.FC = () => {
           if (cacheAge < maxCacheAge && cached.hospitals && cached.hospitals.length > 0) {
             setHospitals(cached.hospitals);
             setUserLocation(cached.location || null);
-            setShowToast('📱 Showing cached hospital data');
+            setShowToast('Showing cached hospital data');
             setTimeout(() => setShowToast(''), 3000);
             setError('');
           }
@@ -396,7 +396,7 @@ const NearbyHospitalsPage: React.FC = () => {
     if (hospital.phone) {
       window.open(`tel:${hospital.phone}`, '_self');
     } else {
-      setShowToast('📞 Phone number not available');
+      setShowToast('Phone number not available');
       setTimeout(() => setShowToast(''), 3000);
     }
   };
@@ -412,7 +412,7 @@ const NearbyHospitalsPage: React.FC = () => {
     if (hospital.website) {
       window.open(hospital.website, '_blank');
     } else {
-      setShowToast('🌐 Website not available');
+      setShowToast('Website not available');
       setTimeout(() => setShowToast(''), 3000);
     }
   };
@@ -422,7 +422,7 @@ const NearbyHospitalsPage: React.FC = () => {
     if (isOnline) {
       loadHospitals(true);
     } else {
-      setShowToast('❌ No internet connection');
+      setShowToast('No internet connection');
       setTimeout(() => setShowToast(''), 3000);
     }
   };
@@ -461,7 +461,7 @@ const NearbyHospitalsPage: React.FC = () => {
               <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Nearby Hospitals 🏥</h1>
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Nearby Hospitals</h1>
               <p className="text-gray-600 dark:text-gray-300 mt-1">Find healthcare services near you</p>
               <div className="flex items-center mt-2 space-x-4">
                 <div className="flex items-center space-x-1">

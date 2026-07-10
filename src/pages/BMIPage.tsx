@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Scale, TrendingUp, Target, Heart, Thermometer, Activity, Save, Clock, Settings, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Scale, TrendingUp, Target, Heart, Thermometer, Activity, Save, Clock, Settings, RotateCcw, Ruler, Lightbulb } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 import Header from '../components/layout/Header';
@@ -180,7 +180,7 @@ const BMIPage: React.FC = () => {
       status: 'Normal', 
       color: 'text-green-600', 
       bgColor: 'bg-green-100',
-      message: 'Body temperature is within normal range. ✅'
+      message: 'Body temperature is within normal range.'
     };
     if (temp <= 100.4) return { 
       status: 'Fever', 
@@ -207,7 +207,7 @@ const BMIPage: React.FC = () => {
       status: 'Normal', 
       color: 'text-green-600', 
       bgColor: 'bg-green-100',
-      message: 'Heart rate is within normal range. ✅'
+      message: 'Heart rate is within normal range.'
     };
     return { 
       status: 'High', 
@@ -228,7 +228,7 @@ const BMIPage: React.FC = () => {
       status: 'Normal', 
       color: 'text-green-600', 
       bgColor: 'bg-green-100',
-      message: 'Blood pressure is optimal. Keep up the healthy lifestyle! ✅'
+      message: 'Blood pressure is optimal. Keep up the healthy lifestyle!'
     };
     if (systolic <= 139 || diastolic <= 89) return { 
       status: 'High', 
@@ -255,7 +255,7 @@ const BMIPage: React.FC = () => {
       status: 'Normal', 
       color: 'text-green-600', 
       bgColor: 'bg-green-100',
-      message: 'Weight is in healthy range. Maintain your current lifestyle! ✅'
+      message: 'Weight is in healthy range. Maintain your current lifestyle!'
     };
     if (bmi <= 29.9) return { 
       status: 'Overweight', 
@@ -484,7 +484,7 @@ const BMIPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 100 }}
           >
-            ✓ Vitals Updated & Saved
+            Vitals Updated & Saved
           </motion.div>
         )}
 
@@ -610,13 +610,9 @@ const BMIPage: React.FC = () => {
                   Height ({unit === 'metric' ? 'cm' : 'inches'})
                 </label>
                 <div className="relative">
-                  <motion.div
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2"
-                  >
-                    📏
-                  </motion.div>
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-custom">
+                    <Ruler className="h-5 w-5" />
+                  </div>
                   <input
                     type="number"
                     value={height}
@@ -632,13 +628,9 @@ const BMIPage: React.FC = () => {
                   Weight ({unit === 'metric' ? 'kg' : 'lbs'})
                 </label>
                 <div className="relative">
-                  <motion.div
-                    animate={{ y: [0, -2, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2"
-                  >
-                    ⚖️
-                  </motion.div>
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-custom">
+                    <Scale className="h-5 w-5" />
+                  </div>
                   <input
                     type="number"
                     value={weight}
@@ -789,8 +781,9 @@ const BMIPage: React.FC = () => {
                     
                     {!isEditing && (
                       <div className="mt-3 p-3 bg-white dark:bg-gray-700 rounded-xl">
-                        <p className="text-sm text-gray-700 dark:text-gray-300">
-                          💡 {status.message}
+                        <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                          <Lightbulb className="h-4 w-4 text-amber-500 flex-shrink-0 animate-pulse" />
+                          <span>{status.message}</span>
                         </p>
                       </div>
                     )}
@@ -904,7 +897,7 @@ const BMIPage: React.FC = () => {
                 <Heart className="h-12 w-12 text-teal-600 dark:text-teal-400 mx-auto" />
               </motion.div>
               <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">Saving your vital stats...</p>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">Your health data is being securely stored ✨</p>
+              <p className="text-gray-600 dark:text-gray-300 mt-2">Your health data is being securely stored.</p>
             </motion.div>
           </motion.div>
         )}

@@ -8,7 +8,7 @@
   --brand-gradient: linear-gradient(135deg, #7C3AED, #3B82F6);
   --brand-from: #7C3AED;
   --brand-to: #3B82F6;
-  --brand-bg: #0B0F19;
+  --brand-bg: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
   --card-bg: #161B2C;
   --card-border: rgba(255, 255, 255, 0.08);
   --text-primary: #F1F5F9;
@@ -20,7 +20,7 @@
   --brand-gradient: linear-gradient(135deg, #4f46e5, #0284c7);
   --brand-from: #4f46e5;
   --brand-to: #0284c7;
-  --brand-bg: #cbd5e1; /* Premium slate-300 base background, less bright and professional */
+  --brand-bg: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%); /* Premium slate gradient, professional and gentle */
   --card-bg: rgba(241, 245, 249, 0.92); /* Frosted light slate-50 cards, reduces white glare */
   --card-border: rgba(15, 23, 42, 0.1); /* Pronounced slate borders */
   --text-primary: #0f172a; /* Slate-900 high contrast text */
@@ -32,7 +32,7 @@
   --brand-gradient: linear-gradient(135deg, #7C3AED, #3B82F6);
   --brand-from: #7C3AED;
   --brand-to: #3B82F6;
-  --brand-bg: #0B0F19;
+  --brand-bg: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
   --card-bg: #161B2C;
   --card-border: rgba(255, 255, 255, 0.08);
   --text-primary: #F1F5F9;
@@ -44,7 +44,7 @@
   --brand-gradient: linear-gradient(135deg, #10b981, #06b6d4);
   --brand-from: #10b981;
   --brand-to: #06b6d4;
-  --brand-bg: #050f0c;
+  --brand-bg: linear-gradient(135deg, #022c22 0%, #064e3b 100%);
   --card-bg: #0b1d16;
   --card-border: rgba(255, 255, 255, 0.08);
   --text-primary: #ecfdf5;
@@ -56,7 +56,7 @@
   --brand-gradient: linear-gradient(135deg, #f97316, #f43f5e);
   --brand-from: #f97316;
   --brand-to: #f43f5e;
-  --brand-bg: #0f0a0a;
+  --brand-bg: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
   --card-bg: #1f1111;
   --card-border: rgba(255, 255, 255, 0.08);
   --text-primary: #fff5f5;
@@ -68,7 +68,7 @@
   --brand-gradient: linear-gradient(135deg, #d946ef, #06b6d4);
   --brand-from: #d946ef;
   --brand-to: #06b6d4;
-  --brand-bg: #0c0517;
+  --brand-bg: linear-gradient(135deg, #0b0615 0%, #1e0b36 100%);
   --card-bg: #170a2b;
   --card-border: rgba(255, 255, 255, 0.1);
   --text-primary: #fae8ff;
@@ -84,10 +84,11 @@
   }
 
   body {
-    background-color: var(--brand-bg);
+    background: var(--brand-bg);
     color: var(--text-primary);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    transition: background 0.4s ease, color 0.4s ease;
+    background-attachment: fixed;
   }
 
   /* Custom scrollbar */

@@ -18,9 +18,9 @@ const Footer: React.FC = () => {
 
           {/* Credit */}
           <p className="text-xs text-secondary-custom text-center">
-            Made with <span className="text-red-500">❤</span> by{' '}
+            Made with <Heart className="h-3 w-3 text-red-500 fill-red-500 inline mx-0.5" /> by{' '}
             <span className="font-bold text-primary-custom">
-              Abhijit Chauhan & Krishna for MSME IDEA Hackathon 6.0
+              Abhijit & Krishna
             </span>
           </p>
 

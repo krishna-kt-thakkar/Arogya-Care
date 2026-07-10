@@ -1,7 +1,22 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Download, Share, X, Sparkles } from 'lucide-react';
+import { Trophy, Download, Share, X, Sparkles, Zap, Shield, Activity, Flame, Award, TrendingUp } from 'lucide-react';
 import { useStreak } from '../../contexts/StreakContext';
+
+const getBadgeIcon = (id: string) => {
+  switch (id) {
+    case 'spark': return Sparkles;
+    case 'warrior': return Zap;
+    case 'centurion': return Shield;
+    case 'iron': return Activity;
+    case 'titan': return Trophy;
+    case 'eternal': return Flame;
+    case 'immortal': return Award;
+    case 'infinite': return TrendingUp;
+    case 'legacy': return Trophy;
+    default: return Trophy;
+  }
+};
 
 const BadgeUnlockModal: React.FC = () => {
   const { showBadgeUnlock, newlyUnlockedBadge, dismissBadgeUnlock, exportBadge, streakData } = useStreak();
@@ -12,12 +27,12 @@ const BadgeUnlockModal: React.FC = () => {
     if (navigator.share) {
       navigator.share({
         title: `I unlocked the ${newlyUnlockedBadge.name} badge!`,
-        text: `🎉 Just achieved a ${streakData.currentStreak}-day streak and unlocked the ${newlyUnlockedBadge.symbol} ${newlyUnlockedBadge.name} badge in Arogya Care! ${newlyUnlockedBadge.description}`,
+        text: `Just achieved a ${streakData.currentStreak}-day streak and unlocked the ${newlyUnlockedBadge.name} badge in Arogya Care! ${newlyUnlockedBadge.description}`,
         url: window.location.origin
       });
     } else {
       // Fallback for browsers that don't support Web Share API
-      const text = `🎉 Just achieved a ${streakData.currentStreak}-day streak and unlocked the ${newlyUnlockedBadge.symbol} ${newlyUnlockedBadge.name} badge in Arogya Care! ${newlyUnlockedBadge.description}`;
+      const text = `Just achieved a ${streakData.currentStreak}-day streak and unlocked the ${newlyUnlockedBadge.name} badge in Arogya Care! ${newlyUnlockedBadge.description}`;
       navigator.clipboard.writeText(text);
       alert('Achievement copied to clipboard!');
     }
@@ -98,7 +113,7 @@ const BadgeUnlockModal: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              🎉 Congratulations!
+              Congratulations!
             </motion.h2>
 
             {/* Badge Display */}
@@ -108,8 +123,7 @@ const BadgeUnlockModal: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, type: "spring", damping: 10 }}
             >
-              <motion.span 
-                className="text-4xl"
+              <motion.div 
                 animate={{ 
                   scale: [1, 1.2, 1],
                 }}
@@ -119,8 +133,11 @@ const BadgeUnlockModal: React.FC = () => {
                   ease: "easeInOut"
                 }}
               >
-                {newlyUnlockedBadge.symbol}
-              </motion.span>
+                {(() => {
+                  const IconComp = getBadgeIcon(newlyUnlockedBadge.id);
+                  return <IconComp className={`h-10 w-10 ${newlyUnlockedBadge.color}`} />;
+                })()}
+              </motion.div>
               <div className="text-left">
                 <h3 className={`text-xl font-bold ${newlyUnlockedBadge.color} transition-colors duration-300`}>
                   {newlyUnlockedBadge.name}

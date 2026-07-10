@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { StreakProvider } from './contexts/StreakContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PageTransition from './components/common/PageTransition';
@@ -100,15 +101,17 @@ const AppRoutes: React.FC = () => {
 
 function App() {
   return (
-    <ThemeProvider>
-      <ToastProvider>
-        <AuthProvider>
-          <StreakProvider>
-            <AppRoutes />
-          </StreakProvider>
-        </AuthProvider>
-      </ToastProvider>
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <StreakProvider>
+              <AppRoutes />
+            </StreakProvider>
+          </AuthProvider>
+        </ToastProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
 

@@ -83,7 +83,7 @@ const LiveDeploymentPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          🎉 App Successfully Deployed!
+          App Successfully Deployed!
         </motion.h1>
 
         {/* Deployment Card */}
@@ -204,18 +204,18 @@ const LiveDeploymentPage: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 1.5 }}
         >
-          <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 border border-white/20 dark:border-gray-700/20">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Built with ❤️ using{' '}
+          <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 border border-white/20 dark:border-gray-700/20 flex items-center justify-center">
+            <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+              Built with <Heart className="h-3 w-3 text-red-500 fill-red-500 mx-1" /> using{' '}
               <motion.span
-                className="font-semibold text-orange-600 dark:text-orange-400"
+                className="font-semibold text-orange-600 dark:text-orange-400 mx-1"
                 whileHover={{ scale: 1.05 }}
               >
                 Bolt.new
               </motion.span>
               {' '}and deployed via{' '}
               <motion.span
-                className="font-semibold text-blue-600 dark:text-blue-400"
+                className="font-semibold text-blue-600 dark:text-blue-400 ml-1"
                 whileHover={{ scale: 1.05 }}
               >
                 IONOS Hosting
@@ -236,9 +236,8 @@ const LiveDeploymentPage: React.FC = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="text-4xl"
           >
-            🚀
+            <Zap className="h-8 w-8 text-yellow-400 opacity-60" />
           </motion.div>
         </div>
 
@@ -254,9 +253,8 @@ const LiveDeploymentPage: React.FC = () => {
               ease: "easeInOut",
               delay: 1
             }}
-            className="text-3xl"
           >
-            ✨
+            <Sparkles className="h-8 w-8 text-teal-400 opacity-60" />
           </motion.div>
         </div>
 
@@ -272,9 +270,8 @@ const LiveDeploymentPage: React.FC = () => {
               ease: "easeInOut",
               delay: 0.5
             }}
-            className="text-3xl"
           >
-            🎉
+            <Globe className="h-8 w-8 text-blue-400 opacity-60" />
           </motion.div>
         </div>
       </motion.div>

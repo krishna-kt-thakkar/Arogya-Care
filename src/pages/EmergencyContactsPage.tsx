@@ -67,7 +67,7 @@ const EmergencyContactsPage: React.FC = () => {
     relationship: '',
     phone: '',
     countryCode: '+1',
-    avatar: '👤'
+    avatar: 'bg-red-500'
   });
 
   // Relationship options
@@ -78,21 +78,22 @@ const EmergencyContactsPage: React.FC = () => {
 
   // Avatar options
   const avatarOptions = [
-    '👤', '👨', '👩', '👴', '👵', '👨‍⚕️', '👩‍⚕️', '👮', '👨‍🚒', '👩‍🚒',
-    '❤️', '👨‍👩‍👧‍👦', '👫', '👬', '👭', '🏠', '🏥', '🚑', '📞', '⭐'
+    'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500',
+    'bg-pink-500', 'bg-indigo-500', 'bg-teal-500', 'bg-orange-500', 'bg-gray-500'
   ];
 
   // Country codes
   const countryCodes = [
-    { code: '+1', country: 'US/CA', flag: '🇺🇸' },
-    { code: '+91', country: 'India', flag: '🇮🇳' },
-    { code: '+44', country: 'UK', flag: '🇬🇧' },
-    { code: '+49', country: 'Germany', flag: '🇩🇪' },
-    { code: '+33', country: 'France', flag: '🇫🇷' },
-    { code: '+81', country: 'Japan', flag: '🇯🇵' },
-    { code: '+86', country: 'China', flag: '🇨🇳' },
-    { code: '+61', country: 'Australia', flag: '🇦🇺' }
+    { code: '+1', country: 'US/CA', flag: 'US' },
+    { code: '+91', country: 'India', flag: 'IN' },
+    { code: '+44', country: 'UK', flag: 'UK' },
+    { code: '+49', country: 'Germany', flag: 'DE' },
+    { code: '+33', country: 'France', flag: 'FR' },
+    { code: '+81', country: 'Japan', flag: 'JP' },
+    { code: '+86', country: 'China', flag: 'CN' },
+    { code: '+61', country: 'Australia', flag: 'AU' }
   ];
+
 
   // Load data on mount
   useEffect(() => {
@@ -236,7 +237,7 @@ const EmergencyContactsPage: React.FC = () => {
       relationship: '',
       phone: '',
       countryCode: '+1',
-      avatar: '👤'
+      avatar: 'bg-red-500'
     });
     setShowAddForm(false);
     setEditingContact(null);
@@ -274,7 +275,7 @@ const EmergencyContactsPage: React.FC = () => {
       relationship: contact.relationship,
       phone: contact.phone,
       countryCode: contact.countryCode,
-      avatar: contact.avatar || '👤'
+      avatar: contact.avatar || 'bg-red-500'
     });
     setEditingContact(contact);
     setShowAddForm(true);
@@ -285,7 +286,7 @@ const EmergencyContactsPage: React.FC = () => {
     const phoneNumber = formatPhoneNumber(contact.phone, contact.countryCode);
     
     if (showTestMode) {
-      alert(`🧪 TEST MODE: Would call ${contact.name} at ${phoneNumber}`);
+      alert(`TEST MODE: Would call ${contact.name} at ${phoneNumber}`);
       return;
     }
 
@@ -313,10 +314,10 @@ const EmergencyContactsPage: React.FC = () => {
       locationText = ' (Location unavailable)';
     }
 
-    const message = `🚨 This is ${userName}. I'm in an emergency${locationText}. Please help!`;
+    const message = `This is ${userName}. I'm in an emergency${locationText}. Please help!`;
     
     if (showTestMode) {
-      alert(`🧪 TEST MODE: Would send SMS to ${contact.name}:\n\n"${message}"`);
+      alert(`TEST MODE: Would send SMS to ${contact.name}:\n\n"${message}"`);
       return;
     }
 
@@ -357,7 +358,7 @@ const EmergencyContactsPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 100 }}
           >
-            ✓ Emergency contacts saved
+            Emergency contacts saved
           </motion.div>
         )}
 
@@ -376,7 +377,7 @@ const EmergencyContactsPage: React.FC = () => {
               <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Emergency Contacts 🚨</h1>
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Emergency Contacts</h1>
               <p className="text-gray-600 dark:text-gray-300 mt-1">Stay prepared with trusted emergency contacts</p>
             </div>
           </div>
@@ -392,7 +393,7 @@ const EmergencyContactsPage: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              🧪 Test Mode
+              Test Mode
             </motion.button>
             <motion.button
               onClick={() => setShowAddForm(true)}
@@ -435,7 +436,7 @@ const EmergencyContactsPage: React.FC = () => {
           >
             <div className="flex items-center justify-center space-x-3">
               <AlertTriangle className="h-8 w-8" />
-              <span>🚨 EMERGENCY</span>
+              <span>EMERGENCY</span>
               <AlertTriangle className="h-8 w-8" />
             </div>
             <p className="text-sm font-normal mt-2 opacity-90">
@@ -773,7 +774,7 @@ const EmergencyContactsPage: React.FC = () => {
                         relationship: '',
                         phone: '',
                         countryCode: '+1',
-                        avatar: '👤'
+                        avatar: 'bg-red-500'
                       });
                     }}
                     className="flex-1 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center space-x-2"
@@ -817,7 +818,7 @@ const EmergencyContactsPage: React.FC = () => {
                     Emergency Contact
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300">
-                    {showTestMode ? '🧪 Test Mode Active' : 'Choose how to contact for help'}
+                    {showTestMode ? 'Test Mode Active' : 'Choose how to contact for help'}
                   </p>
                 </div>
 
@@ -826,11 +827,13 @@ const EmergencyContactsPage: React.FC = () => {
                     <div key={contact.id} className="border border-gray-200 dark:border-gray-600 rounded-xl p-4">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center space-x-3">
-                          <span className="text-2xl">{contact.avatar}</span>
+                          <div className={`h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-sm uppercase ${contact.avatar || 'bg-red-500'}`}>
+                            {contact.name.charAt(0)}
+                          </div>
                           <div>
-                            <p className="font-semibold text-gray-800 dark:text-gray-100">
+                            <p className="font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-1">
                               {contact.name}
-                              {contact.isPrimary && <span className="text-yellow-500 ml-1">⭐</span>}
+                              {contact.isPrimary && <Star className="h-3.5 w-3.5 fill-yellow-500 text-yellow-500 inline" />}
                             </p>
                             <p className="text-sm text-gray-600 dark:text-gray-300">{contact.relationship}</p>
                           </div>

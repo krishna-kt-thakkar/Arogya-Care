@@ -103,7 +103,7 @@ const ReportDecoderPage: React.FC = () => {
     code: 'en',
     name: 'English',
     nativeName: 'English',
-    flag: '🇺🇸'
+    flag: 'EN'
   });
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const [activeTab, setActiveTab] = useState<'upload' | 'reports' | 'analysis'>('upload');
@@ -116,26 +116,26 @@ const ReportDecoderPage: React.FC = () => {
 
   // Supported languages
   const supportedLanguages: Language[] = [
-    { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸' },
-    { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳' },
-    { code: 'es', name: 'Spanish', nativeName: 'Español', flag: '🇪🇸' },
-    { code: 'ar', name: 'Arabic', nativeName: 'العربية', flag: '🇸🇦' },
-    { code: 'zh', name: 'Chinese', nativeName: '中文', flag: '🇨🇳' },
-    { code: 'bn', name: 'Bengali', nativeName: 'বাংলা', flag: '🇧🇩' },
-    { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', flag: '🇮🇳' },
-    { code: 'te', name: 'Telugu', nativeName: 'తెలుగు', flag: '🇮🇳' },
-    { code: 'ur', name: 'Urdu', nativeName: 'اردو', flag: '🇵🇰' },
-    { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷' },
-    { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
-    { code: 'ja', name: 'Japanese', nativeName: '日本語', flag: '🇯🇵' },
-    { code: 'ko', name: 'Korean', nativeName: '한국어', flag: '🇰🇷' },
-    { code: 'ru', name: 'Russian', nativeName: 'Русский', flag: '🇷🇺' },
-    { code: 'pt', name: 'Portuguese', nativeName: 'Português', flag: '🇧🇷' },
-    { code: 'it', name: 'Italian', nativeName: 'Italiano', flag: '🇮🇹' },
-    { code: 'tr', name: 'Turkish', nativeName: 'Türkçe', flag: '🇹🇷' },
-    { code: 'pl', name: 'Polish', nativeName: 'Polski', flag: '🇵🇱' },
-    { code: 'nl', name: 'Dutch', nativeName: 'Nederlands', flag: '🇳🇱' },
-    { code: 'sv', name: 'Swedish', nativeName: 'Svenska', flag: '🇸🇪' }
+    { code: 'en', name: 'English', nativeName: 'English', flag: 'EN' },
+    { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: 'HI' },
+    { code: 'es', name: 'Spanish', nativeName: 'Español', flag: 'ES' },
+    { code: 'ar', name: 'Arabic', nativeName: 'العربية', flag: 'AR' },
+    { code: 'zh', name: 'Chinese', nativeName: '中文', flag: 'ZH' },
+    { code: 'bn', name: 'Bengali', nativeName: 'বাংলা', flag: 'BN' },
+    { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', flag: 'TA' },
+    { code: 'te', name: 'Telugu', nativeName: 'తెలుగు', flag: 'TE' },
+    { code: 'ur', name: 'Urdu', nativeName: 'اردو', flag: 'UR' },
+    { code: 'fr', name: 'French', nativeName: 'Français', flag: 'FR' },
+    { code: 'de', name: 'German', nativeName: 'Deutsch', flag: 'DE' },
+    { code: 'ja', name: 'Japanese', nativeName: '日本語', flag: 'JA' },
+    { code: 'ko', name: 'Korean', nativeName: '한국어', flag: 'KO' },
+    { code: 'ru', name: 'Russian', nativeName: 'Русский', flag: 'RU' },
+    { code: 'pt', name: 'Portuguese', nativeName: 'Português', flag: 'PT' },
+    { code: 'it', name: 'Italian', nativeName: 'Italiano', flag: 'IT' },
+    { code: 'tr', name: 'Turkish', nativeName: 'Türkçe', flag: 'TR' },
+    { code: 'pl', name: 'Polish', nativeName: 'Polski', flag: 'PL' },
+    { code: 'nl', name: 'Dutch', nativeName: 'Nederlands', flag: 'NL' },
+    { code: 'sv', name: 'Swedish', nativeName: 'Svenska', flag: 'SV' }
   ];
 
   // Load reports from localStorage
@@ -662,7 +662,7 @@ RECOMMENDATIONS:
         </motion.div>
         
         <h2 className="text-2xl font-bold text-blue-800 mb-4">
-          Let's understand your medical reports together 💙
+          Let's understand your medical reports together
         </h2>
         <p className="text-blue-700 leading-relaxed max-w-2xl mx-auto">
           Upload any medical report, prescription, or lab result. Our AI will read the text, analyze the content, 
@@ -777,7 +777,7 @@ RECOMMENDATIONS:
         </div>
         
         <div className="mt-6 p-4 bg-blue-50 rounded-xl">
-          <h4 className="font-semibold text-blue-800 mb-2">📸 Tips for Best Results:</h4>
+          <h4 className="font-semibold text-blue-800 mb-2">Tips for Best Results:</h4>
           <ul className="text-sm text-blue-700 space-y-1">
             <li>• Ensure good lighting when taking photos</li>
             <li>• Keep the camera steady and focus on the text</li>
@@ -1062,7 +1062,7 @@ RECOMMENDATIONS:
           </motion.div>
           
           <h2 className="text-2xl font-bold text-green-800 mb-4">
-            You're doing well. This report is just a part of your health journey 💙
+            You're doing well. This report is just a part of your health journey
           </h2>
           <p className="text-green-700 leading-relaxed max-w-2xl mx-auto">
             Let's understand it together. We've analyzed your report and explained everything in simple, 
@@ -1087,24 +1087,24 @@ RECOMMENDATIONS:
             <div className="relative">
               <button
                 onClick={() => setShowLanguageSelector(!showLanguageSelector)}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors"
+                className="flex items-center space-x-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-xl transition-colors"
               >
-                <span className="text-2xl">{selectedLanguage.flag}</span>
-                <span className="font-medium text-blue-800">{selectedLanguage.nativeName}</span>
-                <Globe className="h-4 w-4 text-blue-600" />
+                <span className="text-xs font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded uppercase">{selectedLanguage.flag}</span>
+                <span className="font-medium text-blue-800 dark:text-blue-200">{selectedLanguage.nativeName}</span>
+                <Globe className="h-4 w-4 text-blue-600 dark:text-blue-400" />
               </button>
               
               <AnimatePresence>
                 {showLanguageSelector && (
                   <motion.div
-                    className="absolute right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 max-h-80 overflow-y-auto"
+                    className="absolute right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 max-h-80 overflow-y-auto"
                     initial={{ opacity: 0, scale: 0.95, y: -10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -10 }}
                     style={{ minWidth: '300px' }}
                   >
                     <div className="p-4">
-                      <h4 className="font-semibold text-gray-800 mb-3">Select Language</h4>
+                      <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-3">Select Language</h4>
                       <div className="space-y-2">
                         {supportedLanguages.map((language) => (
                           <button
@@ -1115,14 +1115,14 @@ RECOMMENDATIONS:
                             }}
                             className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-colors ${
                               selectedLanguage.code === language.code
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'hover:bg-gray-50'
+                                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200'
+                                : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
                             }`}
                           >
-                            <span className="text-xl">{language.flag}</span>
+                            <span className="text-xs font-bold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded uppercase w-8 text-center">{language.flag}</span>
                             <div className="text-left">
-                              <p className="font-medium">{language.nativeName}</p>
-                              <p className="text-sm text-gray-500">{language.name}</p>
+                              <p className="font-medium text-gray-900 dark:text-gray-100">{language.nativeName}</p>
+                              <p className="text-sm text-gray-500 dark:text-gray-400">{language.name}</p>
                             </div>
                           </button>
                         ))}
@@ -1145,9 +1145,9 @@ RECOMMENDATIONS:
           {/* Tab Headers */}
           <div className="flex border-b border-gray-200">
             {[
-              { id: 'summary', label: '🧪 Test Summary', icon: Activity },
-              { id: 'medications', label: '💊 Medicines', icon: Pill },
-              { id: 'next-steps', label: '🚶‍♂️ Next Steps', icon: TrendingUp }
+              { id: 'summary', label: 'Test Summary', icon: Activity },
+              { id: 'medications', label: 'Medicines', icon: Pill },
+              { id: 'next-steps', label: 'Next Steps', icon: TrendingUp }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -1398,7 +1398,7 @@ RECOMMENDATIONS:
               <ArrowLeft className="h-6 w-6 text-gray-600" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Report Decoder & Records 📄</h1>
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Report Decoder & Records</h1>
               <p className="text-gray-600 mt-1">AI-powered medical report analysis and translation</p>
             </div>
           </div>

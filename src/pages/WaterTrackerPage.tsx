@@ -254,7 +254,7 @@ const WaterTrackerPage: React.FC = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     className="mt-4 text-green-600 dark:text-green-400 font-semibold transition-colors duration-300"
                   >
-                    🎉 {t('goal')} {t('completed')}!
+                    {t('goal')} {t('completed')}!
                   </motion.div>
                 )}
               </div>

@@ -36,7 +36,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'spark',
     name: 'Consistency Spark',
-    symbol: '🔹',
+    symbol: 'Spark',
     description: 'The first flame of habit has been lit. Keep going. Greatness awaits.',
     daysRequired: 7,
     color: 'text-blue-400',
@@ -47,7 +47,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'warrior',
     name: 'Habit Warrior',
-    symbol: '⚡',
+    symbol: 'Warrior',
     description: 'You\'ve proven your commitment. The warrior spirit awakens within.',
     daysRequired: 30,
     color: 'text-yellow-500',
@@ -58,7 +58,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'centurion',
     name: 'Centurion Spirit',
-    symbol: '🔸',
+    symbol: 'Centurion',
     description: 'A true warrior of discipline. Your dedication inspires others.',
     daysRequired: 100,
     color: 'text-orange-500',
@@ -69,7 +69,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'iron',
     name: 'Iron Resolve',
-    symbol: '🟡',
+    symbol: 'Iron Resolve',
     description: 'Steel-sharp consistency. Your willpower is unbreakable.',
     daysRequired: 365,
     color: 'text-gray-600',
@@ -80,7 +80,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'titan',
     name: 'Titan of Time',
-    symbol: '🟠',
+    symbol: 'Titan',
     description: 'Legendary habit builder. You\'ve transcended ordinary limits.',
     daysRequired: 1000,
     color: 'text-red-500',
@@ -91,7 +91,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'eternal',
     name: 'Eternal Flame',
-    symbol: '🔵',
+    symbol: 'Eternal',
     description: 'Unstoppable and ever-burning. Your flame will never die.',
     daysRequired: 2000,
     color: 'text-indigo-600',
@@ -102,7 +102,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'immortal',
     name: 'Immortal Streak',
-    symbol: '🟣',
+    symbol: 'Immortal',
     description: 'God-tier discipline. You\'ve achieved the impossible.',
     daysRequired: 3000,
     color: 'text-purple-600',
@@ -113,7 +113,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'infinite',
     name: 'The Infinite',
-    symbol: '⚫',
+    symbol: 'Infinite',
     description: 'Beyond limits of time. You are one with the eternal flow.',
     daysRequired: 4000,
     color: 'text-black',
@@ -124,7 +124,7 @@ const defaultBadges: Badge[] = [
   {
     id: 'legacy',
     name: 'Legacy Legend',
-    symbol: '🌌',
+    symbol: 'Legend',
     description: 'A timeless symbol of self-mastery. Your legend will inspire generations.',
     daysRequired: 5000,
     color: 'text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text',

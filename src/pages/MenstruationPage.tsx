@@ -367,7 +367,7 @@ const MenstruationPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
           >
-            Thank You 💕
+            Thank You
           </motion.button>
         </div>
       </motion.div>

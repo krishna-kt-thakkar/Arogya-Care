@@ -199,7 +199,7 @@ const MedicationsPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 100 }}
           >
-            ✓ Medications data saved
+             Medications data saved
           </motion.div>
         )}
 
@@ -218,7 +218,7 @@ const MedicationsPage: React.FC = () => {
               <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">{t('medicationReminder')} 💊</h1>
+              <h1 className="text-3xl font-black text-primary-custom">{t('medicationReminder')}</h1>
               <p className="text-gray-600 dark:text-gray-300 mt-1">Never miss your medications</p>
             </div>
           </div>
@@ -322,7 +322,7 @@ const MedicationsPage: React.FC = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {medication.taken ? '✓ Taken' : 'Mark as Taken'}
+                {medication.taken ? 'Taken' : 'Mark as Taken'}
               </motion.button>
             </motion.div>
           ))}

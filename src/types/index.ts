@@ -16,11 +16,17 @@ export interface HealthStats {
   medicationsTotal: number;
 }
 
-export type Language = 'en' | 'hi';
+export type Language = 'en' | 'hi' | 'hinglish' | 'te' | 'gu' | 'es' | 'fr' | 'de';
 
 export interface Translations {
   [key: string]: {
     en: string;
     hi: string;
+    hinglish: string;
+    te: string;
+    gu: string;
+    es: string;
+    fr: string;
+    de: string;
   };
 }
