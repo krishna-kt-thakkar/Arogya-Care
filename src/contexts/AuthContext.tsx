@@ -95,20 +95,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string): Promise<AuthResult> => {
     sessionStorage.removeItem('arogya_is_new_user');
-    // Fail-safe fallback if keys are missing
     if (!hasFirebaseConfig) {
-      console.warn('Firebase not configured. Performing instant simulated login.');
-      const mockUser: User = {
-        id: 'sim-' + Date.now(),
-        name: email.split('@')[0].toUpperCase(),
-        email: email,
-        gender: 'other',
-        isGuest: false,
-        isSimulated: true,
-      };
-      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-      setUser(mockUser);
-      return { success: true };
+      return { success: false, error: 'Firebase is not configured. Please configure your credentials in the .env file to enable authentication.' };
     }
 
     try {
@@ -132,20 +120,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = async (name: string, email: string, password: string, gender: 'male' | 'female' | 'other'): Promise<AuthResult> => {
     sessionStorage.setItem('arogya_is_new_user', 'true');
-    // Fail-safe fallback if keys are missing
     if (!hasFirebaseConfig) {
-      console.warn('Firebase not configured. Performing instant simulated signup.');
-      const mockUser: User = {
-        id: 'sim-' + Date.now(),
-        name: name,
-        email: email,
-        gender: gender,
-        isGuest: false,
-        isSimulated: true,
-      };
-      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-      setUser(mockUser);
-      return { success: true };
+      return { success: false, error: 'Firebase is not configured. Please configure your credentials in the .env file to enable registration.' };
     }
 
     try {
@@ -169,8 +145,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const sendOtp = async (email: string): Promise<AuthResult> => {
     if (!hasFirebaseConfig) {
-      console.warn('Firebase not configured. Simulating OTP send success.');
-      return { success: true };
+      return { success: false, error: 'Firebase is not configured. Real OTP delivery requires configuring the .env file.' };
     }
 
     try {
@@ -184,26 +159,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const verifyOtp = async (email: string, _token: string): Promise<AuthResult> => {
     if (!hasFirebaseConfig) {
-      console.warn('Firebase not configured. Instantly verifying simulated OTP.');
-      const mockUser: User = {
-        id: 'sim-' + Date.now(),
-        name: email.split('@')[0].toUpperCase(),
-        email: email,
-        gender: 'other',
-        isGuest: false,
-        isSimulated: true,
-      };
-      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-      setUser(mockUser);
-      return { success: true };
+      return { success: false, error: 'Firebase is not configured. Real OTP verification is unavailable.' };
     }
     return { success: true };
   };
 
   const resetPassword = async (email: string): Promise<AuthResult> => {
     if (!hasFirebaseConfig) {
-      console.warn('Firebase not configured. Simulating password reset success.');
-      return { success: true };
+      return { success: false, error: 'Firebase is not configured. Resetting password requires configuring the .env file.' };
     }
 
     try {
@@ -220,39 +183,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signInWithGoogle = async (): Promise<boolean> => {
-    // Fail-safe fallback if keys are missing or during popup blocking
     if (!hasFirebaseConfig) {
-      console.warn('Firebase not configured. Performing instant simulated Google login.');
-      const mockUser: User = {
-        id: 'google-sim-' + Date.now(),
-        name: 'Google Explorer',
-        email: 'google-user@gmail.com',
-        gender: 'other',
-        isGuest: false,
-        isSimulated: true,
-      };
-      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-      setUser(mockUser);
-      return true;
+      throw new Error('Firebase is not configured. Please add your credentials to the .env file to enable Google Sign-In.');
     }
 
     try {
       await firebaseSignInWithGoogle();
       return true;
     } catch (error: any) {
-      console.error('Google Sign-In error, falling back to simulated session:', error);
-      // If popup is blocked or fails, log in simulated user so the presentation doesn't break
-      const mockUser: User = {
-        id: 'google-sim-' + Date.now(),
-        name: 'Google Explorer',
-        email: 'google-user@gmail.com',
-        gender: 'other',
-        isGuest: false,
-        isSimulated: true,
-      };
-      sessionStorage.setItem('arogya_guest_mode', JSON.stringify(mockUser));
-      setUser(mockUser);
-      return true;
+      console.error('Google Sign-In error:', error);
+      throw error;
     }
   };
 

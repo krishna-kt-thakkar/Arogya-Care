@@ -17,15 +17,15 @@
 }
 
 .theme-light {
-  --brand-gradient: linear-gradient(135deg, #4f46e5, #0ea5e9);
+  --brand-gradient: linear-gradient(135deg, #4f46e5, #0284c7);
   --brand-from: #4f46e5;
-  --brand-to: #0ea5e9;
-  --brand-bg: #f1f5f9; /* Premium slate-50 base */
-  --card-bg: rgba(255, 255, 255, 0.75); /* Soft glassmorphism cards */
-  --card-border: rgba(15, 23, 42, 0.08);
-  --text-primary: #0f172a; /* Slate-900 high-readability text */
-  --text-secondary: #334155; /* Slate-700 description text */
-  --glow-color: rgba(79, 70, 229, 0.08);
+  --brand-to: #0284c7;
+  --brand-bg: #cbd5e1; /* Premium slate-300 base background, less bright and professional */
+  --card-bg: rgba(241, 245, 249, 0.92); /* Frosted light slate-50 cards, reduces white glare */
+  --card-border: rgba(15, 23, 42, 0.1); /* Pronounced slate borders */
+  --text-primary: #0f172a; /* Slate-900 high contrast text */
+  --text-secondary: #334155; /* Slate-700 secondary text */
+  --glow-color: rgba(79, 70, 229, 0.05);
 }
 
 .theme-dark {
