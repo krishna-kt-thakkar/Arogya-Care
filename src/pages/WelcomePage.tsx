@@ -91,22 +91,22 @@ const WelcomePage: React.FC = () => {
           animate={showContent ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-3">
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-primary-custom mb-3">
             {isGuest ? (
               <>Welcome, <span className="text-brand-color">Guest Explorer</span></>
             ) : isNewUser ? (
-              <>Welcome to <span className="text-brand-color">Arogya Care</span></>
+              <>Welcome to <span className="text-brand-color">Aarogya Care</span></>
             ) : (
-              <>Welcome back, <span className="text-brand-color">{displayName}</span></>
+              <>Welcome back</>
             )}
           </h1>
 
-          <p className="text-base sm:text-lg text-blue-100/60 leading-relaxed mb-8 max-w-md mx-auto">
+          <p className="text-base sm:text-lg text-secondary-custom leading-relaxed mb-8 max-w-md mx-auto">
             {isGuest
-              ? 'Take a tour of your personal health companion. Your data stays on this device until you create an account.'
+              ? 'Take a tour of your personal health companion. Your data stays on this device securely.'
               : isNewUser
-              ? `Great to have you, ${displayName}. Let's set up your health dashboard and start building healthy habits today.`
-              : `Your health dashboard is ready. Let's pick up where you left off.`}
+              ? `Great to have you, ${displayName}. Let's set up your profile and start tracking your wellness indexes.`
+              : `Great to see you again, ${displayName}. Ready to continue your wellness journey?`}
           </p>
         </motion.div>
 
@@ -124,7 +124,7 @@ const WelcomePage: React.FC = () => {
           ].map((pill) => (
             <div
               key={pill.label}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-blue-200/70"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-card-surface border border-card-custom text-xs font-semibold text-secondary-custom shadow-sm"
             >
               <pill.icon className="h-3.5 w-3.5 text-brand-from" />
               {pill.label}
@@ -151,7 +151,7 @@ const WelcomePage: React.FC = () => {
 
           {!canProceed && (
             <motion.p
-              className="text-[10px] text-blue-200/30 mt-3"
+              className="text-[10px] text-secondary-custom/50 mt-3"
               animate={{ opacity: [0.3, 0.7, 0.3] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >

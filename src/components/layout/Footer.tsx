@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
           <p className="text-xs text-secondary-custom text-center">
             Made with <span className="text-red-500">❤</span> by{' '}
             <span className="font-bold text-primary-custom">
-              Abhijit Chauhan & Krishna
+              Abhijit Chauhan & Krishna for MSME IDEA Hackathon 6.0
             </span>
           </p>
 

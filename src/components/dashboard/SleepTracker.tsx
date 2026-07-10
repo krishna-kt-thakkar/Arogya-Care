@@ -12,7 +12,10 @@ import {
   Calendar,
   TrendingUp,
   Star,
-  Coffee
+  Coffee,
+  Frown,
+  Meh,
+  Smile
 } from 'lucide-react';
 import { useStreak } from '../../contexts/StreakContext';
 
@@ -280,7 +283,7 @@ const SleepTracker: React.FC = () => {
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-6 shadow-lg border border-indigo-100 dark:border-indigo-800/30 transition-colors duration-300 cursor-pointer relative"
+      className="glass-card p-6 border border-card-custom cursor-pointer relative"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
@@ -346,9 +349,10 @@ const SleepTracker: React.FC = () => {
           {/* Animated Sleeping Person */}
           <div className="relative mx-auto w-20 h-16 mb-4">
             <motion.div
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0 flex items-center justify-center icon-3d-box"
               animate={{ 
-                y: [0, -2, 0],
+                y: [0, -5, 0],
+                rotateY: [0, 8, -8, 0]
               }}
               transition={{ 
                 duration: 3, 
@@ -356,7 +360,15 @@ const SleepTracker: React.FC = () => {
                 ease: "easeInOut"
               }}
             >
-              <div className="text-4xl">🛏️</div>
+              {/* Layer 3: Deep background blur glow */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 blur-lg opacity-50 scale-110" />
+              {/* Layer 2: Mid shadow for depth */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 opacity-60 translate-y-1 blur-sm" />
+              {/* Layer 1: Main glossy face */}
+              <div className="relative z-10 p-3.5 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg border border-white/20">
+                <div className="absolute top-0 left-0 right-0 h-1/2 rounded-t-xl bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
+                <Moon className="h-8 w-8 text-white relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
+              </div>
             </motion.div>
             
             {/* ZZZ animation */}
@@ -588,28 +600,32 @@ const SleepTracker: React.FC = () => {
                   </label>
                   <div className="grid grid-cols-4 gap-2">
                     {[
-                      { value: 'poor', emoji: '😴', label: 'Poor' },
-                      { value: 'fair', emoji: '😐', label: 'Fair' },
-                      { value: 'good', emoji: '😌', label: 'Good' },
-                      { value: 'excellent', emoji: '😊', label: 'Great' }
-                    ].map((quality) => (
-                      <button
-                        key={quality.value}
-                        onClick={() => setSleepQuality(quality.value as any)}
-                        className={`p-3 rounded-xl border-2 transition-all ${
-                          sleepQuality === quality.value
-                            ? 'border-indigo-500 bg-indigo-100 dark:bg-indigo-900/30'
-                            : 'border-gray-200 dark:border-gray-600 hover:border-indigo-300'
-                        }`}
-                      >
-                        <div className="text-center">
-                          <div className="text-lg mb-1">{quality.emoji}</div>
-                          <p className="text-xs font-medium text-gray-600 dark:text-gray-300">
-                            {quality.label}
-                          </p>
-                        </div>
-                      </button>
-                    ))}
+                      { value: 'poor', icon: Frown, label: 'Poor', color: 'text-red-500' },
+                      { value: 'fair', icon: Meh, label: 'Fair', color: 'text-amber-500' },
+                      { value: 'good', icon: Smile, label: 'Good', color: 'text-indigo-500' },
+                      { value: 'excellent', icon: Star, label: 'Great', color: 'text-emerald-500' }
+                    ].map((quality) => {
+                      const IconComponent = quality.icon;
+                      return (
+                        <button
+                          key={quality.value}
+                          type="button"
+                          onClick={() => setSleepQuality(quality.value as any)}
+                          className={`p-3 rounded-xl border transition-all ${
+                            sleepQuality === quality.value
+                              ? 'border-indigo-500 bg-indigo-500/10'
+                              : 'border-card-custom hover:border-indigo-300/40 bg-card-surface/40'
+                          }`}
+                        >
+                          <div className="text-center flex flex-col items-center">
+                            <IconComponent className={`h-5 w-5 mb-1.5 ${quality.color}`} />
+                            <p className="text-xs font-semibold text-primary-custom">
+                              {quality.label}
+                            </p>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 

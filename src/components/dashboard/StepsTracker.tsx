@@ -195,7 +195,7 @@ const StepsTracker: React.FC = () => {
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-6 shadow-lg border border-green-100 dark:border-green-800/30 transition-colors duration-300 cursor-pointer relative"
+      className="glass-card p-6 border border-card-custom cursor-pointer relative"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.1 }}
@@ -278,33 +278,26 @@ const StepsTracker: React.FC = () => {
           {/* Animated Walking Shoes */}
           <div className="relative mx-auto w-20 h-16 mb-4">
             <motion.div
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0 flex items-center justify-center icon-3d-box"
               animate={{ 
-                y: [0, -4, 0],
+                y: [0, -6, 0],
+                rotateY: [0, 8, -8, 0]
               }}
               transition={{ 
-                duration: 1.5, 
+                duration: 3, 
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
             >
-              <div className="text-4xl">👟</div>
-            </motion.div>
-            
-            {/* Walking trail effect */}
-            <motion.div
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
-              animate={{ 
-                opacity: [0.3, 0.7, 0.3],
-                scale: [0.8, 1.2, 0.8]
-              }}
-              transition={{ 
-                duration: 1.5, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <div className="text-xs text-green-500">👣</div>
+              {/* Layer 3: Deep background blur glow */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 blur-lg opacity-50 scale-110" />
+              {/* Layer 2: Mid shadow for depth */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 opacity-60 translate-y-1 blur-sm" />
+              {/* Layer 1: Main glossy face */}
+              <div className="relative z-10 p-3.5 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg border border-white/20">
+                <div className="absolute top-0 left-0 right-0 h-1/2 rounded-t-xl bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
+                <Footprints className="h-8 w-8 text-white relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
+              </div>
             </motion.div>
           </div>
         </motion.div>

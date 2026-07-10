@@ -104,13 +104,16 @@ const WaterTracker: React.FC = () => {
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-900/20 dark:to-blue-900/20 rounded-2xl p-6 shadow-lg border border-sky-100 dark:border-sky-800/30 transition-colors duration-300 relative"
+      className="glass-card p-6 border border-card-custom relative"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 transition-colors duration-300">{t('waterIntake')} 💧</h3>
+        <div className="flex items-center space-x-2">
+          <Droplets className="h-5 w-5 text-blue-500 animate-pulse" />
+          <h3 className="text-lg font-bold text-primary-custom">{t('waterIntake')}</h3>
+        </div>
         <div className="flex items-center space-x-2">
           <motion.button
             onClick={removeWater}

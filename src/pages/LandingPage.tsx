@@ -471,6 +471,7 @@ const LandingPage: React.FC = () => {
   ];
 
   const themeOptions = [
+    { id: 'light' as Theme, name: 'Pristine Light', color: 'bg-blue-400' },
     { id: 'dark' as Theme, name: 'Deep Space', color: 'bg-violet-600' },
     { id: 'emerald' as Theme, name: 'Emerald Care', color: 'bg-emerald-500' },
     { id: 'sunset' as Theme, name: 'Sunset Glow', color: 'bg-orange-500' },
@@ -478,7 +479,7 @@ const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-brand-bg text-white overflow-x-hidden transition-colors duration-500">
+    <div className="min-h-screen bg-brand-bg text-primary-custom overflow-x-hidden transition-colors duration-500">
       {/* ===== NAVBAR ===== */}
       <motion.nav
         className="fixed top-0 left-0 right-0 z-50 bg-brand-bg/85 backdrop-blur-xl border-b border-card-custom"
@@ -605,10 +606,7 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
             Your health, finally in sync.
           </motion.p>
-          <motion.p className="text-xs text-blue-200/40 mb-10 tracking-wider uppercase font-semibold"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }}>
-            "Aarogya: The gift of good health, tracked simply"
-          </motion.p>
+
 
           <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>

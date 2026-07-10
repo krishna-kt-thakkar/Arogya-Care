@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Theme = 'dark' | 'emerald' | 'sunset' | 'neon';
+export type Theme = 'light' | 'dark' | 'emerald' | 'sunset' | 'neon';
 
 interface ThemeContextType {
   theme: Theme;
@@ -27,7 +27,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Detect saved theme on first load
   useEffect(() => {
     const savedTheme = localStorage.getItem('arogya_theme') as Theme;
-    if (savedTheme && savedTheme !== ('light' as any)) {
+    if (savedTheme) {
       setTheme(savedTheme);
     } else {
       setTheme('dark');
@@ -46,12 +46,18 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.classList.add(`theme-${theme}`);
     
     // Apply standard dark classes
-    root.classList.add('dark');
-    root.style.colorScheme = 'dark';
+    if (theme === 'light') {
+      root.classList.remove('dark');
+      root.style.colorScheme = 'light';
+    } else {
+      root.classList.add('dark');
+      root.style.colorScheme = 'dark';
+    }
   }, [theme]);
 
   const getThemeMessage = (t: Theme): string => {
     switch (t) {
+      case 'light': return '☀️ Pristine Light: Crisp, clean, and legible.';
       case 'dark': return '🌙 Classic Dark: Deep space elegance.';
       case 'emerald': return '🌿 Emerald Forest: Restorative green energy.';
       case 'sunset': return '🌅 Sunset Glow: Energetic orange-rose warmth.';
@@ -72,13 +78,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const toggleTheme = () => {
-    const themes: Theme[] = ['dark', 'emerald', 'sunset', 'neon'];
+    const themes: Theme[] = ['light', 'dark', 'emerald', 'sunset', 'neon'];
     const currentIndex = themes.indexOf(theme);
     const nextIndex = (currentIndex + 1) % themes.length;
     changeTheme(themes[nextIndex]);
   };
 
-  const isDark = true; // All remaining themes are dark variants
+  const isDark = theme !== 'light';
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme: changeTheme, toggleTheme, isDark }}>

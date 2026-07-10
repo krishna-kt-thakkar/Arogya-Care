@@ -472,7 +472,7 @@ const BMIPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-brand-bg text-primary-custom transition-colors duration-500">
       <Header />
       
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -498,24 +498,24 @@ const BMIPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface border border-card-custom shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+              <ArrowLeft className="h-6 w-6 text-primary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">{t('bmiVitalStats')}</h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">Track and update your health metrics</p>
+              <h1 className="text-3xl font-black text-primary-custom">{t('bmiVitalStats')}</h1>
+              <p className="text-secondary-custom mt-1">Track and update your health metrics</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-3">
             <motion.button
               onClick={() => setShowSettings(!showSettings)}
-              className="p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="p-2 rounded-full bg-card-surface border border-card-custom shadow-md hover:shadow-lg transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Settings className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+              <Settings className="h-5 w-5 text-primary-custom" />
             </motion.button>
             
             <motion.button

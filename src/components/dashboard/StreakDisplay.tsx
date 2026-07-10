@@ -58,7 +58,7 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 transition-colors duration-300"
+      className="glass-card p-6 border border-card-custom transition-colors duration-300"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -82,7 +82,7 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
         </motion.div>
         
         <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-300">
-          {streakData.currentStreak === 0 ? 'Ready to Start?' : `🔥 Day ${streakData.currentStreak}`}
+          {streakData.currentStreak === 0 ? 'Ready to Start?' : `Day ${streakData.currentStreak}`}
         </h3>
         
         <p className="text-gray-600 dark:text-gray-300 transition-colors duration-300">

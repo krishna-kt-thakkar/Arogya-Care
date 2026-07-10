@@ -16,6 +16,18 @@
   --glow-color: rgba(124, 58, 237, 0.25);
 }
 
+.theme-light {
+  --brand-gradient: linear-gradient(135deg, #6366f1, #3b82f6);
+  --brand-from: #6366f1;
+  --brand-to: #3b82f6;
+  --brand-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(15, 23, 42, 0.08);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --glow-color: rgba(99, 102, 241, 0.15);
+}
+
 .theme-dark {
   --brand-gradient: linear-gradient(135deg, #7C3AED, #3B82F6);
   --brand-from: #7C3AED;
@@ -233,3 +245,137 @@
     }
   }
 }
+
+/* ==========================================================================
+   THEMATIC COMPONENT OVERRIDES FOR 3D FEATURE ALIGNMENT
+   ========================================================================== */
+
+/* Universal Page Backgrounds & Glows */
+div.min-h-screen[class*="bg-gradient-to-"] {
+  background: var(--brand-bg) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+div.min-h-screen[class*="bg-gradient-to-"]::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 10%;
+  width: 400px;
+  height: 400px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--brand-from) 0%, transparent 70%);
+  filter: blur(120px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+div.min-h-screen[class*="bg-gradient-to-"]::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--brand-to) 0%, transparent 70%);
+  filter: blur(130px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+div.min-h-screen[class*="bg-gradient-to-"] > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Thematic Glass Cards */
+div[class*="bg-white"][class*="rounded-3xl"],
+div[class*="bg-white"][class*="rounded-2xl"],
+div[class*="bg-white"][class*="rounded-xl"] {
+  background-color: var(--card-bg) !important;
+  border: 1.5px solid var(--card-border) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(24px) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Inner Panels and Secondary Boxes */
+div[class*="bg-gray-50"],
+div[class*="bg-slate-50"],
+div[class*="bg-gray-100"] {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid var(--card-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.theme-light div[class*="bg-gray-50"],
+.theme-light div[class*="bg-slate-50"],
+.theme-light div[class*="bg-gray-100"] {
+  background-color: rgba(15, 23, 42, 0.03) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Hardcoded Header Back Buttons */
+button[class*="bg-white"][class*="shadow"] {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.15) !important;
+}
+
+button[class*="bg-white"][class*="shadow"] svg {
+  color: var(--text-primary) !important;
+}
+
+/* Dynamic Primary & Secondary Typography */
+.text-gray-800, .text-gray-900, .text-slate-800, .text-slate-900, .text-slate-950,
+.text-gray-700, .text-slate-700, .text-blue-100, .text-blue-200, .text-slate-100, .text-slate-200, .text-slate-300,
+[class*="text-blue-100/90"], [class*="text-blue-200/90"], [class*="text-slate-100/90"], [class*="text-slate-200/90"],
+[class*="text-blue-100/80"], [class*="text-blue-200/80"], [class*="text-slate-100/80"], [class*="text-slate-200/80"] {
+  color: var(--text-primary) !important;
+}
+
+.text-gray-600, .text-gray-500, .text-slate-600, .text-slate-500,
+[class*="text-blue-100/"], [class*="text-blue-200/"],
+[class*="text-slate-400/"], [class*="text-slate-500/"] {
+  color: var(--text-secondary) !important;
+}
+
+/* Clean Dynamic Inputs & Dropdowns */
+input, select, textarea {
+  background-color: var(--card-bg) !important;
+  border: 1.5px solid var(--card-border) !important;
+  color: var(--text-primary) !important;
+  transition: all 0.3s ease !important;
+  outline: none !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--brand-from) !important;
+  box-shadow: 0 0 0 3px var(--glow-color) !important;
+  background-color: var(--card-bg) !important;
+}
+
+/* Colored Icon Wrapper Bubbles */
+div[class*="bg-"][class*="-50"],
+div[class*="bg-"][class*="-100"] {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.theme-light div[class*="bg-"][class*="-50"],
+.theme-light div[class*="bg-"][class*="-100"] {
+  background-color: rgba(15, 23, 42, 0.05) !important;
+  border: 1.5px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Keep SVG accent colors inside bubble icons if they have custom text-classes */
+div[class*="bg-"][class*="-50"] svg,
+div[class*="bg-"][class*="-100"] svg {
+  filter: drop-shadow(0 2px 8px var(--glow-color)) !important;
+}
+

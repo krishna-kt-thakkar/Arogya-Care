@@ -19,6 +19,7 @@ const Header: React.FC = () => {
   };
 
   const themeOptions = [
+    { id: 'light' as Theme, name: 'Pristine Light', color: 'bg-blue-400' },
     { id: 'dark' as Theme, name: 'Deep Space', color: 'bg-violet-600' },
     { id: 'emerald' as Theme, name: 'Emerald Care', color: 'bg-emerald-500' },
     { id: 'sunset' as Theme, name: 'Sunset Glow', color: 'bg-orange-500' },
@@ -68,13 +69,13 @@ const Header: React.FC = () => {
               <AnimatePresence>
                 {showThemeMenu && (
                   <motion.div
-                    className="absolute right-0 mt-2.5 w-48 rounded-2xl bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-2xl border border-white/15 p-2 shadow-2xl z-50 overflow-hidden"
+                    className="absolute right-0 mt-2.5 w-48 rounded-2xl bg-card-surface/95 backdrop-blur-2xl border border-card-custom p-2 shadow-2xl z-50 overflow-hidden"
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-blue-200/40 uppercase tracking-wider border-b border-white/5 mb-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-secondary-custom/40 uppercase tracking-wider border-b border-card-custom mb-1">
                       Choose Theme Accent
                     </div>
                     {themeOptions.map((opt) => (
@@ -82,7 +83,7 @@ const Header: React.FC = () => {
                         key={opt.id}
                         onClick={() => { setTheme(opt.id); setShowThemeMenu(false); }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs font-medium transition-colors ${
-                          theme === opt.id ? 'bg-white/10 text-white' : 'text-blue-200/60 hover:bg-white/5 hover:text-white'
+                          theme === opt.id ? 'bg-brand-from/15 text-brand-from font-semibold' : 'text-secondary-custom hover:bg-white/5 hover:text-primary-custom'
                         }`}
                       >
                         <div className="flex items-center gap-2">
