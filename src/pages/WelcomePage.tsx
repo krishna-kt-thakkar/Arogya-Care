@@ -96,20 +96,20 @@ const WelcomePage: React.FC = () => {
         >
           <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-primary-custom mb-3">
             {isGuest ? (
-              <>Welcome, <span className="text-brand-color">Guest Explorer</span></>
+              <>{t('welcome')}, <span className="text-brand-color">{t('guestExplorer')}</span></>
             ) : isNewUser ? (
-              <>Welcome to <span className="text-brand-color">Aarogya Care</span></>
+              <>{t('welcomeToArogya')}</>
             ) : (
-              <>Welcome back</>
+              <>{t('welcomeBack')}</>
             )}
           </h1>
 
           <p className="text-base sm:text-lg text-secondary-custom leading-relaxed mb-8 max-w-md mx-auto">
             {isGuest
-              ? 'Take a tour of your personal health companion. Your data stays on this device securely.'
+              ? t('guestDesc')
               : isNewUser
-              ? `Great to have you, ${displayName}. Let's set up your profile and start tracking your wellness indexes.`
-              : `Great to see you again, ${displayName}. Ready to continue your wellness journey?`}
+              ? t('newUserDesc').replace('{name}', displayName)
+              : t('returnUserDesc').replace('{name}', displayName)}
           </p>
         </motion.div>
 
@@ -121,9 +121,9 @@ const WelcomePage: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           {[
-            { icon: Sparkles, label: 'AI Health Insights' },
-            { icon: Shield, label: 'Secure & Private' },
-            { icon: Zap, label: '12+ Trackers' },
+            { icon: Sparkles, label: t('aiHealthInsights') },
+            { icon: Shield, label: t('securePrivate') },
+            { icon: Zap, label: t('trackers12') },
           ].map((pill) => (
             <div
               key={pill.label}

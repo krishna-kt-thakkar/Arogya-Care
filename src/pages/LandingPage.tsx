@@ -843,12 +843,12 @@ const LandingPage: React.FC = () => {
                   <div className="inline-flex p-3 rounded-2xl bg-white/5 border border-card-custom mb-3">
                     <Send className="h-6 w-6 text-brand-from" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">One-Time Password</h3>
-                  <p className="text-xs text-secondary-custom mt-1">Access AROGYA CARE securely via mail link</p>
+                  <h3 className="text-lg font-bold text-white">{t('oneTimePassword')}</h3>
+                  <p className="text-xs text-secondary-custom mt-1">{t('accessSecurely')}</p>
                 </div>
                 <form onSubmit={handleSendOtp} className="space-y-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Email Address</label>
+                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">{t('emailAddress')}</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com"
@@ -861,7 +861,7 @@ const LandingPage: React.FC = () => {
                     </div>
                   )}
                   <button type="submit" disabled={isSubmitting} className="w-full py-3 btn-brand rounded-xl text-sm disabled:opacity-50 flex items-center justify-center gap-2">
-                    Send Code <ArrowRight className="h-4 w-4" />
+                    {t('sendCode')} <ArrowRight className="h-4 w-4" />
                   </button>
                 </form>
               </motion.div>
@@ -877,12 +877,12 @@ const LandingPage: React.FC = () => {
                   <div className="inline-flex p-3 rounded-2xl bg-white/5 border border-card-custom mb-3">
                     <Lock className="h-6 w-6 text-brand-from" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">Reset Account</h3>
-                  <p className="text-xs text-secondary-custom mt-1">Receive password change instructions via email</p>
+                  <h3 className="text-lg font-bold text-white">{t('resetAccount')}</h3>
+                  <p className="text-xs text-secondary-custom mt-1">{t('receiveInstructions')}</p>
                 </div>
                 <form onSubmit={handleForgotPassword} className="space-y-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Email Address</label>
+                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">{t('emailAddress')}</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com"
@@ -933,7 +933,7 @@ const LandingPage: React.FC = () => {
                   <AnimatePresence>
                     {authMode === 'signup' && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                        <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Full Name</label>
+                        <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">{t('fullName')}</label>
                         <div className="relative">
                           <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                           <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="John Doe"
@@ -945,7 +945,7 @@ const LandingPage: React.FC = () => {
 
                   {/* Email */}
                   <div>
-                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Email</label>
+                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">{t('email')}</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com"
@@ -956,7 +956,7 @@ const LandingPage: React.FC = () => {
                   {/* Password */}
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <label className="block text-[10px] font-bold text-secondary-custom uppercase tracking-wider">Password</label>
+                      <label className="block text-[10px] font-bold text-secondary-custom uppercase tracking-wider">{t('password')}</label>
                       {authMode === 'login' && (
                         <button type="button" onClick={() => switchAuthTo('forgot')} className="text-[10px] font-bold text-brand-from hover:text-white transition-colors">
                           Forgot?
@@ -974,7 +974,7 @@ const LandingPage: React.FC = () => {
                     {authMode === 'signup' && password && (
                       <div className="mt-2 space-y-1">
                         <div className="flex justify-between text-[9px] font-semibold text-secondary-custom">
-                          <span>Security Index</span>
+                          <span>{t('securityIndex')}</span>
                           <span>{passwordStrength.label}</span>
                         </div>
                         <div className="h-1 bg-white/5 rounded-full overflow-hidden">
@@ -988,16 +988,16 @@ const LandingPage: React.FC = () => {
                   <AnimatePresence>
                     {authMode === 'signup' && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-1">
-                        <label className="block text-[10px] font-bold text-secondary-custom uppercase tracking-wider">Gender</label>
+                        <label className="block text-[10px] font-bold text-secondary-custom uppercase tracking-wider">{t('gender')}</label>
                         <div className="flex gap-2">
                           {(['male', 'female', 'other'] as const).map(g => (
-                            <button key={g} type="button" onClick={() => setGender(g)}
+                            <button key={t(g)} type="button" onClick={() => setGender(g)}
                               className={`flex-1 py-2 text-xs font-semibold rounded-lg border transition-all ${
                                 gender === g
                                   ? 'bg-brand-gradient text-white border-white/20'
                                   : 'bg-white/5 border-card-custom text-secondary-custom hover:bg-white/10'
                               }`}>
-                              {g}
+                              {t(g)}
                             </button>
                           ))}
                         </div>
@@ -1024,35 +1024,35 @@ const LandingPage: React.FC = () => {
                       >
                         {captchaPassed && <Check className="h-4 w-4 text-white" />}
                       </button>
-                      <span className="text-xs text-secondary-custom font-bold">I am not a robot</span>
+                      <span className="text-xs text-secondary-custom font-bold">{t('iAmNotARobot')}</span>
                     </div>
                     <div className="flex flex-col items-end opacity-40">
                       <ShieldAlert className="h-5 w-5 text-secondary-custom" />
-                      <span className="text-[7px] text-secondary-custom uppercase font-black tracking-widest mt-0.5">Secure CAPTCHA</span>
+                      <span className="text-[7px] text-secondary-custom uppercase font-black tracking-widest mt-0.5">{t('secureCaptcha')}</span>
                     </div>
                   </div>
 
                   <button type="submit" disabled={isSubmitting} className="w-full py-3.5 btn-brand rounded-xl text-sm disabled:opacity-50 mt-4 flex items-center justify-center gap-2">
-                    {isSubmitting ? 'Loading...' : authMode === 'login' ? 'Sign In' : 'Register Account'}
+                    {isSubmitting ? 'Loading...' : authMode === 'login' ? t('signIn') : t('registerAccount')}
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </form>
 
                 <div className="relative flex py-2 items-center">
                   <div className="flex-grow border-t border-white/10"></div>
-                  <span className="flex-shrink mx-4 text-[9px] font-bold text-secondary-custom uppercase tracking-widest">Alternative</span>
+                  <span className="flex-shrink mx-4 text-[9px] font-bold text-secondary-custom uppercase tracking-widest">{t('alternative')}</span>
                   <div className="flex-grow border-t border-white/10"></div>
                 </div>
 
                 <div className="space-y-2">
                   <button onClick={handleGoogleSignIn} className="w-full py-3 bg-card-surface hover:bg-white/5 text-primary-custom font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all">
-                    <Chrome className="h-4.5 w-4.5 text-blue-500" /> Sign In with Google
+                    <Chrome className="h-4.5 w-4.5 text-blue-500" /> {t('signInWithGoogle')}
                   </button>
                   <button onClick={() => switchAuthTo('otp-send')} className="w-full py-3 bg-white/5 border border-card-custom hover:bg-white/10 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
-                    <KeyRound className="h-4 w-4 text-brand-from" /> Email Verification OTP
+                    <KeyRound className="h-4 w-4 text-brand-from" /> {t('emailVerificationOtp')}
                   </button>
                   <button onClick={handleGuestMode} className="w-full py-2 bg-transparent text-secondary-custom hover:text-white font-semibold text-xs transition-all text-center">
-                    Continue as Guest Explorer
+                    {t('continueAsGuest')}
                   </button>
                 </div>
               </motion.div>
@@ -1101,7 +1101,7 @@ const LandingPage: React.FC = () => {
                 <X className="h-5 w-5" />
               </button>
 
-              <h3 className="text-lg font-black text-white mb-2">Human Verification</h3>
+              <h3 className="text-lg font-black text-white mb-2">{t('humanVerification')}</h3>
               <p className="text-xs text-secondary-custom leading-relaxed mb-6">
                 Please solve the math puzzle below to confirm you are not an automated program.
               </p>
@@ -1117,7 +1117,7 @@ const LandingPage: React.FC = () => {
                   type="number"
                   value={captchaAnswer}
                   onChange={(e) => setCaptchaAnswer(e.target.value)}
-                  placeholder="Enter sum"
+                  placeholder={t('enterSum')}
                   className="w-full px-4 py-3 bg-white/5 border border-card-custom rounded-xl text-center text-lg font-black text-white focus:border-brand-from outline-none focus:bg-white/10 transition-all"
                   autoFocus
                   onKeyDown={(e) => {
@@ -1127,7 +1127,7 @@ const LandingPage: React.FC = () => {
                         setCaptchaPassed(true);
                         setShowCaptchaModal(false);
                       } else {
-                        alert('Incorrect answer. Please try again.');
+                        alert(t('incorrectAnswer'));
                         generateCaptcha();
                       }
                     }
@@ -1141,7 +1141,7 @@ const LandingPage: React.FC = () => {
                       setCaptchaPassed(true);
                       setShowCaptchaModal(false);
                     } else {
-                      alert('Incorrect answer. Please try again.');
+                      alert(t('incorrectAnswer'));
                       generateCaptcha();
                     }
                   }}

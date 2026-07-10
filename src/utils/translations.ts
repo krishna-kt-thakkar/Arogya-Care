@@ -676,4 +676,145 @@ export const translations: Translations = {
     en: 'Logout', hi: 'लॉगआउट', hinglish: 'Logout',
     te: 'లాగ్ అవుట్', gu: 'ลૉગ આઉટ', es: 'Cerrar sesión', fr: 'Déconnexion', de: 'Abmelden'
   },
+  // === LOGIN & AUTH FLOW ===
+  verifyCode: {
+    en: 'Verify Code', hi: 'कोड सत्यापित करें', hinglish: 'Code verify karo',
+    te: 'కోడ్ ధృవీకరించండి', gu: 'કોડ ચકાસો', es: 'Verificar código', fr: 'Vérifier le code', de: 'Code verifizieren'
+  },
+  oneTimePassword: {
+    en: 'One-Time Password', hi: 'एक बार का पासवर्ड (OTP)', hinglish: 'One-Time Password',
+    te: 'వన్-టైమ్ పాస్‌వర్డ్', gu: 'વન-ટાઇમ પાસવર્ડ', es: 'Contraseña de un solo uso', fr: 'Mot de passe à usage unique', de: 'Einmalpasswort'
+  },
+  accessSecurely: {
+    en: 'Access AROGYA CARE securely via mail link', hi: 'मेल लिंक के माध्यम से आरोग्य केयर को सुरक्षित रूप से एक्सेस करें', hinglish: 'Mail link ke through secure access karein',
+    te: 'మెయిల్ లింక్ ద్వారా సురక్షితంగా ఆరోగ్యా కేర్‌ని యాక్సెస్ చేయండి', gu: 'મેઇલ લિંક દ્વારા આરોગ્ય કેર સુરક્ષિત રીતે એક્સેસ કરો', es: 'Acceda a AROGYA CARE de forma segura a través del enlace de correo', fr: 'Accédez à AROGYA CARE en toute sécurité via le lien e-mail', de: 'Greifen Sie sicher über den E-Mail-Link auf AROGYA CARE zu'
+  },
+  sendCode: {
+    en: 'Send Code', hi: 'कोड भेजें', hinglish: 'Code bhejo',
+    te: 'కోడ్ పంపండి', gu: 'કોડ મોકલો', es: 'Enviar código', fr: 'Envoyer le code', de: 'Code senden'
+  },
+  resetAccount: {
+    en: 'Reset Account', hi: 'खाता रीसेट करें', hinglish: 'Account reset karo',
+    te: 'ఖాతాను రీసెట్ చేయండి', gu: 'ખાતું రీસેટ કરો', es: 'Restablecer cuenta', fr: 'Réinitialiser le compte', de: 'Konto zurücksetzen'
+  },
+  receiveInstructions: {
+    en: 'Receive password change instructions via email', hi: 'ईमेल के माध्यम से पासवर्ड बदलने के निर्देश प्राप्त करें', hinglish: 'Email ke through password reset instructions receive karein',
+    te: 'ఇమెయిల్ ద్వారా పాస్‌వర్డ్ మార్పు సూచనలను స్వీకరించండి', gu: 'ઇમેઇલ દ્વારા પાસવર્ડ બદલવાની સૂચનાઓ મેળવો', es: 'Reciba instrucciones para cambiar la contraseña por correo electrónico', fr: 'Recevez les instructions de changement de mot de passe par e-mail', de: 'Erhalten Sie Anweisungen zur Passwortänderung per E-Mail'
+  },
+  sendLink: {
+    en: 'Send Link', hi: 'लिंक भेजें', hinglish: 'Link bhejo',
+    te: 'లింక్ పంపండి', gu: 'લિંક મોકલો', es: 'Enviar enlace', fr: 'Envoyer le lien', de: 'Link senden'
+  },
+  fullName: {
+    en: 'Full Name', hi: 'पूरा नाम', hinglish: 'Pura Naam',
+    te: 'పూర్తి పేరు', gu: 'પૂરું નામ', es: 'Nombre completo', fr: 'Nom complet', de: 'Vollständiger Name'
+  },
+  emailAddress: {
+    en: 'Email Address', hi: 'ईमेल पता', hinglish: 'Email Address',
+    te: 'ఇమెయిల్ చిరునామా', gu: 'ઇમેઇલ સરનામું', es: 'Dirección de correo', fr: 'Adresse e-mail', de: 'E-Mail-Adresse'
+  },
+  register: {
+    en: 'Register', hi: 'पंजीकरण', hinglish: 'Register',
+    te: 'నమోదు చేయండి', gu: 'રજીસ્ટર કરો', es: 'Registrarse', fr: 'S\'enregistrer', de: 'Registrieren'
+  },
+  registerAccount: {
+    en: 'Register Account', hi: 'खाता पंजीकृत करें', hinglish: 'Account register karo',
+    te: 'ఖాతాను నమోదు చేయండి', gu: 'ખાતું રજીસ્ટર કરો', es: 'Registrar cuenta', fr: 'Créer un compte', de: 'Konto registrieren'
+  },
+  other: {
+    en: 'Other', hi: 'अन्य', hinglish: 'Other',
+    te: 'ఇతర', gu: 'અન્ય', es: 'Otro', fr: 'Autre', de: 'Andere'
+  },
+  securityIndex: {
+    en: 'Security Index', hi: 'सुरक्षा सूचकांक', hinglish: 'Security Index',
+    te: 'భద్రతా సూచిక', gu: 'સુરક્ષા સૂચકાંક', es: 'Índice de seguridad', fr: 'Indice de sécurité', de: 'Sicherheitsindex'
+  },
+  iAmNotARobot: {
+    en: 'I am not a robot', hi: 'मैं रोबोट नहीं हूँ', hinglish: 'Main robot nahi hoon',
+    te: 'నేను రోబోట్‌ని కాదు', gu: 'હું રોબોટ નથી', es: 'No soy un robot', fr: 'Je ne suis pas un robot', de: 'Ich bin kein Roboter'
+  },
+  secureCaptcha: {
+    en: 'Secure CAPTCHA', hi: 'सुरक्षित कैप्चा', hinglish: 'Secure CAPTCHA',
+    te: 'సురक्षित కాప్చా', gu: 'સુરક્ષિત કેપ્ચા', es: 'CAPTCHA seguro', fr: 'CAPTCHA sécurisé', de: 'Sicheres CAPTCHA'
+  },
+  alternative: {
+    en: 'Alternative', hi: 'वैकल्पिक', hinglish: 'Alternative',
+    te: 'ప్రత్యామ్నాయం', gu: 'વૈકલ્પિક', es: 'Alternativa', fr: 'Alternative', de: 'Alternative'
+  },
+  emailVerificationOtp: {
+    en: 'Email Verification OTP', hi: 'ईमेल सत्यापन ओटीपी', hinglish: 'Email OTP',
+    te: 'ఇమెయిల్ ధృవీకరణ OTP', gu: 'ઇમેઇલ વેરિફિકેશન OTP', es: 'OTP de verificación de correo', fr: 'OTP de vérification d\'e-mail', de: 'E-Mail-Verifizierungs-OTP'
+  },
+  continueAsGuest: {
+    en: 'Continue as Guest Explorer', hi: 'अतिथि अन्वेषक के रूप में जारी रखें', hinglish: 'Guest ke jaise continue karein',
+    te: 'అతిథి అన్వేషకుడిగా కొనసాగండి', gu: 'અતિથિ અન્વેષક તરીકે ચાલુ રાખો', es: 'Continuar como Explorador Invitado', fr: 'Continuer en tant qu\'explorateur invité', de: 'Als Gast-Entdecker fortfahren'
+  },
+  humanVerification: {
+    en: 'Human Verification', hi: 'मानव सत्यापन', hinglish: 'Human Verification',
+    te: 'మానవ ధృవీకరణ', gu: 'માનవ ચકાసણી', es: 'Verificación humana', fr: 'Vérification humaine', de: 'Menschliche Verifizierung'
+  },
+  solveMathPuzzle: {
+    en: 'Please solve the math puzzle below to confirm you are not an automated program.', hi: 'कृपया यह पुष्टि करने के लिए नीचे दिए गए गणित के पहेली को हल करें कि आप एक स्वचालित प्रोग्राम नहीं हैं।', hinglish: 'Confirm karne ke liye neeche ka math puzzle solve karein.',
+    te: 'మీరు స్వయంచాలక ప్రోగ్రామ్ కాదని నిర్ధారించడానికి దయచేసి క్రింది గణిత పజిల్‌ను పరిష్కరించండి.', gu: 'તમે స్వચાલિત પ્રોગ્રામ નથી તેની ખાતરી કરવા માટે કૃપા કરીને નીચે આપેલ ગણિતની પઝલ હલ કરો.', es: 'Resuelva el rompecabezas matemático a continuación para confirmar que no es un programa automatizado.', fr: 'Veuillez résoudre le puzzle mathématique ci-dessous pour confirmer que vous n\'êtes pas un programme automatisé.', de: 'Bitte lösen Sie das mathematische Rätsel unten, um zu bestätigen, dass Sie kein automatisiertes Programm sind.'
+  },
+  enterSum: {
+    en: 'Enter sum', hi: 'योग दर्ज करें', hinglish: 'Sum type karein',
+    te: 'మొత్తాన్ని నమోదు చేయండి', gu: 'સરવાળો દાખલ કરો', es: 'Ingrese la suma', fr: 'Entrez la somme', de: 'Summe eingeben'
+  },
+  verifyAndProceed: {
+    en: 'Verify & Proceed', hi: 'सत्यापित करें और आगे बढ़ें', hinglish: 'Verify aur aage badhein',
+    te: 'ధృవీకరించి కొనసాగండి', gu: 'ચકાસો weekend આગળ વધો', es: 'Verificar y proceder', fr: 'Vérifier et continuer', de: 'Verifizieren & fortfahren'
+  },
+  incorrectAnswer: {
+    en: 'Incorrect answer. Please try again.', hi: 'गलत उत्तर। कृपया पुनः प्रयास करें।', hinglish: 'Galat answer. Phir se try karein.',
+    te: 'తప్పు సమాధానం. దయచేसी మళ్ళీ ప్రయత్నించండి.', gu: 'ખોટો જવાબ. કૃપા કરીને ફરી પ્રયાસ કરો.', es: 'Respuesta incorrecta. Inténtelo de nuevo.', fr: 'Réponse incorrecte. Veuillez réessayer.', de: 'Falsche Antwort. Bitte versuchen Sie es erneut.'
+  },
+  stayHydrated: {
+    en: 'Stay hydrated and track your daily water consumption', hi: 'हाइड्रेटेड रहें और अपने दैनिक पानी की खपत को ट्रैक करें', hinglish: 'Hydrated rahein aur daily paani ka consumption track karein',
+    te: 'హైడ్రేటెడ్‌గా ఉండండి మరియు మీ రోజువారీ నీటి వినియోగాన్ని ట్రాక్ చేయండి', gu: 'હાઇડ્રેટેડ રહો અને તમારા દૈનિક પાણીના વપરાશને ટ્રેક કરો', es: 'Manténgase hidratado y realice un seguimiento de su consumo diario de agua', fr: 'Restez hydraté et suivez votre consommation d\'eau quotidienne', de: 'Bleiben Sie hydriert und verfolgen Sie Ihren täglichen Wasserverbrauch'
+  },
+  lastUpdatedText: {
+    en: 'Last updated', hi: 'अंतिम अपडेट', hinglish: 'Last updated',
+    te: 'చివరిగా నవీకరించబడింది', gu: 'છેલ્લે અપડેટ કરેલ', es: 'Última actualización', fr: 'Dernière mise à jour', de: 'Zuletzt aktualisiert'
+  },
+  justNow: {
+    en: 'Just now', hi: 'अभी-अभी', hinglish: 'Abhi-abhi',
+    te: 'ఇప్పుడే', gu: 'હમણાં જ', es: 'Justo ahora', fr: 'À l\'instant', de: 'Gerade eben'
+  },
+  minAgo: {
+    en: 'min ago', hi: 'मिनट पहले', hinglish: 'min pehle',
+    te: 'నిమిషం క్రితం', gu: 'મિનિટ પહેલા', es: 'minutos antes', fr: 'il y a min', de: 'vor Min.'
+  },
+  hourAgo: {
+    en: 'hour ago', hi: 'घंटे पहले', hinglish: 'hour pehle',
+    te: 'గంట క్రితం', gu: 'કલાક પહેલા', es: 'horas antes', fr: 'il y a heure', de: 'vor Std.'
+  },
+  hoursAgo: {
+    en: 'hours ago', hi: 'घंटे पहले', hinglish: 'hours pehle',
+    te: 'గంటల క్రితం', gu: 'કલાકો પહેલા', es: 'horas antes', fr: 'il y a heures', de: 'vor Std.'
+  },
+  yesterday: {
+    en: 'Yesterday', hi: 'कल', hinglish: 'Kal',
+    te: 'నిన్న', gu: 'ગઈકાલે', es: 'Ayer', fr: 'Hier', de: 'Gestern'
+  },
+  dataSaved: {
+    en: 'Data saved successfully', hi: 'डेटा सफलतापूर्वक सहेजा गया', hinglish: 'Data successfully save ho gaya',
+    te: 'డేటా విజయవంతంగా సేవ్ చేయబడింది', gu: 'ડેટા સફળતાપૂર્વક સાચવવામાં આવ્યો', es: 'Datos guardados con éxito', fr: 'Données enregistrées avec succès', de: 'Daten erfolgreich gespeichert'
+  },
+  glassesConsumed: {
+    en: 'glasses consumed', hi: 'गिलास पानी पिया', hinglish: 'glasses consumed',
+    te: 'గ్లాసుల వినియోగం', gu: 'ગ્લાસ વપરાશ', es: 'vasos consumidos', fr: 'verres consommés', de: 'Gläser konsumiert'
+  },
+  addGlass: {
+    en: 'Add Glass', hi: 'गिलास जोड़ें', hinglish: 'Glass add karein',
+    te: 'గ్లాస్ జోడించండి', gu: 'ગ્લાસ ઉમેરો', es: 'Añadir vaso', fr: 'Ajouter un verre', de: 'Glas hinzufügen'
+  },
+  calendar: {
+    en: 'Calendar', hi: 'कैलेंडर', hinglish: 'Calendar',
+    te: 'క్యాలెండర్', gu: 'કેલેન્ડર', es: 'Calendario', fr: 'Calendrier', de: 'Kalender'
+  },
+  periodReminders: {
+    en: 'Period Reminders', hi: 'मासिक धर्म अनुस्मारक', hinglish: 'Period Reminders',
+    te: 'ఋతుచక్ర రిమైండర్లు', gu: 'માસિક ધર્મ રીમાઇન્ડર્સ', es: 'Recordatorios del período', fr: 'Rappels de règles', de: 'Periodenerinnerungen'
+  },
 };

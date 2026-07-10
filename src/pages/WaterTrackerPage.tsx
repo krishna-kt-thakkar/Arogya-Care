@@ -15,7 +15,7 @@ interface WaterData {
 
 const WaterTrackerPage: React.FC = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { addActivity } = useStreak();
   const [waterIntake, setWaterIntake] = useState(0);
   const [animateWater, setAnimateWater] = useState(false);
@@ -155,10 +155,10 @@ const WaterTrackerPage: React.FC = () => {
     const diffHours = Math.floor(diffMins / 60);
     const diffDays = Math.floor(diffHours / 24);
 
-    if (diffMins < 1) return 'Just now';
-    if (diffMins < 60) return `${diffMins} min ago`;
-    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-    if (diffDays === 1) return 'Yesterday';
+    if (diffMins < 1) return t('justNow');
+    if (diffMins < 60) return `${diffMins} ${t('minAgo')}`;
+    if (diffHours < 24) return `${diffHours} ${diffHours > 1 ? t('hoursAgo') : t('hourAgo')}`;
+    if (diffDays === 1) return t('yesterday');
     return date.toLocaleDateString();
   };
 
@@ -182,10 +182,10 @@ const WaterTrackerPage: React.FC = () => {
           </button>
           <div>
             <h1 className="text-3xl font-black text-primary-custom">{t('waterIntake')}</h1>
-            <p className="text-secondary-custom mt-1">Stay hydrated and track your daily water consumption</p>
+            <p className="text-secondary-custom mt-1">{t('stayHydrated')}</p>
             {lastUpdated && (
               <p className="text-sm text-secondary-custom mt-1">
-                Last updated: {formatLastUpdated(lastUpdated)}
+                {t('lastUpdatedText')}: {formatLastUpdated(lastUpdated)}
               </p>
             )}
           </div>
@@ -207,12 +207,12 @@ const WaterTrackerPage: React.FC = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0, y: -10 }}
               >
-                ✓ Data saved successfully
+                ✓ {t('dataSaved')}
               </motion.div>
             )}
 
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-primary-custom mb-8">Today's Progress</h2>
+              <h2 className="text-2xl font-bold text-primary-custom mb-8">{t('todaysProgress')}</h2>
               
               {/* Large Water Glass */}
               <div className="flex justify-center mb-8">
@@ -244,7 +244,7 @@ const WaterTrackerPage: React.FC = () => {
                 <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2 transition-colors duration-300">
                   {waterIntake}/{waterGoal}
                 </p>
-                <p className="text-secondary-custom transition-colors duration-300">{t('glasses')} consumed</p>
+                <p className="text-secondary-custom transition-colors duration-300">{t('glassesConsumed')}</p>
                 <p className="text-2xl font-semibold text-blue-500 dark:text-blue-400 mt-2 transition-colors duration-300">
                   {Math.round(percentage)}%
                 </p>
@@ -271,7 +271,7 @@ const WaterTrackerPage: React.FC = () => {
                 </motion.button>
                 
                 <div className="text-center">
-                  <p className="text-sm text-secondary-custom mb-1 transition-colors duration-300">Add Glass</p>
+                  <p className="text-sm text-secondary-custom mb-1 transition-colors duration-300">{t('addGlass')}</p>
                   <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center transition-colors duration-300">
                     <Droplets className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                   </div>
@@ -298,7 +298,7 @@ const WaterTrackerPage: React.FC = () => {
           >
             <div className="flex items-center mb-6">
               <TrendingUp className="h-8 w-8 text-green-600 dark:text-green-400 mr-3" />
-              <h2 className="text-2xl font-bold text-primary-custom">Weekly Progress</h2>
+              <h2 className="text-2xl font-bold text-primary-custom">{t('weeklyProgress')}</h2>
             </div>
 
             <div className="space-y-4">
@@ -311,7 +311,7 @@ const WaterTrackerPage: React.FC = () => {
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
                   <span className="font-medium text-secondary-custom w-12 transition-colors duration-300">
-                    {new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' })}
+                    {new Date(day.date).toLocaleDateString(language, { weekday: 'short' })}
                   </span>
                   <div className="flex-1 mx-4">
                     <div className="bg-white/10 rounded-full h-3 transition-colors duration-300">

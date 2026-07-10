@@ -7,7 +7,7 @@ import { useTheme, Theme } from '../../contexts/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
-  const { language, changeLanguage, toggleLanguage } = useLanguage();
+  const { language, changeLanguage, toggleLanguage, t } = useLanguage();
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-2 sm:space-x-4">
             {user && (
               <span className="hidden sm:inline text-sm text-secondary-custom font-semibold">
-                Welcome, {user.name}
+                {t('welcomeBack')}, {user.name}
               </span>
             )}
             
@@ -130,7 +130,7 @@ const Header: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <LogOut className="h-4 w-4" />
-                <span className="hidden sm:inline text-sm font-bold">Logout</span>
+                <span className="hidden sm:inline text-sm font-bold">{t('logout')}</span>
               </motion.button>
             )}
           </div>

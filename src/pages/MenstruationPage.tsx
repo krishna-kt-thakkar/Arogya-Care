@@ -543,11 +543,11 @@ const MenstruationPage: React.FC = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
             >
-              <h3 className="text-lg font-semibold text-primary-custom mb-4">Settings</h3>
+              <h3 className="text-lg font-semibold text-primary-custom mb-4">{t('settings')}</h3>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Bell className="h-5 w-5 text-pink-600" />
-                  <span className="text-secondary-custom">Period Reminders</span>
+                  <span className="text-secondary-custom">{t('periodReminders')}</span>
                 </div>
                 <button
                   onClick={() => setRemindersEnabled(!remindersEnabled)}
@@ -569,9 +569,9 @@ const MenstruationPage: React.FC = () => {
         {/* Tab Navigation */}
         <div className="flex bg-card-surface rounded-2xl p-1 mb-8 shadow-lg border border-card-custom">
           {[
-            { id: 'calendar', label: 'Calendar', icon: Calendar },
-            { id: 'insights', label: 'Insights', icon: Sparkles },
-            { id: 'comfort', label: 'Comfort', icon: Heart }
+            { id: 'calendar', label: t('calendar'), icon: Calendar },
+            { id: 'insights', label: t('insights'), icon: Sparkles },
+            { id: 'comfort', label: t('comfort'), icon: Heart }
           ].map((tab) => (
             <button
               key={tab.id}
