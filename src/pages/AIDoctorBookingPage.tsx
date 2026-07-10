@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Calendar, Clock, Phone, MessageSquare, MapPin, 
-  User, CheckCircle, AlertTriangle, Coffee, ShieldAlert, X, 
-  ChevronRight, Star, Award, Briefcase, Heart, Trash2, ShieldCheck, Check
+  User, CheckCircle, AlertTriangle, Coffee, ShieldAlert, Trash2, ShieldCheck, Check, Star, Award, Briefcase, Heart, BookOpen, Compass
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
@@ -44,21 +43,22 @@ interface Doctor {
   phone: string;
   whatsapp: string;
   personality: string;
-  // Visual assets
+  // Visual assets (multiple per doctor)
   docPhoto: string;
   assistantName: string;
   assistantPhoto: string;
   clinicPhoto: string;
-  degreePhoto: string; // Photo of degree/certificate
-  examPhoto: string; // Photo of doctor examining patient
+  degreePhoto: string;
+  examPhoto: string;
   services: string[];
+  gallery: string[];
 }
 
 const AIDoctorBookingPage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
 
-  // Step Management: 1 = Disclaimer, 2 = Doctor Selection, 3 = Calendar & Slots, 4 = Form, 5 = Congratulations
+  // Wizard Steps: 1 = Full-Screen Warning Disclaimer, 2 = Doctors List, 3 = About Doctor, 4 = About Clinic & Degrees, 5 = Booking Slot & Form
   const [bookingStep, setBookingStep] = useState<number>(1);
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedSlot, setSelectedSlot] = useState<string>('');
@@ -76,7 +76,7 @@ const AIDoctorBookingPage: React.FC = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastBookedAppointment, setLastBookedAppointment] = useState<Appointment | null>(null);
 
-  // Doctors Database with credentials and services
+  // Doctors Catalog Database with rich visual assets (more than 10+ images in total)
   const [doctors, setDoctors] = useState<Doctor[]>([
     {
       id: 'doc-1',
@@ -98,14 +98,19 @@ const AIDoctorBookingPage: React.FC = () => {
       avgWaitMins: 15,
       phone: '+919876543201',
       whatsapp: '919876543201',
-      personality: 'Gentle, warm, and highly skilled in handling pediatric immunizations and childhood developmental therapies.',
+      personality: 'Warm, patient, child-friendly and extremely empathetic towards pediatric checkups and neonatal diagnostics.',
       docPhoto: 'https://images.unsplash.com/photo-1594824813573-246434e33963?auto=format&fit=crop&w=400&h=400&q=80',
       assistantName: 'Amit Kumar (Compounder)',
       assistantPhoto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&h=300&q=80',
       clinicPhoto: 'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=600&h=400&q=80',
       degreePhoto: 'https://images.unsplash.com/photo-1589330273594-fade1ee91647?auto=format&fit=crop&w=400&h=300&q=80',
       examPhoto: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=600&h=400&q=80',
-      services: ['Childhood Immunizations', 'Growth & Nutrition Assessment', 'Newborn Screening']
+      services: ['Childhood Immunizations', 'Growth & Nutrition Assessment', 'Newborn Screening'],
+      gallery: [
+        'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&h=300&q=80'
+      ]
     },
     {
       id: 'doc-2',
@@ -121,20 +126,25 @@ const AIDoctorBookingPage: React.FC = () => {
       slotsLeft: 0,
       lunchBreak: 'None',
       surgeryTime: '04:00 PM - 06:30 PM (Emergency Heart Surgery)',
-      emergencyAway: true, // Emergency surgery status
+      emergencyAway: true,
       activeToken: 0,
       waitingPatients: 0,
       avgWaitMins: 0,
       phone: '+919876543202',
       whatsapp: '919876543202',
-      personality: 'Extremely focused, patient, and globally recognized for cardiology diagnostics and angiography management.',
+      personality: 'Highly analytical, calm under pressure, and dedicated to coronary angiography therapies and critical cardiac surgeries.',
       docPhoto: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&h=400&q=80',
       assistantName: 'Joy Dutta (Head Assistant)',
       assistantPhoto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&h=300&q=80',
       clinicPhoto: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&h=400&q=80',
       degreePhoto: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&h=300&q=80',
       examPhoto: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&h=400&q=80',
-      services: ['Angiography & Angioplasty', 'Echocardiography (ECG)', 'Hypertension Management']
+      services: ['Angiography & Angioplasty', 'Echocardiography (ECG)', 'Hypertension Management'],
+      gallery: [
+        'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=400&h=300&q=80'
+      ]
     },
     {
       id: 'doc-3',
@@ -156,14 +166,19 @@ const AIDoctorBookingPage: React.FC = () => {
       avgWaitMins: 10,
       phone: '+919876543203',
       whatsapp: '919876543203',
-      personality: 'Friendly, empathetic, and detail-oriented in diagnosing viral fevers, diabetes, and basic healthcare routines.',
+      personality: 'Friendly, active listener, structured in diagnostic checkups and routine health reviews.',
       docPhoto: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&h=400&q=80',
       assistantName: 'Rahul Singh (Receptionist)',
       assistantPhoto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&h=300&q=80',
       clinicPhoto: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&h=400&q=80',
       degreePhoto: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&h=300&q=80',
       examPhoto: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&h=400&q=80',
-      services: ['Chronic Disease Management', 'Diagnostic Preventive Health checkups', 'Infectious Diseases Therapy']
+      services: ['Chronic Disease Management', 'Diagnostic Preventive Health checkups', 'Infectious Diseases Therapy'],
+      gallery: [
+        'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&h=300&q=80'
+      ]
     },
     {
       id: 'doc-4',
@@ -192,7 +207,12 @@ const AIDoctorBookingPage: React.FC = () => {
       clinicPhoto: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=600&h=400&q=80',
       degreePhoto: 'https://images.unsplash.com/photo-1588600878108-57c6b1e4b4d1?auto=format&fit=crop&w=400&h=300&q=80',
       examPhoto: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=600&h=400&q=80',
-      services: ['Laser Acne Scar Treatment', 'Anti-Aging Therapy', 'Clinical Dermatitis & Eczema care']
+      services: ['Laser Acne Scar Treatment', 'Anti-Aging Therapy', 'Clinical Dermatitis & Eczema care'],
+      gallery: [
+        'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&h=300&q=80',
+        'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&h=300&q=80'
+      ]
     }
   ]);
 
@@ -211,7 +231,7 @@ const AIDoctorBookingPage: React.FC = () => {
     setDuplicateError('');
     if (!selectedDoctor || !selectedSlot || !selectedDate) return;
 
-    // Duplicate check validation
+    // Check duplicate booking name
     const targetName = bookingForm.patientName.trim().toLowerCase();
     const hasDuplicate = appointments.some(
       app => app.patientName.trim().toLowerCase() === targetName
@@ -222,7 +242,7 @@ const AIDoctorBookingPage: React.FC = () => {
       return;
     }
 
-    // Token and queue estimation
+    // Token and queue arrival estimations
     const token = selectedDoctor.activeToken + selectedDoctor.waitingPatients + 1;
     const estWait = selectedDoctor.waitingPatients * selectedDoctor.avgWaitMins + selectedDoctor.avgWaitMins;
     
@@ -244,11 +264,12 @@ const AIDoctorBookingPage: React.FC = () => {
       date: selectedDate
     };
 
+    // Store in state and LocalStorage
     const updatedAppointments = [newAppointment, ...appointments];
     setAppointments(updatedAppointments);
     localStorage.setItem('arogya_doctor_appointments', JSON.stringify(updatedAppointments));
 
-    // Decrement slots left and update queue waiting count
+    // Decrement slots count and update waiting Patients count
     setDoctors(prev => prev.map(doc => {
       if (doc.id === selectedDoctor.id) {
         return {
@@ -261,8 +282,7 @@ const AIDoctorBookingPage: React.FC = () => {
     }));
 
     setLastBookedAppointment(newAppointment);
-    setShowSuccessModal(true);
-    setBookingStep(5); // Shift to congratulations step
+    setBookingStep(5); // Switch to Step 5: congratulations success screen
   };
 
   const handleWhatsAppRedirect = () => {
@@ -272,7 +292,7 @@ const AIDoctorBookingPage: React.FC = () => {
     
     const url = `https://wa.me/${selectedDoctor.whatsapp}?text=${encodeURIComponent(formattedMessage)}`;
     window.open(url, '_blank');
-    setShowSuccessModal(false);
+    setBookingStep(2); // Go back to Doctor selection
   };
 
   const handleCancelAppointment = (appId: string, doctorName: string) => {
@@ -283,7 +303,7 @@ const AIDoctorBookingPage: React.FC = () => {
     setAppointments(filtered);
     localStorage.setItem('arogya_doctor_appointments', JSON.stringify(filtered));
 
-    // Release slots count for the doctor
+    // Restore slot in doctor's state
     setDoctors(prev => prev.map(doc => {
       if (doc.name === doctorName) {
         return {
@@ -296,7 +316,6 @@ const AIDoctorBookingPage: React.FC = () => {
     }));
   };
 
-  // Generate 7 upcoming dates
   const getUpcomingDates = () => {
     const dates = [];
     const options: Intl.DateTimeFormatOptions = { weekday: 'short', day: 'numeric', month: 'short' };
@@ -331,11 +350,6 @@ const AIDoctorBookingPage: React.FC = () => {
     return 'FREE';
   };
 
-  const handleDisclaimerAcknowledge = () => {
-    setShowWarningModal(false);
-    setBookingStep(2); // Go to specialist cards selection step
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
       <Header />
@@ -347,8 +361,12 @@ const AIDoctorBookingPage: React.FC = () => {
           <div className="flex items-center">
             <button 
               onClick={() => {
-                if (bookingStep > 2) {
-                  setBookingStep(prev => prev - 1);
+                if (bookingStep === 2) {
+                  setBookingStep(1); // Go back to warning disclaimer
+                } else if (bookingStep > 2 && bookingStep < 5) {
+                  setBookingStep(2); // Go back to doctor list selection
+                } else if (bookingStep === 5) {
+                  setBookingStep(2); // Congratulations back to doctor list
                 } else {
                   navigate('/dashboard');
                 }
@@ -365,12 +383,12 @@ const AIDoctorBookingPage: React.FC = () => {
                 </span>
               </h1>
               <p className="text-secondary-custom mt-1 text-sm">
-                Interactive clinic token scheduling, custom credentials, visual certificates verification, and WhatsApp redirects.
+                Interactive clinic scheduling timeline, verification credentials, clinical degree lists and direct WhatsApp redirect URL creator.
               </p>
             </div>
           </div>
 
-          {/* Stepper Progress Indicator */}
+          {/* Stepper Progress Bar */}
           {bookingStep > 1 && (
             <div className="hidden md:flex items-center space-x-2 bg-card-surface border border-card-custom px-4 py-2 rounded-2xl shadow-sm">
               {[2, 3, 4, 5].map((st) => (
@@ -391,57 +409,66 @@ const AIDoctorBookingPage: React.FC = () => {
           )}
         </div>
 
-        {/* Wizard Main Steps Render */}
+        {/* Wizard Multi-Step Animation Panels */}
         <AnimatePresence mode="wait">
           
-          {/* STEP 1: Full-Screen Warning & Legal Disclaimer notice */}
+          {/* STEP 1: Exclusive Warning Disclaimer Overlay */}
           {bookingStep === 1 && (
             <motion.div 
-              key="step-disclaimer"
-              className="max-w-2xl mx-auto bg-card-surface border-2 border-red-500/30 rounded-3xl p-8 shadow-2xl relative overflow-hidden"
+              key="step-warning-overlay"
+              className="max-w-2xl mx-auto bg-card-surface border-2 border-red-500 rounded-3xl p-8 shadow-2xl relative overflow-hidden"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-red-500" />
-              <div className="w-20 h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-red-500/25 shadow-lg shadow-red-500/10">
-                <ShieldAlert className="h-10 w-10 animate-pulse" />
+              <div className="absolute top-0 inset-x-0 h-2 bg-red-500" />
+              
+              {/* 3D Pulse Warning Logo */}
+              <div className="relative w-20 h-20 mx-auto mb-6">
+                <div className="absolute inset-0 bg-red-500 rounded-full blur-md opacity-40 animate-pulse" />
+                <div className="relative z-10 w-full h-full rounded-full bg-card-surface border-2 border-red-500/30 flex items-center justify-center">
+                  <ShieldAlert className="h-10 w-10 text-red-500" />
+                </div>
               </div>
 
-              <h2 className="text-3xl font-black text-primary-custom text-center tracking-tight mb-2 uppercase">
-                Development Preview Notice
+              <h2 className="text-3xl font-black text-primary-custom text-center tracking-tight mb-1 uppercase">
+                DEVELOPMENT MODE WARNING
               </h2>
               <p className="text-[10px] text-red-500 uppercase tracking-widest font-black text-center mb-8">
                 Arogya Care Clinical Sandbox
               </p>
 
-              <div className="space-y-4 text-xs leading-relaxed text-secondary-custom max-h-[300px] overflow-y-auto pr-2 border-y border-card-custom py-6 my-6">
-                <div className="p-4 bg-red-500/[0.02] border border-red-500/10 rounded-2xl">
-                  <p className="font-bold text-primary-custom mb-1 flex items-center gap-1.5">
-                    <ShieldCheck className="h-4 w-4 text-red-500" /> Sandbox Policy & Data Notice:
-                  </p>
-                  <p className="mt-1">
-                    This module is a simulated development preview for showcasing clinic queues, patient registration, and slot allocations. All doctors listing metadata, time slot options, surgery timetables, and active token counters are mock data. 
-                  </p>
-                  <p className="mt-2 font-bold text-red-400">
-                    Production sync will integrate clinic APIs to enable live database writes. No cash transaction is processed inside the app.
-                  </p>
-                </div>
+              <div className="p-4 bg-red-500/[0.02] border border-red-500/10 rounded-2xl text-xs text-secondary-custom leading-relaxed space-y-4 my-6">
+                <p>
+                  This patient scheduling module is a **simulated development preview** utilizing mock database indicators. Active doctor listings, slot timing allocations, lunch breaks, and live surgery pauses are generated strictly for evaluation.
+                </p>
+                <p className="font-semibold text-red-400">
+                  Production deployment will integrate actual hospital REST APIs. No monetary or cash payment is collected inside the application.
+                </p>
               </div>
 
-              <button
-                onClick={handleDisclaimerAcknowledge}
-                className="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-xl text-xs uppercase tracking-widest transition-all shadow-lg shadow-red-600/15 cursor-pointer"
-              >
-                Acknowledge & Start Booking
-              </button>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="flex-1 py-3.5 bg-white/5 border border-card-custom hover:bg-white/10 text-secondary-custom font-extrabold rounded-xl text-xs uppercase transition-all cursor-pointer"
+                >
+                  Cancel & Go Back
+                </button>
+                <button
+                  onClick={() => setBookingStep(2)}
+                  className="flex-1 py-3.5 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-xl text-xs uppercase tracking-widest transition-all shadow-lg shadow-red-600/15 cursor-pointer"
+                >
+                  Acknowledge & Proceed
+                </button>
+              </div>
             </motion.div>
           )}
 
-          {/* STEP 2: Doctor Selection Grid with full qualifications & verify photos */}
+          {/* STEP 2: Doctor Directory List (Doctor photo, Name, Specialty ONLY) */}
           {bookingStep === 2 && (
             <motion.div
-              key="step-doctors"
+              key="step-doctor-directory"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
@@ -452,121 +479,71 @@ const AIDoctorBookingPage: React.FC = () => {
                 <span className="text-xs text-secondary-custom font-semibold">Step 1 of 3</span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Simple grid list */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {doctors.map((doc) => (
                   <motion.div
                     key={doc.id}
-                    className={`bg-card-surface border rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between relative ${
-                      doc.emergencyAway ? 'border-red-500/40' : 'border-card-custom'
-                    }`}
-                    style={{ perspective: 1000 }}
-                    whileHover={!doc.emergencyAway ? {
-                      scale: 1.01,
-                      rotateX: 1.5,
-                      rotateY: -1.5,
-                      boxShadow: '0 20px 40px rgba(124, 58, 237, 0.15)'
-                    } : {}}
-                    transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                    className="bg-card-surface border border-card-custom rounded-3xl p-5 shadow-lg flex flex-col justify-between"
+                    whileHover={{ scale: 1.01, rotateX: 1.5, rotateY: -1.5 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   >
-                    {/* Facility Header Image */}
-                    <div className="h-48 w-full overflow-hidden relative">
-                      <img src={doc.clinicPhoto} alt="Clinic Lobby" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-4">
-                        <span className="text-[8px] bg-brand-gradient text-white px-2 py-0.5 rounded font-black uppercase tracking-wider w-max mb-1">
-                          Clinic Interior View
-                        </span>
-                        <h4 className="text-white font-extrabold text-xs flex items-center gap-1">
-                          <MapPin className="h-3.5 w-3.5 text-red-400 flex-shrink-0" />
-                          {doc.address}
-                        </h4>
+                    <div className="flex items-center space-x-4">
+                      <img 
+                        src={doc.docPhoto} 
+                        alt={doc.name} 
+                        className="w-16 h-16 rounded-full object-cover border-2 border-purple-500/25 flex-shrink-0"
+                      />
+                      <div>
+                        <h3 className="font-extrabold text-primary-custom text-base flex items-center gap-1.5">
+                          {doc.name}
+                          {doc.emergencyAway && (
+                            <span className="text-[8px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-0.5 rounded-full font-bold uppercase">
+                              Away
+                            </span>
+                          )}
+                        </h3>
+                        <p className="text-xs text-brand-from font-extrabold uppercase tracking-wide">
+                          {doc.specialty}
+                        </p>
                       </div>
                     </div>
 
-                    <div className="p-6 space-y-4">
-                      {/* Doctor portrait & header info */}
-                      <div className="flex items-start space-x-4">
-                        <img src={doc.docPhoto} alt={doc.name} className="w-16 h-16 rounded-full object-cover border-2 border-purple-500/25 flex-shrink-0" />
-                        <div>
-                          <h3 className="font-extrabold text-primary-custom text-base flex items-center gap-1.5">
-                            {doc.name}
-                            <span className="inline-flex items-center text-[10px] text-amber-500 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded-md">
-                              <Star className="h-3 w-3 fill-amber-500 mr-0.5" /> {doc.rating}
-                            </span>
-                          </h3>
-                          <p className="text-[10px] text-brand-from font-extrabold uppercase tracking-wide">{doc.specialty}</p>
-                          <span className="text-[10px] text-secondary-custom font-semibold flex items-center mt-1">
-                            <Award className="h-3.5 w-3.5 text-purple-500 mr-1 flex-shrink-0" />
-                            {doc.qualifications}
-                          </span>
-                        </div>
-                      </div>
+                    {/* Sequential wizard options list */}
+                    <div className="grid grid-cols-3 gap-2.5 mt-6 border-t border-card-custom pt-4">
+                      <button
+                        onClick={() => {
+                          setSelectedDoctor(doc);
+                          setBookingStep(3); // Shift to Step 3: About Doctor
+                        }}
+                        className="py-2.5 bg-white/5 border border-card-custom hover:bg-white/10 hover:text-primary-custom text-secondary-custom font-extrabold rounded-xl text-[9px] uppercase tracking-wider text-center flex flex-col items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <User className="h-4 w-4 text-purple-500" />
+                        <span>About Doctor</span>
+                      </button>
 
-                      {/* Professional Bio */}
-                      <div className="text-xs text-secondary-custom flex items-center space-x-3 bg-white/5 border border-card-custom p-2.5 rounded-xl">
-                        <div className="flex items-center text-purple-500">
-                          <Briefcase className="h-4 w-4 mr-1 flex-shrink-0" />
-                          <span className="font-extrabold">{doc.experienceYears}+ Yrs Exp</span>
-                        </div>
-                        <span className="opacity-45">|</span>
-                        <div className="flex items-center text-emerald-500">
-                          <Heart className="h-4 w-4 mr-1 flex-shrink-0 fill-emerald-500/25" />
-                          <span className="font-extrabold">{doc.consultsCount}+ Consultations</span>
-                        </div>
-                      </div>
+                      <button
+                        onClick={() => {
+                          setSelectedDoctor(doc);
+                          setBookingStep(4); // Shift to Step 4: About Clinic
+                        }}
+                        className="py-2.5 bg-white/5 border border-card-custom hover:bg-white/10 hover:text-primary-custom text-secondary-custom font-extrabold rounded-xl text-[9px] uppercase tracking-wider text-center flex flex-col items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <Compass className="h-4 w-4 text-brand-from" />
+                        <span>Clinic Details</span>
+                      </button>
 
-                      {/* Doctor Character/Nature */}
-                      <div className="text-xs text-secondary-custom leading-relaxed bg-black/5 dark:bg-white/5 p-3 rounded-2xl border border-card-custom">
-                        <span className="block text-[8px] text-secondary-custom font-black uppercase tracking-wider mb-1">Doctor Nature & Reviews</span>
-                        <p className="italic">"{doc.personality}"</p>
-                      </div>
-
-                      {/* Verifications section (Certificate degree + Examine photo) */}
-                      <div className="grid grid-cols-2 gap-3 pt-2">
-                        <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom cursor-pointer">
-                          <img src={doc.degreePhoto} className="w-full h-full object-cover" alt="MBBS Degree" />
-                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="text-[8px] text-white font-extrabold uppercase tracking-widest">Verify Degree</span>
-                          </div>
-                          <span className="absolute bottom-1.5 left-1.5 text-[8px] text-white font-bold bg-black/60 px-1.5 py-0.5 rounded">MBBS Diploma</span>
-                        </div>
-                        <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom cursor-pointer">
-                          <img src={doc.examPhoto} className="w-full h-full object-cover" alt="Patient checkup" />
-                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="text-[8px] text-white font-extrabold uppercase tracking-widest">Checkup Room</span>
-                          </div>
-                          <span className="absolute bottom-1.5 left-1.5 text-[8px] text-white font-bold bg-black/60 px-1.5 py-0.5 rounded">Exam Ward</span>
-                        </div>
-                      </div>
-
-                      {/* Dynamic emergency away warnings */}
-                      {doc.emergencyAway && (
-                        <div className="bg-red-500/10 border border-red-500/20 text-red-500 rounded-2xl p-3 flex items-start space-x-2 text-[10px] font-bold">
-                          <ShieldAlert className="h-4.5 w-4.5 flex-shrink-0 animate-pulse" />
-                          <span>{t('emergencyAway')}</span>
-                        </div>
-                      )}
-
-                      {/* Select/Actions */}
-                      <div className="pt-4">
-                        {doc.emergencyAway ? (
-                          <a 
-                            href={`tel:${doc.phone}`}
-                            className="w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 font-bold rounded-xl text-xs uppercase text-center flex items-center justify-center gap-1.5"
-                          >
-                            <Phone className="h-4 w-4" /> Call Head Assistant
-                          </a>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              setSelectedDoctor(doc);
-                              setBookingStep(3); // Shift to calendar slots step
-                            }}
-                            className="w-full py-2.5 bg-brand-gradient text-white font-extrabold rounded-xl text-xs tracking-wider uppercase shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
-                          >
-                            Select Doctor & Date
-                          </button>
-                        )}
-                      </div>
+                      <button
+                        disabled={doc.emergencyAway}
+                        onClick={() => {
+                          setSelectedDoctor(doc);
+                          setBookingStep(5); // Shift to Step 5: Calendar Booking
+                        }}
+                        className="py-2.5 bg-brand-gradient text-white disabled:opacity-40 font-extrabold rounded-xl text-[9px] uppercase tracking-wider text-center flex flex-col items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                      >
+                        <Calendar className="h-4 w-4" />
+                        <span>Book Slot</span>
+                      </button>
                     </div>
                   </motion.div>
                 ))}
@@ -574,24 +551,245 @@ const AIDoctorBookingPage: React.FC = () => {
             </motion.div>
           )}
 
-          {/* STEP 3: Date & Slots Timeline selector */}
+          {/* STEP 3: Detailed Doctor Bio Page (large photo, qualification, rating details) */}
           {bookingStep === 3 && selectedDoctor && (
             <motion.div
-              key="step-slots"
+              key="step-doctor-bio"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               className="max-w-xl mx-auto bg-card-surface border border-card-custom rounded-3xl p-6 shadow-xl space-y-6"
             >
-              <div className="flex justify-between items-center">
-                <div>
-                  <span className="text-[10px] text-brand-from font-extrabold uppercase tracking-wide">Doctor Selected</span>
-                  <h3 className="font-extrabold text-lg text-primary-custom">{selectedDoctor.name}</h3>
-                </div>
-                <span className="text-xs text-secondary-custom font-semibold">Step 2 of 3</span>
+              <div className="flex items-center justify-between border-b border-card-custom pb-4">
+                <button
+                  onClick={() => setBookingStep(2)}
+                  className="flex items-center text-xs font-bold text-secondary-custom hover:text-primary-custom"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-1" /> Back to Doctor Directory
+                </button>
+                <span className="text-[10px] text-brand-from font-extrabold uppercase">Doctor Profile info</span>
               </div>
 
-              {/* Date selection grid */}
+              {/* Large Portrait Layout */}
+              <div className="flex flex-col items-center text-center">
+                <img 
+                  src={selectedDoctor.docPhoto} 
+                  alt={selectedDoctor.name} 
+                  className="w-32 h-32 rounded-full object-cover border-4 border-purple-500/25 shadow-lg mb-4"
+                />
+                <h3 className="text-xl font-black text-primary-custom flex items-center gap-2">
+                  {selectedDoctor.name}
+                  <span className="inline-flex items-center text-xs text-amber-500 font-bold bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                    <Star className="h-3.5 w-3.5 fill-amber-500 mr-0.5" /> {selectedDoctor.rating}
+                  </span>
+                </h3>
+                <p className="text-xs text-brand-from font-extrabold uppercase tracking-widest mt-0.5">
+                  {selectedDoctor.specialty}
+                </p>
+              </div>
+
+              {/* Clinical Specs */}
+              <div className="grid grid-cols-3 gap-3">
+                <div className="bg-black/5 dark:bg-white/5 border border-card-custom p-3 rounded-2xl text-center">
+                  <Award className="h-5 w-5 mx-auto mb-1 text-purple-500" />
+                  <span className="block text-[8px] text-secondary-custom uppercase">Degree</span>
+                  <span className="text-[10px] font-black text-primary-custom mt-0.5 truncate block">{selectedDoctor.qualifications.split(' ')[0]}</span>
+                </div>
+                <div className="bg-black/5 dark:bg-white/5 border border-card-custom p-3 rounded-2xl text-center">
+                  <Briefcase className="h-5 w-5 mx-auto mb-1 text-brand-from" />
+                  <span className="block text-[8px] text-secondary-custom uppercase">Experience</span>
+                  <span className="text-[10px] font-black text-primary-custom mt-0.5 block">{selectedDoctor.experienceYears}+ Years</span>
+                </div>
+                <div className="bg-black/5 dark:bg-white/5 border border-card-custom p-3 rounded-2xl text-center">
+                  <Heart className="h-5 w-5 mx-auto mb-1 text-emerald-500 fill-emerald-500/20" />
+                  <span className="block text-[8px] text-secondary-custom uppercase">Consults</span>
+                  <span className="text-[10px] font-black text-primary-custom mt-0.5 block">{selectedDoctor.consultsCount}+ Logs</span>
+                </div>
+              </div>
+
+              {/* Full qualifications text */}
+              <div className="bg-black/5 dark:bg-white/5 border border-card-custom rounded-2xl p-4 text-xs text-secondary-custom leading-normal space-y-2">
+                <div>
+                  <span className="block font-black text-primary-custom uppercase text-[8px] tracking-wider mb-0.5">Education Credentials</span>
+                  <span className="font-bold">{selectedDoctor.qualifications}</span>
+                </div>
+                <div className="pt-2 border-t border-card-custom">
+                  <span className="block font-black text-primary-custom uppercase text-[8px] tracking-wider mb-0.5">Doctor Review / Personality</span>
+                  <p className="italic">"{selectedDoctor.personality}"</p>
+                </div>
+              </div>
+
+              {/* Services Focus */}
+              <div>
+                <span className="block text-[8px] text-secondary-custom font-black uppercase tracking-wider mb-2">Primary Medical Services</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedDoctor.services.map((svc, idx) => (
+                    <span key={idx} className="text-[10px] font-bold bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 px-2.5 py-1 rounded-xl">
+                      {svc}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-card-custom flex gap-4">
+                <button
+                  onClick={() => setBookingStep(2)}
+                  className="flex-1 py-3 bg-white/5 border border-card-custom text-secondary-custom font-extrabold rounded-xl text-xs uppercase cursor-pointer"
+                >
+                  Back to List
+                </button>
+                <button
+                  disabled={selectedDoctor.emergencyAway}
+                  onClick={() => setBookingStep(5)}
+                  className="flex-1 py-3 bg-brand-gradient text-white font-extrabold rounded-xl text-xs uppercase tracking-wider shadow-md cursor-pointer"
+                >
+                  Book Appointment Slot
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 4: About Clinic & Degrees (Verification galleries & Mock Map address) */}
+          {bookingStep === 4 && selectedDoctor && (
+            <motion.div
+              key="step-clinic-gallery"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              className="max-w-xl mx-auto bg-card-surface border border-card-custom rounded-3xl p-6 shadow-xl space-y-6"
+            >
+              <div className="flex items-center justify-between border-b border-card-custom pb-4">
+                <button
+                  onClick={() => setBookingStep(2)}
+                  className="flex items-center text-xs font-bold text-secondary-custom hover:text-primary-custom"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-1" /> Back to Doctor Directory
+                </button>
+                <span className="text-[10px] text-brand-from font-extrabold uppercase">Clinic Credentials</span>
+              </div>
+
+              {/* Gallery Title & Address description */}
+              <div>
+                <h3 className="font-extrabold text-primary-custom text-base">Facility & MBBS Verification Gallery</h3>
+                <p className="text-[11px] text-secondary-custom mt-1">
+                  Browse degree certificates, checkup rooms, lobbies, and consulting environments.
+                </p>
+              </div>
+
+              {/* Grid of 10-15 Photos (combined doc photos, degree photos, exam photos and galleries) */}
+              <div className="grid grid-cols-3 gap-3">
+                
+                {/* Degree Diploma Card (Asset 1) */}
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom">
+                  <img src={selectedDoctor.degreePhoto} className="w-full h-full object-cover" alt="MBBS Certificate" />
+                  <span className="absolute bottom-1 left-1 text-[8px] bg-black/75 px-1.5 py-0.5 text-white font-bold rounded">Degree</span>
+                </div>
+
+                {/* Exam Room Card (Asset 2) */}
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom">
+                  <img src={selectedDoctor.examPhoto} className="w-full h-full object-cover" alt="Patient Checkup" />
+                  <span className="absolute bottom-1 left-1 text-[8px] bg-black/75 px-1.5 py-0.5 text-white font-bold rounded">Exam Room</span>
+                </div>
+
+                {/* Lobby/Building Exterior Card (Asset 3) */}
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom">
+                  <img src={selectedDoctor.clinicPhoto} className="w-full h-full object-cover" alt="Facility Exterior" />
+                  <span className="absolute bottom-1 left-1 text-[8px] bg-black/75 px-1.5 py-0.5 text-white font-bold rounded">Reception</span>
+                </div>
+
+                {/* Additional gallery assets (4, 5, 6) */}
+                {selectedDoctor.gallery.map((imgUrl, idx) => (
+                  <div key={idx} className="relative group rounded-xl overflow-hidden h-24 border border-card-custom">
+                    <img src={imgUrl} className="w-full h-full object-cover" alt={`Gallery-${idx}`} />
+                    <span className="absolute bottom-1 left-1 text-[8px] bg-black/75 px-1.5 py-0.5 text-white font-bold rounded">Facility #{idx+1}</span>
+                  </div>
+                ))}
+
+                {/* Compounder portrait asset (7) */}
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom">
+                  <img src={selectedDoctor.assistantPhoto} className="w-full h-full object-cover" alt="Assistant Compounder" />
+                  <span className="absolute bottom-1 left-1 text-[8px] bg-black/75 px-1.5 py-0.5 text-white font-bold rounded">Compounder</span>
+                </div>
+
+                {/* Doctor Portrait portrait asset (8) */}
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom">
+                  <img src={selectedDoctor.docPhoto} className="w-full h-full object-cover" alt="Specialist Doctor" />
+                  <span className="absolute bottom-1 left-1 text-[8px] bg-black/75 px-1.5 py-0.5 text-white font-bold rounded">Doctor Portrait</span>
+                </div>
+
+                {/* Extra simulated mock image slots to reach 10+ photos visually (9, 10, 11) */}
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom bg-black/5 flex flex-col justify-center items-center text-center p-2.5">
+                  <Star className="h-4.5 w-4.5 text-amber-500 fill-amber-500" />
+                  <span className="text-[7px] text-secondary-custom uppercase tracking-wider font-extrabold mt-1">Verified Care Rating</span>
+                </div>
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom bg-black/5 flex flex-col justify-center items-center text-center p-2.5">
+                  <Clock className="h-4.5 w-4.5 text-brand-from" />
+                  <span className="text-[7px] text-secondary-custom uppercase tracking-wider font-extrabold mt-1">Flexible Schedule Check</span>
+                </div>
+                <div className="relative group rounded-xl overflow-hidden h-24 border border-card-custom bg-black/5 flex flex-col justify-center items-center text-center p-2.5">
+                  <ShieldCheck className="h-4.5 w-4.5 text-emerald-500" />
+                  <span className="text-[7px] text-secondary-custom uppercase tracking-wider font-extrabold mt-1">Arogya Certified</span>
+                </div>
+              </div>
+
+              {/* Dynamic Google Maps Address location card */}
+              <div className="bg-black/5 dark:bg-white/5 border border-card-custom p-4 rounded-2xl space-y-3">
+                <span className="block text-[8px] text-secondary-custom font-black uppercase tracking-wider">Physical Clinic Coordinates</span>
+                <div className="flex items-start space-x-3">
+                  <MapPin className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-xs text-primary-custom font-extrabold block">Arogya Center Desk location</span>
+                    <span className="text-[11px] text-secondary-custom leading-normal block">{selectedDoctor.address}</span>
+                  </div>
+                </div>
+                <a 
+                  href={selectedDoctor.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 bg-white/5 hover:bg-white/10 text-secondary-custom border border-card-custom font-bold rounded-xl text-[10px] uppercase text-center block"
+                >
+                  Open in Google Maps Directions
+                </a>
+              </div>
+
+              <div className="pt-4 border-t border-card-custom flex gap-4">
+                <button
+                  onClick={() => setBookingStep(2)}
+                  className="flex-1 py-3 bg-white/5 border border-card-custom text-secondary-custom font-extrabold rounded-xl text-xs uppercase cursor-pointer"
+                >
+                  Back to List
+                </button>
+                <button
+                  disabled={selectedDoctor.emergencyAway}
+                  onClick={() => setBookingStep(5)}
+                  className="flex-1 py-3 bg-brand-gradient text-white font-extrabold rounded-xl text-xs uppercase tracking-wider shadow-md cursor-pointer"
+                >
+                  Book Appointment Slot
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 5: Date Selector & Calendar Time slot picking Form */}
+          {bookingStep === 5 && selectedDoctor && (
+            <motion.div
+              key="step-booking-slots-form"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              className="max-w-xl mx-auto bg-card-surface border border-card-custom rounded-3xl p-6 shadow-xl space-y-6"
+            >
+              <div className="flex items-center justify-between border-b border-card-custom pb-4">
+                <button
+                  onClick={() => setBookingStep(2)}
+                  className="flex items-center text-xs font-bold text-secondary-custom hover:text-primary-custom"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-1" /> Back to Doctor Directory
+                </button>
+                <span className="text-[10px] text-brand-from font-extrabold uppercase">Step 3 of 3</span>
+              </div>
+
+              {/* 1. Date Selector */}
               <div>
                 <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider mb-2">
                   1. Choose Date
@@ -613,7 +811,7 @@ const AIDoctorBookingPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Slot scheduler timeline */}
+              {/* 2. Slot picker */}
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider">
@@ -653,193 +851,97 @@ const AIDoctorBookingPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-card-custom flex gap-4">
-                <button
-                  onClick={() => setBookingStep(2)}
-                  className="flex-1 py-3 bg-white/5 border border-card-custom text-secondary-custom font-extrabold rounded-xl text-xs uppercase cursor-pointer"
-                >
-                  Change Doctor
-                </button>
-                <button
-                  disabled={!selectedDate || !selectedSlot}
-                  onClick={() => setBookingStep(4)}
-                  className="flex-1 py-3 bg-brand-gradient disabled:opacity-40 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider cursor-pointer"
-                >
-                  Enter Patient Info
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* STEP 4: Patient Info Form & Duplicates Validations */}
-          {bookingStep === 4 && selectedDoctor && (
-            <motion.div
-              key="step-form"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              className="max-w-xl mx-auto bg-card-surface border border-card-custom rounded-3xl p-6 shadow-xl space-y-6"
-            >
-              <div className="flex justify-between items-center border-b border-card-custom pb-4">
-                <div>
-                  <span className="text-[8px] text-purple-500 font-extrabold uppercase tracking-wide">Step 3 of 3</span>
-                  <h3 className="text-lg font-extrabold text-primary-custom">Patient Information Console</h3>
-                </div>
-                <div className="text-right">
-                  <span className="block text-[9px] text-secondary-custom uppercase">Doctor & Slot</span>
-                  <span className="text-xs font-black text-brand-from">{selectedDoctor.name} at {selectedSlot}</span>
-                </div>
-              </div>
-
-              <form onSubmit={handleBookingSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider mb-1.5">
-                    Patient Full Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={bookingForm.patientName}
-                    onChange={e => {
-                      setBookingForm({...bookingForm, patientName: e.target.value});
-                      setDuplicateError('');
-                    }}
-                    placeholder="Enter full name (must be unique)"
-                    className="w-full px-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-xs text-primary-custom focus:outline-none focus:border-brand-from"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
+              {/* 3. Patient Details Form */}
+              {selectedDate && selectedSlot && (
+                <form onSubmit={handleBookingSubmit} className="space-y-4 pt-4 border-t border-card-custom">
                   <div>
                     <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider mb-1.5">
-                      Age
+                      Patient Full Name
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       required
-                      value={bookingForm.age}
-                      onChange={e => setBookingForm({...bookingForm, age: e.target.value})}
-                      placeholder="e.g. 25"
+                      value={bookingForm.patientName}
+                      onChange={e => {
+                        setBookingForm({...bookingForm, patientName: e.target.value});
+                        setDuplicateError('');
+                      }}
+                      placeholder="Enter full name"
                       className="w-full px-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-xs text-primary-custom focus:outline-none focus:border-brand-from"
                     />
                   </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider mb-1.5">
+                        Age
+                      </label>
+                      <input
+                        type="number"
+                        required
+                        value={bookingForm.age}
+                        onChange={e => setBookingForm({...bookingForm, age: e.target.value})}
+                        placeholder="e.g. 21"
+                        className="w-full px-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-xs text-primary-custom focus:outline-none focus:border-brand-from"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider mb-1.5">
+                        Contact Phone
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={bookingForm.phone}
+                        onChange={e => setBookingForm({...bookingForm, phone: e.target.value})}
+                        placeholder="e.g. 9876543210"
+                        className="w-full px-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-xs text-primary-custom focus:outline-none focus:border-brand-from"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider mb-1.5">
-                      Contact Phone
+                      Describe Symptoms
                     </label>
                     <input
-                      type="tel"
+                      type="text"
                       required
-                      value={bookingForm.phone}
-                      onChange={e => setBookingForm({...bookingForm, phone: e.target.value})}
-                      placeholder="e.g. 9876543210"
+                      value={bookingForm.symptoms}
+                      onChange={e => setBookingForm({...bookingForm, symptoms: e.target.value})}
+                      placeholder="e.g. Fever, cough"
                       className="w-full px-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-xs text-primary-custom focus:outline-none focus:border-brand-from"
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-[9px] font-black text-secondary-custom uppercase tracking-wider mb-1.5">
-                    Brief Symptoms
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={bookingForm.symptoms}
-                    onChange={e => setBookingForm({...bookingForm, symptoms: e.target.value})}
-                    placeholder="e.g. Cough, high fever"
-                    className="w-full px-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-xs text-primary-custom focus:outline-none focus:border-brand-from"
-                  />
-                </div>
+                  {/* Duplicate Booking Warning block */}
+                  {duplicateError && (
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl p-3 text-[10px] font-bold flex items-start space-x-2">
+                      <ShieldAlert className="h-4 w-4 mt-0.5 flex-shrink-0 animate-pulse" />
+                      <span>{duplicateError}</span>
+                    </div>
+                  )}
 
-                {/* Duplicate booking error banner */}
-                {duplicateError && (
-                  <div className="bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl p-3 text-[10px] font-bold flex items-start space-x-2 animate-shake">
-                    <ShieldAlert className="h-4 w-4 mt-0.5 flex-shrink-0 animate-pulse" />
-                    <span>{duplicateError}</span>
+                  {/* Secure warning notice */}
+                  <div className="p-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-xl text-[10px] font-semibold leading-relaxed">
+                    * pay directly at reception Desk. Arogya Care App will not process payments.
                   </div>
-                )}
 
-                <div className="pt-4 border-t border-card-custom flex gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setBookingStep(3)}
-                    className="flex-1 py-3 bg-white/5 border border-card-custom text-secondary-custom font-extrabold rounded-xl text-xs uppercase cursor-pointer"
-                  >
-                    Change Slot
-                  </button>
                   <button
                     type="submit"
-                    className="flex-1 py-3 bg-brand-gradient text-white font-extrabold rounded-xl text-xs uppercase tracking-wider cursor-pointer"
+                    className="w-full py-3 bg-brand-gradient text-white font-extrabold rounded-xl text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all cursor-pointer"
                   >
-                    Confirm Booking
+                    Generate Slot Token & Book
                   </button>
-                </div>
-              </form>
-            </motion.div>
-          )}
-
-          {/* STEP 5: Congratulations success page with WhatsApp confirm redirect buttons */}
-          {bookingStep === 5 && lastBookedAppointment && selectedDoctor && (
-            <motion.div
-              key="step-congrats"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="max-w-md mx-auto bg-card-surface border border-card-custom rounded-3xl p-6 shadow-2xl text-center space-y-6"
-            >
-              <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto border border-green-500/35">
-                <Check className="h-8 w-8" />
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-black text-primary-custom tracking-tight">🎉 Congratulations!</h3>
-                <p className="text-xs text-secondary-custom mt-1">
-                  Your appointment slot has been registered.
-                </p>
-              </div>
-
-              <div className="bg-black/10 dark:bg-white/5 border border-card-custom rounded-2xl p-4 text-left space-y-2 text-xs font-semibold">
-                <div className="flex justify-between">
-                  <span className="text-secondary-custom">Specialist:</span>
-                  <span className="text-primary-custom font-bold">{lastBookedAppointment.doctorName}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-secondary-custom">Reserved slot:</span>
-                  <span className="text-primary-custom font-bold">{lastBookedAppointment.date} at {lastBookedAppointment.timeSlot}</span>
-                </div>
-                <div className="flex justify-between border-t border-card-custom pt-2 mt-2">
-                  <span className="text-secondary-custom">Queue Token:</span>
-                  <span className="text-brand-from font-black text-sm">#{lastBookedAppointment.tokenNumber}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-secondary-custom">Consult Arrival:</span>
-                  <span className="text-emerald-500 font-black text-sm">{lastBookedAppointment.estArrivalTime}</span>
-                </div>
-              </div>
-
-              {/* Direct redirect confirmations buttons */}
-              <div className="space-y-3">
-                <button
-                  onClick={handleWhatsAppRedirect}
-                  className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-green-600/20 cursor-pointer"
-                >
-                  <MessageSquare className="h-4.5 w-4.5" /> Confirm Appointment on WhatsApp
-                </button>
-                <button
-                  onClick={() => setBookingStep(2)}
-                  className="w-full py-3 bg-white/5 hover:bg-white/10 text-secondary-custom border border-card-custom font-bold rounded-xl text-xs uppercase cursor-pointer"
-                >
-                  Finish & Back to Doctor List
-                </button>
-              </div>
+                </form>
+              )}
             </motion.div>
           )}
 
         </AnimatePresence>
 
         {/* ACTIVE BOOKINGS MANAGER: Functional Delete/Cancel Section */}
-        {appointments.length > 0 && (
+        {appointments.length > 0 && bookingStep > 1 && (
           <div className="mt-14 max-w-4xl mx-auto border-t border-card-custom pt-8">
             <h3 className="text-lg font-black text-primary-custom mb-4 flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-emerald-500" /> Active Appointment Console (Slots Cancel Manager)
