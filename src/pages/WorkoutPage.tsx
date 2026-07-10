@@ -550,29 +550,29 @@ const WorkoutPage: React.FC = () => {
       case 1:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            <h2 className="text-2xl font-black text-primary-custom mb-6">
               {quizData.goal === 'maintain' ? 'In how many months do you want to maintain this routine?' : 
                `How much weight do you want to ${quizData.goal}?`}
             </h2>
             {quizData.goal !== 'maintain' && (
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
+                <label className="block text-xs font-bold text-secondary-custom uppercase mb-2 tracking-wider">Weight (kg)</label>
                 <input
                   type="number"
                   value={quizData.weightChange}
                   onChange={(e) => setQuizData({...quizData, weightChange: parseInt(e.target.value) || 0})}
-                  className="w-32 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent text-center text-lg font-semibold"
+                  className="w-32 px-4 py-3 bg-white/5 border border-card-custom rounded-xl focus:border-brand-from outline-none text-center text-lg font-black text-primary-custom transition-all"
                   placeholder="0"
                 />
               </div>
             )}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Duration (months)</label>
+              <label className="block text-xs font-bold text-secondary-custom uppercase mb-2 tracking-wider">Duration (months)</label>
               <input
                 type="number"
                 value={quizData.duration}
                 onChange={(e) => setQuizData({...quizData, duration: parseInt(e.target.value) || 0})}
-                className="w-32 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent text-center text-lg font-semibold"
+                className="w-32 px-4 py-3 bg-white/5 border border-card-custom rounded-xl focus:border-brand-from outline-none text-center text-lg font-black text-primary-custom transition-all"
                 placeholder="0"
               />
             </div>
@@ -630,7 +630,7 @@ const WorkoutPage: React.FC = () => {
               </div>
             ) : (
               <div>
-                <p className="text-gray-600 mb-6">Select the days when you prefer to avoid {quizData.dietaryPreference === 'eggitarian' ? 'eggs' : 'non-vegetarian food'}:</p>
+                <p className="text-secondary-custom mb-6">Select the days when you prefer to avoid {quizData.dietaryPreference === 'eggitarian' ? 'eggs' : 'non-vegetarian food'}:</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {DAYS_OF_WEEK.map((day) => (
                     <button
@@ -641,10 +641,10 @@ const WorkoutPage: React.FC = () => {
                           : [...quizData.nonVegDays, day];
                         setQuizData({...quizData, nonVegDays: newDays});
                       }}
-                      className={`p-3 rounded-xl border-2 transition-all ${
+                      className={`p-3 rounded-xl border-2 transition-all font-semibold ${
                         quizData.nonVegDays.includes(day)
-                          ? 'bg-orange-50 border-orange-200 text-orange-800' 
-                          : 'bg-white border-gray-200 hover:border-gray-300'
+                          ? 'bg-orange-500/10 border-orange-500/30 text-orange-500 shadow-md' 
+                          : 'bg-white/5 border-card-custom hover:border-brand-from/30 text-primary-custom'
                       }`}
                     >
                       {day}
@@ -654,15 +654,15 @@ const WorkoutPage: React.FC = () => {
                 <div className="mt-4">
                   <button
                     onClick={() => setQuizData({...quizData, nonVegDays: []})}
-                    className="text-sm text-gray-500 hover:text-gray-700 underline"
+                    className="text-sm text-secondary-custom hover:text-primary-custom underline transition-colors"
                   >
                     Clear all selections
                   </button>
                 </div>
                 {quizData.nonVegDays.length > 0 && (
-                  <div className="mt-4 p-3 bg-orange-50 rounded-xl">
-                    <p className="text-sm text-orange-800">
-                      You'll get vegetarian meals on: {quizData.nonVegDays.join(', ')}
+                  <div className="mt-4 p-3 bg-orange-500/10 border border-orange-500/20 rounded-xl">
+                    <p className="text-sm text-orange-400">
+                      You\'ll get vegetarian meals on: {quizData.nonVegDays.join(', ')}
                     </p>
                   </div>
                 )}
@@ -674,17 +674,17 @@ const WorkoutPage: React.FC = () => {
       case 4:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Which cuisine(s) do you prefer?</h2>
+            <h2 className="text-2xl font-black text-primary-custom mb-6">Which cuisine(s) do you prefer?</h2>
             <div className="mb-4">
               <input
                 type="text"
                 value={cuisineSearch}
                 onChange={(e) => setCuisineSearch(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white/5 border border-card-custom rounded-xl focus:border-brand-from outline-none text-primary-custom transition-all"
                 placeholder="Search cuisines..."
               />
             </div>
-            <div className="max-h-64 overflow-y-auto border border-gray-200 rounded-xl p-4">
+            <div className="max-h-64 overflow-y-auto border border-card-custom rounded-xl p-4 bg-white/5">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {filteredCuisines.slice(0, 20).map((cuisine) => (
                   <button
@@ -697,8 +697,8 @@ const WorkoutPage: React.FC = () => {
                     }}
                     className={`p-2 text-sm rounded-lg border transition-all ${
                       quizData.cuisines.includes(cuisine) 
-                        ? 'bg-teal-50 border-teal-200 text-teal-800' 
-                        : 'bg-white border-gray-200 hover:border-gray-300'
+                        ? 'bg-teal-500/10 border-teal-500/30 text-teal-500 shadow-md font-semibold' 
+                        : 'bg-white/5 border-card-custom hover:border-brand-from/30 text-primary-custom'
                     }`}
                   >
                     {cuisine}
@@ -708,10 +708,10 @@ const WorkoutPage: React.FC = () => {
             </div>
             {quizData.cuisines.length > 0 && (
               <div className="mt-4">
-                <p className="text-sm text-gray-600 mb-2">Selected cuisines:</p>
+                <p className="text-sm text-secondary-custom mb-2">Selected cuisines:</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {quizData.cuisines.map((cuisine) => (
-                    <span key={cuisine} className="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm">
+                    <span key={cuisine} className="px-3 py-1 bg-teal-500/10 border border-teal-500/20 text-teal-500 rounded-full text-sm font-semibold">
                       {cuisine}
                     </span>
                   ))}
@@ -724,7 +724,7 @@ const WorkoutPage: React.FC = () => {
       case 5:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Do you have any allergies?</h2>
+            <h2 className="text-2xl font-black text-primary-custom mb-6">Do you have any allergies?</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {['Nuts', 'Dairy', 'Gluten', 'Shellfish', 'Eggs', 'Soy', 'Fish', 'Sesame', 'None'].map((allergy) => (
                 <button
@@ -739,10 +739,10 @@ const WorkoutPage: React.FC = () => {
                       setQuizData({...quizData, allergies: newAllergies});
                     }
                   }}
-                  className={`p-3 rounded-xl border-2 transition-all ${
+                  className={`p-3 rounded-xl border-2 transition-all font-semibold ${
                     (allergy === 'None' && quizData.allergies.length === 0) || quizData.allergies.includes(allergy)
-                      ? 'bg-orange-50 border-orange-200 text-orange-800' 
-                      : 'bg-white border-gray-200 hover:border-gray-300'
+                      ? 'bg-orange-500/10 border-orange-500/30 text-orange-500 shadow-md' 
+                      : 'bg-white/5 border-card-custom hover:border-brand-from/30 text-primary-custom'
                   }`}
                 >
                   {allergy}
@@ -787,9 +787,9 @@ const WorkoutPage: React.FC = () => {
       case 7:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Do you have any medical conditions?</h2>
+            <h2 className="text-2xl font-black text-primary-custom mb-6">Do you have any medical conditions?</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {['Diabetes', 'Hypertension', 'Heart Disease', 'Thyroid', 'PCOS', 'Arthritis', 'Asthma', 'None'].map((condition) => (
+               {['Diabetes', 'Hypertension', 'Heart Disease', 'Thyroid', 'PCOS', 'Arthritis', 'Asthma', 'None'].map((condition) => (
                 <button
                   key={condition}
                   onClick={() => {
@@ -802,10 +802,10 @@ const WorkoutPage: React.FC = () => {
                       setQuizData({...quizData, medicalConditions: newConditions});
                     }
                   }}
-                  className={`p-3 rounded-xl border-2 transition-all ${
+                  className={`p-3 rounded-xl border-2 transition-all font-semibold ${
                     (condition === 'None' && quizData.medicalConditions.length === 0) || quizData.medicalConditions.includes(condition)
-                      ? 'bg-red-50 border-red-200 text-red-800' 
-                      : 'bg-white border-gray-200 hover:border-gray-300'
+                      ? 'bg-red-500/10 border-red-500/30 text-red-500 shadow-md' 
+                      : 'bg-white/5 border-card-custom hover:border-brand-from/30 text-primary-custom'
                   }`}
                 >
                   {condition}

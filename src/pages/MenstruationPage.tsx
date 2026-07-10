@@ -289,13 +289,13 @@ const MenstruationPage: React.FC = () => {
   // Comfort screen component
   const ComfortScreen = () => (
     <motion.div
-      className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="glass-card p-8 border border-card-custom max-w-md w-full shadow-2xl text-left"
+        className="bg-white dark:bg-slate-900/95 p-8 border border-card-custom max-w-md w-full shadow-2xl text-left rounded-3xl backdrop-blur-xl"
         initial={{ scale: 0.8, y: 50 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.8, y: 50 }}
