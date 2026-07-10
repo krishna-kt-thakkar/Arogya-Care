@@ -52,51 +52,6 @@ const Header: React.FC = () => {
               </span>
             )}
             
-            {/* Theme Dropdown Selector */}
-            <div className="relative">
-              <motion.button
-                onClick={() => setShowThemeMenu(!showThemeMenu)}
-                className="flex items-center space-x-2 px-3.5 py-2 rounded-full bg-white/5 border border-card-custom hover:bg-white/10 text-primary-custom transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Palette className="h-4 w-4 text-brand-from" />
-                <span className="hidden md:inline text-xs font-semibold uppercase tracking-wider capitalize text-secondary-custom">
-                  {theme}
-                </span>
-              </motion.button>
-
-              <AnimatePresence>
-                {showThemeMenu && (
-                  <motion.div
-                    className="absolute right-0 mt-2.5 w-48 rounded-2xl bg-card-surface/95 backdrop-blur-2xl border border-card-custom p-2 shadow-2xl z-50 overflow-hidden"
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-secondary-custom/40 uppercase tracking-wider border-b border-card-custom mb-1">
-                      Choose Theme Accent
-                    </div>
-                    {themeOptions.map((opt) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => { setTheme(opt.id); setShowThemeMenu(false); }}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs font-medium transition-colors ${
-                          theme === opt.id ? 'bg-brand-from/15 text-brand-from font-semibold' : 'text-secondary-custom hover:bg-white/5 hover:text-primary-custom'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <span className={`w-3 h-3 rounded-full ${opt.color} border border-white/20`} />
-                          <span>{opt.name}</span>
-                        </div>
-                        {theme === opt.id && <Heart className="h-3 w-3 text-brand-from fill-brand-from animate-pulse" />}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
 
             {/* Language Toggle */}
             <motion.button

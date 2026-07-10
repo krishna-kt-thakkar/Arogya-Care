@@ -10,6 +10,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import PageTransition from './components/common/PageTransition';
 import BadgeUnlockModal from './components/gamification/BadgeUnlockModal';
 import ChatbotIcon from './components/chat/ChatbotIcon';
+import GlobalThemeSelector from './components/common/GlobalThemeSelector';
 
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
@@ -89,9 +90,10 @@ const AppRoutes: React.FC = () => {
         </Routes>
       </AnimatePresence>
 
-      {/* Global floating elements — only show when user is logged in */}
+      {/* Global floating elements */}
       {user && <ChatbotIcon />}
       <BadgeUnlockModal />
+      <GlobalThemeSelector />
     </>
   );
 };

@@ -499,45 +499,6 @@ const LandingPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Custom Theme Switcher */}
-            <div className="relative">
-              <button
-                onClick={() => setShowThemeMenu(!showThemeMenu)}
-                className="p-2.5 rounded-full bg-white/5 border border-card-custom hover:bg-white/10 transition-colors flex items-center gap-2 text-xs font-semibold text-blue-200/80"
-                title="Change Theme Layout">
-                <Palette className="h-4 w-4 text-brand-from" />
-                <span className="hidden md:inline capitalize">{theme} theme</span>
-              </button>
-
-              <AnimatePresence>
-                {showThemeMenu && (
-                  <motion.div
-                    className="absolute right-0 mt-2.5 w-48 rounded-2xl bg-slate-900/95 backdrop-blur-2xl border border-white/15 p-2 shadow-2xl z-50 overflow-hidden"
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}>
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-blue-200/40 uppercase tracking-wider border-b border-white/5 mb-1">
-                      Choose Theme Accent
-                    </div>
-                    {themeOptions.map((opt) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => { setTheme(opt.id); setShowThemeMenu(false); }}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs font-medium transition-colors ${
-                          theme === opt.id ? 'bg-white/10 text-white' : 'text-blue-200/60 hover:bg-white/5 hover:text-white'
-                        }`}>
-                        <div className="flex items-center gap-2">
-                          <span className={`w-3.5 h-3.5 rounded-full ${opt.color} border border-white/20`} />
-                          <span>{opt.name}</span>
-                        </div>
-                        {theme === opt.id && <CheckCircle className="h-3.5 w-3.5 text-violet-400" />}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
 
             <motion.button onClick={scrollToAuth}
               className="px-5 py-2 rounded-full bg-white/5 hover:bg-white/10 text-white text-sm font-semibold border border-card-custom transition-all"
