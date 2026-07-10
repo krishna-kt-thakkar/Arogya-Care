@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/layout/Header';
+import { useLanguage } from '../hooks/useLanguage';
+
 
 interface Message {
   id: string;
@@ -30,6 +32,7 @@ interface Message {
 
 const AIMoodCompanionPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -308,17 +311,17 @@ const AIMoodCompanionPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-3">
+              <h1 className="text-3xl font-bold text-primary-custom flex items-center space-x-3">
                 <Heart className="h-8 w-8 text-pink-500" />
-                <span>AI Mood Companion</span>
+                <span>{t('aiMoodCompanion')}</span>
                 <Sparkles className="h-6 w-6 text-purple-500" />
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">4-minute emotional support session</p>
+              <p className="text-secondary-custom mt-1">4-minute emotional support session</p>
             </div>
           </div>
           
@@ -336,7 +339,7 @@ const AIMoodCompanionPage: React.FC = () => {
             </button>
             <button
               onClick={resetSession}
-              className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+              className="p-2 rounded-full bg-white/5 text-secondary-custom hover:bg-white/10 transition-all"
             >
               <RotateCcw className="h-5 w-5" />
             </button>
@@ -367,7 +370,7 @@ const AIMoodCompanionPage: React.FC = () => {
                   ? 'text-green-600 dark:text-green-400'
                   : 'text-blue-600 dark:text-blue-400'
             }`} />
-            <span className="font-medium text-gray-800 dark:text-gray-100">
+            <span className="font-medium text-primary-custom">
               {sessionActive
                 ? `Session time remaining: ${formatTimeRemaining()}`
                 : sessionComplete
@@ -377,7 +380,7 @@ const AIMoodCompanionPage: React.FC = () => {
           </div>
           
           {sessionActive && (
-            <div className="w-24 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+            <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden">
               <motion.div
                 className={`h-full ${
                   timeRemaining < 60
@@ -394,21 +397,21 @@ const AIMoodCompanionPage: React.FC = () => {
 
         {/* Chat Interface */}
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 h-[500px] flex flex-col"
+          className="bg-card-surface rounded-3xl shadow-lg border border-card-custom h-[500px] flex flex-col"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           {/* Chat Header */}
-          <div className="p-6 border-b border-gray-100 dark:border-gray-700">
+          <div className="p-6 border-b border-card-custom">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                   {getMoodIcon()}
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">AI Companion</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <h3 className="text-lg font-semibold text-primary-custom">AI Companion</h3>
+                  <p className="text-sm text-secondary-custom">
                     {currentMood 
                       ? `Sensing you're feeling ${currentMood}` 
                       : 'Here to listen and support'}
@@ -437,11 +440,11 @@ const AIMoodCompanionPage: React.FC = () => {
                   <div className={`px-4 py-3 rounded-2xl ${
                     message.isUser
                       ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100'
+                      : 'bg-white/5 text-primary-custom'
                   }`}>
                     <p className="text-sm leading-relaxed">{message.text}</p>
                     <p className={`text-xs mt-2 ${
-                      message.isUser ? 'text-purple-100' : 'text-gray-500 dark:text-gray-400'
+                      message.isUser ? 'text-purple-100' : 'text-secondary-custom'
                     }`}>
                       {new Date(message.timestamp).toLocaleTimeString([], { 
                         hour: '2-digit', 
@@ -475,7 +478,7 @@ const AIMoodCompanionPage: React.FC = () => {
                   <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                     <Heart className="h-4 w-4 text-white" />
                   </div>
-                  <div className="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-2xl">
+                  <div className="bg-white/5 px-4 py-3 rounded-2xl">
                     <div className="flex space-x-1">
                       <motion.div
                         className="w-2 h-2 bg-purple-400 rounded-full"
@@ -502,7 +505,7 @@ const AIMoodCompanionPage: React.FC = () => {
           </div>
 
           {/* Message Input */}
-          <div className="p-6 border-t border-gray-100 dark:border-gray-700">
+          <div className="p-6 border-t border-card-custom">
             <div className="flex space-x-3">
               <div className="flex-1 relative">
                 <textarea
@@ -510,7 +513,7 @@ const AIMoodCompanionPage: React.FC = () => {
                   onChange={(e) => setCurrentMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Share how you're feeling..."
-                  className="w-full px-4 py-3 pr-12 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  className="w-full px-4 py-3 pr-12 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent resize-none bg-card-surface text-primary-custom"
                   rows={2}
                   disabled={sessionComplete}
                 />
@@ -521,7 +524,7 @@ const AIMoodCompanionPage: React.FC = () => {
                   className={`absolute right-3 top-3 p-1 rounded-full transition-all ${
                     isListening 
                       ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 animate-pulse' 
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                      : 'bg-white/5 text-secondary-custom hover:text-secondary-custom'
                   } ${sessionComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
@@ -561,7 +564,7 @@ const AIMoodCompanionPage: React.FC = () => {
                 setTimeout(() => sendMessage(), 100);
               }}
               disabled={sessionComplete}
-              className="p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 transition-all text-center group disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-4 bg-card-surface rounded-2xl border border-card-custom hover:border-purple-300 dark:hover:border-purple-600 transition-all text-center group disabled:opacity-50 disabled:cursor-not-allowed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 + index * 0.1 }}
@@ -569,7 +572,7 @@ const AIMoodCompanionPage: React.FC = () => {
               whileTap={{ scale: sessionComplete ? 1 : 0.98 }}
             >
               <action.icon className="h-8 w-8 text-purple-500 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-              <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{action.label}</p>
+              <p className="text-sm font-medium text-primary-custom">{action.label}</p>
             </motion.button>
           ))}
         </motion.div>

@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                       onClick={() => setShowLanguageMenu(false)}
                     />
                     <motion.div
-                      className="absolute right-0 mt-2 w-48 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-2xl p-2 z-50 overflow-hidden"
+                      className="absolute right-0 mt-2 w-48 rounded-2xl bg-card-surface border border-card-custom shadow-2xl p-2 z-50 overflow-hidden"
                       initial={{ opacity: 0, y: -10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -106,7 +106,7 @@ const Header: React.FC = () => {
                             className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
                               language === opt.id
                                 ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white'
+                                : 'text-secondary-custom hover:bg-white/5/50 hover:text-primary-custom dark:hover:text-white'
                             }`}
                           >
                             <div className="flex justify-between items-center">

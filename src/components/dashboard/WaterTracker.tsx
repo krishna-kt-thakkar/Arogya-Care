@@ -162,7 +162,7 @@ const WaterTracker: React.FC = () => {
         <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 transition-colors duration-300">
           {waterIntake}/{waterGoal}
         </p>
-        <p className="text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300">{t('glasses')}</p>
+        <p className="text-sm text-secondary-custom transition-colors duration-300">{t('glasses')}</p>
         {waterIntake >= waterGoal && (
           <motion.div
             initial={{ opacity: 0, scale: 0 }}

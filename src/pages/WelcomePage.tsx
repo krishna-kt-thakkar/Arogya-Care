@@ -3,9 +3,12 @@ import { motion } from 'framer-motion';
 import { Heart, ArrowRight, Sparkles, Shield, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../hooks/useLanguage';
+
 
 const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { user } = useAuth();
   const [showContent, setShowContent] = useState(false);
   const [canProceed, setCanProceed] = useState(false);

@@ -20,12 +20,12 @@
   --brand-gradient: linear-gradient(135deg, #4f46e5, #0284c7);
   --brand-from: #4f46e5;
   --brand-to: #0284c7;
-  --brand-bg: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%); /* Premium slate gradient, professional and gentle */
-  --card-bg: rgba(241, 245, 249, 0.92); /* Frosted light slate-50 cards, reduces white glare */
-  --card-border: rgba(15, 23, 42, 0.1); /* Pronounced slate borders */
+  --brand-bg: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%); /* Slightly darker slate gradient for less glare */
+  --card-bg: rgba(255, 255, 255, 0.88); /* More opaque white cards for content clarity */
+  --card-border: rgba(15, 23, 42, 0.15); /* Stronger slate borders for better definition */
   --text-primary: #0f172a; /* Slate-900 high contrast text */
   --text-secondary: #334155; /* Slate-700 secondary text */
-  --glow-color: rgba(79, 70, 229, 0.05);
+  --glow-color: rgba(79, 70, 229, 0.08);
 }
 
 .theme-dark {
@@ -235,6 +235,27 @@
   }
   .text-secondary-custom {
     color: var(--text-secondary);
+  }
+  .divide-card-custom > :not([hidden]) ~ :not([hidden]) {
+    border-color: var(--card-border);
+  }
+  .ring-card-custom {
+    --tw-ring-color: var(--card-border);
+  }
+  .placeholder-secondary-custom::placeholder {
+    color: var(--text-secondary);
+  }
+  .text-brand-from {
+    color: var(--brand-from);
+  }
+  .border-brand-from {
+    border-color: var(--brand-from);
+  }
+  .focus\:ring-brand-from:focus {
+    --tw-ring-color: var(--brand-from);
+  }
+  .focus\:border-brand-from:focus {
+    border-color: var(--brand-from);
   }
 
   /* Core animations */

@@ -164,7 +164,7 @@ const Dashboard: React.FC = () => {
   ];
 
   const getScoreMessage = (score: number) => {
-    if (score >= 80) return 'Optimal Health Status';
+    if (score >= 80) return `Optimal Health ${t('status')}`;
     if (score >= 50) return 'Moderate Activity';
     if (score > 0) return 'Initiating Diagnostics';
     return 'Awaiting Active Tracking';
@@ -200,12 +200,12 @@ const Dashboard: React.FC = () => {
             <AlertTriangle className="h-5 w-5 text-red-500 flex-shrink-0 animate-pulse" />
             <div className="flex-1">
               <p className="text-sm font-bold text-primary-custom">
-                Temporary Guest Mode Active
+                {t('guestModeActive')}
               </p>
               <p className="text-xs text-secondary-custom mt-0.5">
-                Your logs and tracker metrics are only stored locally on this browser session.{' '}
+                {t('guestModeDesc')}{' '}
                 <button onClick={() => navigate('/')} className="font-bold text-brand-from hover:underline">
-                  Create an account to persist progress
+                  {t('createAccountPersist')}
                 </button>
               </p>
             </div>
@@ -244,17 +244,17 @@ const Dashboard: React.FC = () => {
                   {user.name}
                 </h3>
                 <p className="text-xs text-secondary-custom font-semibold tracking-wider uppercase mt-0.5">
-                  {user.isGuest ? 'Guest Explorer' : 'Aarogya Member'}
+                  {user.isGuest ? t('guestExplorer') : t('aarogyaMember')}
                 </p>
 
                 <div className="mt-6 pt-6 border-t border-card-custom grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-white/5 border border-card-custom rounded-2xl">
                     <span className="block text-xl font-black text-brand-from">{wellnessScore}%</span>
-                    <span className="text-[10px] text-secondary-custom uppercase tracking-wider font-bold">Health Index</span>
+                    <span className="text-[10px] text-secondary-custom uppercase tracking-wider font-bold">{t('healthIndex')}</span>
                   </div>
                   <div className="text-center p-3 bg-white/5 border border-card-custom rounded-2xl">
-                    <span className="block text-xl font-black text-brand-to">Active</span>
-                    <span className="text-[10px] text-secondary-custom uppercase tracking-wider font-bold">Status</span>
+                    <span className="block text-xl font-black text-brand-to">{t('active')}</span>
+                    <span className="text-[10px] text-secondary-custom uppercase tracking-wider font-bold">{t('status')}</span>
                   </div>
                 </div>
               </div>
@@ -285,11 +285,11 @@ const Dashboard: React.FC = () => {
               </div>
               
               <div>
-                <h4 className="text-sm font-black text-primary-custom">Consistency Streak</h4>
+                <h4 className="text-sm font-black text-primary-custom">{t('consistencyStreak')}</h4>
                 <p className="text-xs text-secondary-custom leading-tight">
                   {streakData.currentStreak === 0 
-                    ? 'Start tracking your daily progress' 
-                    : `Active habit streak day: ${streakData.currentStreak}`
+                    ? t('startTrackingProgress') 
+                    : `${t('activeStreakDay')}: ${streakData.currentStreak}`
                   }
                 </p>
               </div>

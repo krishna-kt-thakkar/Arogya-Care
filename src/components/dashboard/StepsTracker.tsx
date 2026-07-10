@@ -245,9 +245,9 @@ const StepsTracker: React.FC = () => {
             <Footprints className="h-6 w-6 text-green-600 dark:text-green-400" />
           </motion.div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Steps Today</h3>
+            <h3 className="text-lg font-semibold text-primary-custom">Steps Today</h3>
             {lastUpdated && (
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-secondary-custom">
                 Updated {formatLastUpdated(lastUpdated)}
               </p>
             )}
@@ -309,7 +309,7 @@ const StepsTracker: React.FC = () => {
         >
           {currentSteps.toLocaleString()}
         </motion.p>
-        <p className="text-sm text-gray-600 dark:text-gray-300">of {dailyGoal.toLocaleString()} goal</p>
+        <p className="text-sm text-secondary-custom">of {dailyGoal.toLocaleString()} goal</p>
         
         {/* Progress Ring */}
         <div className="relative w-16 h-16 mx-auto mt-3">
@@ -363,12 +363,12 @@ const StepsTracker: React.FC = () => {
             detectStepsFromDevice();
           }}
           disabled={isDetecting}
-          className="p-2 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600 transition-all text-center disabled:opacity-50"
+          className="p-2 bg-card-surface rounded-xl border border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600 transition-all text-center disabled:opacity-50"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Watch className="h-4 w-4 text-green-600 dark:text-green-400 mx-auto mb-1" />
-          <span className="text-xs text-gray-600 dark:text-gray-300">Device</span>
+          <span className="text-xs text-secondary-custom">Device</span>
         </motion.button>
 
         <motion.button
@@ -377,12 +377,12 @@ const StepsTracker: React.FC = () => {
             detectStepsFromGPS();
           }}
           disabled={isDetecting}
-          className="p-2 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600 transition-all text-center disabled:opacity-50"
+          className="p-2 bg-card-surface rounded-xl border border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600 transition-all text-center disabled:opacity-50"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <MapPin className="h-4 w-4 text-green-600 dark:text-green-400 mx-auto mb-1" />
-          <span className="text-xs text-gray-600 dark:text-gray-300">GPS</span>
+          <span className="text-xs text-secondary-custom">GPS</span>
         </motion.button>
 
         <motion.button
@@ -391,12 +391,12 @@ const StepsTracker: React.FC = () => {
             setIsEditing(true);
             setEditValue(currentSteps.toString());
           }}
-          className="p-2 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600 transition-all text-center"
+          className="p-2 bg-card-surface rounded-xl border border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600 transition-all text-center"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Edit className="h-4 w-4 text-green-600 dark:text-green-400 mx-auto mb-1" />
-          <span className="text-xs text-gray-600 dark:text-gray-300">Manual</span>
+          <span className="text-xs text-secondary-custom">Manual</span>
         </motion.button>
       </div>
 
@@ -460,13 +460,13 @@ const StepsTracker: React.FC = () => {
             onClick={() => setIsEditing(false)}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-2xl"
+              className="bg-card-surface rounded-2xl p-6 w-full max-w-sm shadow-2xl"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
+              <h3 className="text-lg font-bold text-primary-custom mb-4">
                 Enter Step Count
               </h3>
               
@@ -474,7 +474,7 @@ const StepsTracker: React.FC = () => {
                 type="number"
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-center text-xl font-bold"
+                className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom text-center text-xl font-bold"
                 placeholder="Enter steps"
                 autoFocus
               />
@@ -482,7 +482,7 @@ const StepsTracker: React.FC = () => {
               <div className="flex space-x-3 mt-6">
                 <button
                   onClick={() => setIsEditing(false)}
-                  className="flex-1 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center space-x-2"
+                  className="flex-1 py-3 border border-card-custom text-secondary-custom rounded-xl font-semibold hover:bg-white/5 transition-colors flex items-center justify-center space-x-2"
                 >
                   <X className="h-4 w-4" />
                   <span>Cancel</span>
@@ -511,7 +511,7 @@ const StepsTracker: React.FC = () => {
             onClick={() => setShowWeekly(false)}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md shadow-2xl"
+              className="bg-card-surface rounded-3xl p-8 w-full max-w-md shadow-2xl"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -519,21 +519,21 @@ const StepsTracker: React.FC = () => {
             >
               <div className="flex items-center mb-6">
                 <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400 mr-3" />
-                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Weekly Steps</h3>
+                <h3 className="text-xl font-bold text-primary-custom">Weekly Steps</h3>
               </div>
 
               <div className="space-y-3">
                 {weeklyData.map((day, index) => (
                   <motion.div
                     key={day.date}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-xl"
+                    className="flex items-center justify-between p-3 bg-white/5 rounded-xl"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
                     <div className="flex items-center space-x-3">
-                      <Calendar className="h-4 w-4 text-gray-500" />
-                      <span className="font-medium text-gray-800 dark:text-gray-100">
+                      <Calendar className="h-4 w-4 text-secondary-custom" />
+                      <span className="font-medium text-primary-custom">
                         {new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' })}
                       </span>
                     </div>
@@ -541,7 +541,7 @@ const StepsTracker: React.FC = () => {
                       <p className="font-bold text-green-600 dark:text-green-400">
                         {day.steps.toLocaleString()}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-secondary-custom">
                         {Math.round((day.steps / day.goal) * 100)}% of goal
                       </p>
                     </div>
@@ -551,7 +551,7 @@ const StepsTracker: React.FC = () => {
 
               <button
                 onClick={() => setShowWeekly(false)}
-                className="w-full mt-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                className="w-full mt-6 py-3 bg-white/10 text-primary-custom rounded-xl font-semibold hover:bg-white/20 transition-colors"
               >
                 Close
               </button>

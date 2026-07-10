@@ -2,9 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, ExternalLink, Globe, Zap, Heart, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../hooks/useLanguage';
+
 
 const LiveDeploymentPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 transition-colors duration-300">
@@ -78,7 +81,7 @@ const LiveDeploymentPage: React.FC = () => {
 
         {/* Main Heading */}
         <motion.h1
-          className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6"
+          className="text-4xl md:text-5xl font-bold text-primary-custom mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -88,7 +91,7 @@ const LiveDeploymentPage: React.FC = () => {
 
         {/* Deployment Card */}
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl border border-gray-100 dark:border-gray-700 mb-8"
+          className="bg-card-surface rounded-3xl p-8 shadow-2xl border border-card-custom mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
@@ -102,7 +105,7 @@ const LiveDeploymentPage: React.FC = () => {
               >
                 <Globe className="h-6 w-6 text-teal-600 dark:text-teal-400 mr-3" />
               </motion.div>
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+              <h2 className="text-xl font-semibold text-primary-custom">
                 This app is now live at:
               </h2>
             </div>
@@ -188,7 +191,7 @@ const LiveDeploymentPage: React.FC = () => {
             
             <motion.button
               onClick={() => navigate('/dashboard')}
-              className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-800 dark:text-gray-200 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-card-surface border border-card-custom text-primary-custom px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -204,8 +207,8 @@ const LiveDeploymentPage: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 1.5 }}
         >
-          <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 border border-white/20 dark:border-gray-700/20 flex items-center justify-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+          <div className="bg-white/50/50 backdrop-blur-sm rounded-2xl p-4 border border-white/20/20 flex items-center justify-center">
+            <p className="text-sm text-secondary-custom flex items-center">
               Built with <Heart className="h-3 w-3 text-red-500 fill-red-500 mx-1" /> using{' '}
               <motion.span
                 className="font-semibold text-orange-600 dark:text-orange-400 mx-1"

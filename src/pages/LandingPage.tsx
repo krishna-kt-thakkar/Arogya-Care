@@ -12,6 +12,8 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme, Theme } from '../contexts/ThemeContext';
 import { hasFirebaseConfig } from '../backend/firebase';
+import { useLanguage } from '../hooks/useLanguage';
+
 
 type AuthMode = 'login' | 'signup' | 'signup-verify' | 'otp-send' | 'otp-verify' | 'forgot' | 'email-sent';
 
@@ -48,7 +50,7 @@ const FeatureCard: React.FC<{
         <Icon className="h-6 w-6 text-white" />
       </div>
       <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-      <p className="text-sm text-blue-200/60 leading-relaxed">{description}</p>
+      <p className="text-sm text-secondary-custom leading-relaxed">{description}</p>
     </motion.div>
   );
 };
@@ -63,13 +65,14 @@ const StatCard: React.FC<{ value: string; label: string; delay: number }> = ({ v
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.5, delay, type: 'spring' }}>
       <p className="text-4xl sm:text-5xl font-black text-white mb-1 tracking-tight">{value}</p>
-      <p className="text-sm text-blue-200/50 font-medium">{label}</p>
+      <p className="text-sm text-secondary-custom font-medium">{label}</p>
     </motion.div>
   );
 };
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const { theme, setTheme } = useTheme();
   const { user, isLoading, login, signup, signInWithGoogle, sendOtp, verifyOtp, resetPassword, continueAsGuest } = useAuth();
@@ -519,7 +522,7 @@ const LandingPage: React.FC = () => {
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           {/* Tagline Badge */}
-          <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-card-custom text-xs font-semibold text-blue-200/80 mb-8"
+          <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-card-custom text-xs font-semibold text-secondary-custom mb-8"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
             <Sparkles className="h-3.5 w-3.5 text-brand-from" />
             AI-Powered Personal Wellness Engine
@@ -555,7 +558,7 @@ const LandingPage: React.FC = () => {
             <span className="text-primary-custom"> CARE</span>
           </motion.h1>
 
-          <motion.p className="text-xl sm:text-2xl text-blue-100/70 max-w-2xl mx-auto mb-3 font-medium leading-relaxed"
+          <motion.p className="text-xl sm:text-2xl text-secondary-custom/70 max-w-2xl mx-auto mb-3 font-medium leading-relaxed"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
             Your health, finally in sync.
           </motion.p>
@@ -600,7 +603,7 @@ const LandingPage: React.FC = () => {
               Explore Our All-In-One{' '}
               <span className="text-brand-color">Health Suite</span>
             </h2>
-            <p className="text-blue-200/50 max-w-xl mx-auto text-base">
+            <p className="text-secondary-custom max-w-xl mx-auto text-base">
               A comprehensive system offering water tracking, mood analytics, workouts, AI diagnostic assistance, nearby hospitals, and emergency configurations.
             </p>
           </AnimatedSection>
@@ -639,7 +642,7 @@ const LandingPage: React.FC = () => {
                   </div>
                   <p className="text-brand-from font-black text-xs tracking-widest mb-1">{item.step}</p>
                   <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-blue-200/50">{item.description}</p>
+                  <p className="text-sm text-secondary-custom">{item.description}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -662,12 +665,12 @@ const LandingPage: React.FC = () => {
                     Intuitive Companion &{' '}
                     <span className="text-brand-color">Insight Engines</span>
                   </h2>
-                  <p className="text-blue-200/50 leading-relaxed mb-6">
+                  <p className="text-secondary-custom leading-relaxed mb-6">
                     Leverage advanced artificial intelligence to analyze cumulative statistics over steps, hydration levels, and mood indexes, generating daily actionable guidelines to maximize performance.
                   </p>
                   <div className="flex flex-wrap gap-2.5">
                     {['24/7 Support', 'Privacy Guard', 'Deep Analytics', 'Disclaimers Verified'].map(tag => (
-                      <span key={tag} className="px-3 py-1.5 rounded-full bg-white/5 border border-card-custom text-xs font-semibold text-blue-200/70">
+                      <span key={tag} className="px-3 py-1.5 rounded-full bg-white/5 border border-card-custom text-xs font-semibold text-secondary-custom">
                         {tag}
                       </span>
                     ))}
@@ -681,7 +684,7 @@ const LandingPage: React.FC = () => {
                     <div className="relative h-full bg-slate-950/70 border border-card-custom rounded-3xl p-8 flex flex-col items-center justify-center text-center">
                       <Bot className="h-16 w-16 text-brand-from mb-4" />
                       <p className="text-white font-bold text-lg">AROGYA CARE AI</p>
-                      <p className="text-blue-200/40 text-xs mt-1">Analyzing wellness indexes...</p>
+                      <p className="text-secondary-custom text-xs mt-1">Analyzing wellness indexes...</p>
                       <motion.div className="mt-4 flex gap-1.5"
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ duration: 1.5, repeat: Infinity }}>
@@ -709,7 +712,7 @@ const LandingPage: React.FC = () => {
           <AnimatedSection className="text-center mb-10">
             <Heart className="h-10 w-10 text-brand-from mx-auto mb-4 animate-bounce" />
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">Arogya Care Portal</h2>
-            <p className="text-sm text-blue-200/50">Log in, sign up, or test features instantly</p>
+            <p className="text-sm text-secondary-custom">Log in, sign up, or test features instantly</p>
           </AnimatedSection>
 
           {/*Frosted Glass Auth Card */}
@@ -726,7 +729,7 @@ const LandingPage: React.FC = () => {
                   <CheckCircle className="h-10 w-10 text-white animate-bounce" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Inbox Notification</h3>
-                <p className="text-blue-100 text-sm leading-relaxed mb-6">{authSuccess}</p>
+                <p className="text-secondary-custom text-sm leading-relaxed mb-6">{authSuccess}</p>
                 <button onClick={() => switchAuthTo('login')} className="text-xs font-bold text-brand-from hover:text-white transition-colors underline underline-offset-4">
                   ← Return to Sign In
                 </button>
@@ -741,8 +744,8 @@ const LandingPage: React.FC = () => {
                     <Shield className="h-6 w-6 text-emerald-400" />
                   </div>
                   <h3 className="text-lg font-bold text-white">Verify Your Email</h3>
-                  <p className="text-xs text-blue-200/60 mt-1">A 6-digit code was sent to <span className="text-white font-semibold">{email}</span></p>
-                  <p className="text-[10px] text-blue-200/40 mt-1">You must verify your email to complete registration</p>
+                  <p className="text-xs text-secondary-custom mt-1">A 6-digit code was sent to <span className="text-white font-semibold">{email}</span></p>
+                  <p className="text-[10px] text-secondary-custom mt-1">You must verify your email to complete registration</p>
                 </div>
                 <form onSubmit={handleSignupVerifyOtp} className="space-y-4">
                   <div className="flex justify-center gap-2">
@@ -779,7 +782,7 @@ const LandingPage: React.FC = () => {
                       type="button"
                       onClick={handleResendSignupOtp}
                       disabled={resendCooldown > 0 || isSubmitting}
-                      className="text-xs font-bold text-brand-from hover:text-white transition-colors disabled:text-blue-200/30 disabled:cursor-not-allowed"
+                      className="text-xs font-bold text-brand-from hover:text-white transition-colors disabled:text-secondary-custom disabled:cursor-not-allowed"
                     >
                       {resendCooldown > 0 ? `Resend code in ${resendCooldown}s` : 'Resend Code'}
                     </button>
@@ -791,7 +794,7 @@ const LandingPage: React.FC = () => {
             {/* OTP Verify view */}
             {authMode === 'otp-verify' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <button onClick={() => switchAuthTo('otp-send')} className="flex items-center text-blue-200/80 hover:text-white text-xs mb-5 transition-colors">
+                <button onClick={() => switchAuthTo('otp-send')} className="flex items-center text-secondary-custom hover:text-white text-xs mb-5 transition-colors">
                   <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Back
                 </button>
                 <div className="text-center mb-6">
@@ -799,7 +802,7 @@ const LandingPage: React.FC = () => {
                     <KeyRound className="h-6 w-6 text-brand-from" />
                   </div>
                   <h3 className="text-lg font-bold text-white">Enter OTP Token</h3>
-                  <p className="text-xs text-blue-200/60 mt-1">Verification code sent to {email}</p>
+                  <p className="text-xs text-secondary-custom mt-1">Verification code sent to {email}</p>
                 </div>
                 <form onSubmit={handleVerifyOtp} className="space-y-4">
                   <div className="flex justify-center gap-2">
@@ -833,7 +836,7 @@ const LandingPage: React.FC = () => {
             {/* OTP Send view */}
             {authMode === 'otp-send' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <button onClick={() => switchAuthTo('login')} className="flex items-center text-blue-200/80 hover:text-white text-xs mb-5 transition-colors">
+                <button onClick={() => switchAuthTo('login')} className="flex items-center text-secondary-custom hover:text-white text-xs mb-5 transition-colors">
                   <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Back
                 </button>
                 <div className="text-center mb-6">
@@ -841,13 +844,13 @@ const LandingPage: React.FC = () => {
                     <Send className="h-6 w-6 text-brand-from" />
                   </div>
                   <h3 className="text-lg font-bold text-white">One-Time Password</h3>
-                  <p className="text-xs text-blue-200/60 mt-1">Access AROGYA CARE securely via mail link</p>
+                  <p className="text-xs text-secondary-custom mt-1">Access AROGYA CARE securely via mail link</p>
                 </div>
                 <form onSubmit={handleSendOtp} className="space-y-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-blue-200/60 uppercase mb-1 tracking-wider">Email Address</label>
+                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Email Address</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-blue-200/40" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com"
                         className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-sm focus:border-brand-from focus:bg-white/10 outline-none text-white transition-all" />
                     </div>
@@ -867,7 +870,7 @@ const LandingPage: React.FC = () => {
             {/* Forgot Password view */}
             {authMode === 'forgot' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <button onClick={() => switchAuthTo('login')} className="flex items-center text-blue-200/80 hover:text-white text-xs mb-5 transition-colors">
+                <button onClick={() => switchAuthTo('login')} className="flex items-center text-secondary-custom hover:text-white text-xs mb-5 transition-colors">
                   <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Back
                 </button>
                 <div className="text-center mb-6">
@@ -875,13 +878,13 @@ const LandingPage: React.FC = () => {
                     <Lock className="h-6 w-6 text-brand-from" />
                   </div>
                   <h3 className="text-lg font-bold text-white">Reset Account</h3>
-                  <p className="text-xs text-blue-200/60 mt-1">Receive password change instructions via email</p>
+                  <p className="text-xs text-secondary-custom mt-1">Receive password change instructions via email</p>
                 </div>
                 <form onSubmit={handleForgotPassword} className="space-y-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-blue-200/60 uppercase mb-1 tracking-wider">Email Address</label>
+                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Email Address</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-blue-200/40" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com"
                         className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-sm focus:border-brand-from focus:bg-white/10 outline-none text-white transition-all" />
                     </div>
@@ -911,10 +914,10 @@ const LandingPage: React.FC = () => {
                       right: authMode === 'login' ? '50%' : '4px'
                     }}
                   />
-                  <button onClick={() => switchAuthTo('login')} className={`flex-1 z-10 py-2 text-xs font-bold transition-colors ${authMode === 'login' ? 'text-white' : 'text-blue-200/50 hover:text-white'}`}>
+                  <button onClick={() => switchAuthTo('login')} className={`flex-1 z-10 py-2 text-xs font-bold transition-colors ${authMode === 'login' ? 'text-white' : 'text-secondary-custom hover:text-white'}`}>
                     Sign In
                   </button>
-                  <button onClick={() => switchAuthTo('signup')} className={`flex-1 z-10 py-2 text-xs font-bold transition-colors ${authMode === 'signup' ? 'text-white' : 'text-blue-200/50 hover:text-white'}`}>
+                  <button onClick={() => switchAuthTo('signup')} className={`flex-1 z-10 py-2 text-xs font-bold transition-colors ${authMode === 'signup' ? 'text-white' : 'text-secondary-custom hover:text-white'}`}>
                     Register
                   </button>
                 </div>
@@ -930,9 +933,9 @@ const LandingPage: React.FC = () => {
                   <AnimatePresence>
                     {authMode === 'signup' && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                        <label className="block text-[10px] font-bold text-blue-200/60 uppercase mb-1 tracking-wider">Full Name</label>
+                        <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Full Name</label>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-blue-200/40" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                           <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="John Doe"
                             className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-sm focus:border-brand-from focus:bg-white/10 outline-none text-white transition-all" />
                         </div>
@@ -942,9 +945,9 @@ const LandingPage: React.FC = () => {
 
                   {/* Email */}
                   <div>
-                    <label className="block text-[10px] font-bold text-blue-200/60 uppercase mb-1 tracking-wider">Email</label>
+                    <label className="block text-[10px] font-bold text-secondary-custom uppercase mb-1 tracking-wider">Email</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-blue-200/40" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com"
                         className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-sm focus:border-brand-from focus:bg-white/10 outline-none text-white transition-all" />
                     </div>
@@ -953,7 +956,7 @@ const LandingPage: React.FC = () => {
                   {/* Password */}
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <label className="block text-[10px] font-bold text-blue-200/60 uppercase tracking-wider">Password</label>
+                      <label className="block text-[10px] font-bold text-secondary-custom uppercase tracking-wider">Password</label>
                       {authMode === 'login' && (
                         <button type="button" onClick={() => switchAuthTo('forgot')} className="text-[10px] font-bold text-brand-from hover:text-white transition-colors">
                           Forgot?
@@ -961,16 +964,16 @@ const LandingPage: React.FC = () => {
                       )}
                     </div>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-blue-200/40" />
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••"
                         className="w-full pl-10 pr-10 py-2.5 bg-white/5 border border-card-custom rounded-xl text-sm focus:border-brand-from focus:bg-white/10 outline-none text-white transition-all" />
-                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-200/40 hover:text-white">
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-custom hover:text-white">
                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                     </div>
                     {authMode === 'signup' && password && (
                       <div className="mt-2 space-y-1">
-                        <div className="flex justify-between text-[9px] font-semibold text-blue-200/40">
+                        <div className="flex justify-between text-[9px] font-semibold text-secondary-custom">
                           <span>Security Index</span>
                           <span>{passwordStrength.label}</span>
                         </div>
@@ -985,14 +988,14 @@ const LandingPage: React.FC = () => {
                   <AnimatePresence>
                     {authMode === 'signup' && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-1">
-                        <label className="block text-[10px] font-bold text-blue-200/60 uppercase tracking-wider">Gender</label>
+                        <label className="block text-[10px] font-bold text-secondary-custom uppercase tracking-wider">Gender</label>
                         <div className="flex gap-2">
                           {(['male', 'female', 'other'] as const).map(g => (
                             <button key={g} type="button" onClick={() => setGender(g)}
                               className={`flex-1 py-2 text-xs font-semibold rounded-lg border transition-all ${
                                 gender === g
                                   ? 'bg-brand-gradient text-white border-white/20'
-                                  : 'bg-white/5 border-card-custom text-blue-200/60 hover:bg-white/10'
+                                  : 'bg-white/5 border-card-custom text-secondary-custom hover:bg-white/10'
                               }`}>
                               {g}
                             </button>
@@ -1021,11 +1024,11 @@ const LandingPage: React.FC = () => {
                       >
                         {captchaPassed && <Check className="h-4 w-4 text-white" />}
                       </button>
-                      <span className="text-xs text-blue-200/80 font-bold">I am not a robot</span>
+                      <span className="text-xs text-secondary-custom font-bold">I am not a robot</span>
                     </div>
                     <div className="flex flex-col items-end opacity-40">
-                      <ShieldAlert className="h-5 w-5 text-blue-200" />
-                      <span className="text-[7px] text-blue-200/60 uppercase font-black tracking-widest mt-0.5">Secure CAPTCHA</span>
+                      <ShieldAlert className="h-5 w-5 text-secondary-custom" />
+                      <span className="text-[7px] text-secondary-custom uppercase font-black tracking-widest mt-0.5">Secure CAPTCHA</span>
                     </div>
                   </div>
 
@@ -1037,18 +1040,18 @@ const LandingPage: React.FC = () => {
 
                 <div className="relative flex py-2 items-center">
                   <div className="flex-grow border-t border-white/10"></div>
-                  <span className="flex-shrink mx-4 text-[9px] font-bold text-blue-200/30 uppercase tracking-widest">Alternative</span>
+                  <span className="flex-shrink mx-4 text-[9px] font-bold text-secondary-custom uppercase tracking-widest">Alternative</span>
                   <div className="flex-grow border-t border-white/10"></div>
                 </div>
 
                 <div className="space-y-2">
-                  <button onClick={handleGoogleSignIn} className="w-full py-3 bg-white hover:bg-gray-100 text-gray-900 font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all">
+                  <button onClick={handleGoogleSignIn} className="w-full py-3 bg-card-surface hover:bg-white/5 text-primary-custom font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all">
                     <Chrome className="h-4.5 w-4.5 text-blue-500" /> Sign In with Google
                   </button>
                   <button onClick={() => switchAuthTo('otp-send')} className="w-full py-3 bg-white/5 border border-card-custom hover:bg-white/10 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
                     <KeyRound className="h-4 w-4 text-brand-from" /> Email Verification OTP
                   </button>
-                  <button onClick={handleGuestMode} className="w-full py-2 bg-transparent text-blue-200/40 hover:text-white font-semibold text-xs transition-all text-center">
+                  <button onClick={handleGuestMode} className="w-full py-2 bg-transparent text-secondary-custom hover:text-white font-semibold text-xs transition-all text-center">
                     Continue as Guest Explorer
                   </button>
                 </div>
@@ -1069,10 +1072,10 @@ const LandingPage: React.FC = () => {
               <span className="text-brand-color">AROGYA</span> <span className="text-primary-custom">CARE</span>
             </span>
           </div>
-          <p className="text-xs text-blue-200/30 flex items-center justify-center">
-            Made with <Heart className="h-3 w-3 text-red-500 fill-red-500 mx-1" /> by <span className="text-blue-200/50 font-bold ml-1">Abhijit & Krishna</span>
+          <p className="text-xs text-secondary-custom flex items-center justify-center">
+            Made with <Heart className="h-3 w-3 text-red-500 fill-red-500 mx-1" /> by <span className="text-secondary-custom font-bold ml-1">Abhijit & Krishna</span>
           </p>
-          <p className="text-xs text-blue-200/20">© {new Date().getFullYear()} AROGYA CARE. All rights reserved.</p>
+          <p className="text-xs text-secondary-custom">© {new Date().getFullYear()} AROGYA CARE. All rights reserved.</p>
         </div>
       </footer>
 
@@ -1093,13 +1096,13 @@ const LandingPage: React.FC = () => {
             >
               <button
                 onClick={() => setShowCaptchaModal(false)}
-                className="absolute top-4 right-4 text-blue-200/40 hover:text-white"
+                className="absolute top-4 right-4 text-secondary-custom hover:text-white"
               >
                 <X className="h-5 w-5" />
               </button>
 
               <h3 className="text-lg font-black text-white mb-2">Human Verification</h3>
-              <p className="text-xs text-blue-200/60 leading-relaxed mb-6">
+              <p className="text-xs text-secondary-custom leading-relaxed mb-6">
                 Please solve the math puzzle below to confirm you are not an automated program.
               </p>
 

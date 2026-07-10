@@ -232,7 +232,7 @@ const MenstruationPage: React.FC = () => {
           <span className={`text-sm font-medium ${
             isSelected ? 'text-white' : 
             periodDay?.flow ? 'text-white' : 
-            isPredicted ? 'text-pink-600' : 'text-gray-700'
+            isPredicted ? 'text-pink-600' : 'text-secondary-custom'
           }`}>
             {day}
           </span>
@@ -295,7 +295,7 @@ const MenstruationPage: React.FC = () => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white dark:bg-slate-900/95 p-8 border border-card-custom max-w-md w-full shadow-2xl text-left rounded-3xl backdrop-blur-xl"
+        className="bg-card-surface dark:bg-slate-900/95 p-8 border border-card-custom max-w-md w-full shadow-2xl text-left rounded-3xl backdrop-blur-xl"
         initial={{ scale: 0.8, y: 50 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.8, y: 50 }}
@@ -391,7 +391,7 @@ const MenstruationPage: React.FC = () => {
           >
             <div className="flex items-center mb-4">
               <Calendar className="h-6 w-6 text-pink-600 mr-3" />
-              <h3 className="text-lg font-semibold text-gray-800">Next Period Prediction</h3>
+              <h3 className="text-lg font-semibold text-primary-custom">Next Period Prediction</h3>
             </div>
             <p className="text-2xl font-bold text-pink-600 mb-2">
               {nextPeriod.toLocaleDateString('en-US', { 
@@ -401,7 +401,7 @@ const MenstruationPage: React.FC = () => {
                 day: 'numeric' 
               })}
             </p>
-            <p className="text-gray-600">
+            <p className="text-secondary-custom">
               Based on your {avgCycleLength}-day average cycle
             </p>
           </motion.div>
@@ -409,20 +409,20 @@ const MenstruationPage: React.FC = () => {
 
         {/* Cycle statistics */}
         <motion.div
-          className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+          className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Cycle Insights</h3>
+          <h3 className="text-lg font-semibold text-primary-custom mb-4">Cycle Insights</h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-4 bg-pink-50 rounded-xl">
               <p className="text-2xl font-bold text-pink-600">{avgCycleLength}</p>
-              <p className="text-sm text-gray-600">Average Cycle</p>
+              <p className="text-sm text-secondary-custom">Average Cycle</p>
             </div>
             <div className="text-center p-4 bg-purple-50 rounded-xl">
               <p className="text-2xl font-bold text-purple-600">{cycles.length}</p>
-              <p className="text-sm text-gray-600">Cycles Tracked</p>
+              <p className="text-sm text-secondary-custom">Cycles Tracked</p>
             </div>
           </div>
         </motion.div>
@@ -430,20 +430,20 @@ const MenstruationPage: React.FC = () => {
         {/* Recent cycles */}
         {cycles.length > 0 && (
           <motion.div
-            className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+            className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Cycles</h3>
+            <h3 className="text-lg font-semibold text-primary-custom mb-4">Recent Cycles</h3>
             <div className="space-y-3">
               {cycles.slice(-3).reverse().map((cycle, index) => (
-                <div key={cycle.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <div key={cycle.id} className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
                   <div>
-                    <p className="font-medium text-gray-800">
+                    <p className="font-medium text-primary-custom">
                       {new Date(cycle.startDate).toLocaleDateString()}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-secondary-custom">
                       {cycle.days.length} days tracked
                     </p>
                   </div>
@@ -452,7 +452,7 @@ const MenstruationPage: React.FC = () => {
                       <div
                         key={dayIndex}
                         className={`w-3 h-3 rounded-full ${
-                          day.flow ? getFlowColor(day.flow) : 'bg-gray-200'
+                          day.flow ? getFlowColor(day.flow) : 'bg-white/10'
                         }`}
                       />
                     ))}
@@ -475,8 +475,8 @@ const MenstruationPage: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
         >
           <Lock className="h-16 w-16 text-pink-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Privacy Mode Enabled</h2>
-          <p className="text-gray-600 mb-6">Your menstruation data is protected</p>
+          <h2 className="text-2xl font-bold text-primary-custom mb-2">Privacy Mode Enabled</h2>
+          <p className="text-secondary-custom mb-6">Your menstruation data is protected</p>
           <button
             onClick={() => setIsPrivacyMode(false)}
             className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold"
@@ -504,32 +504,32 @@ const MenstruationPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-black text-primary-custom">Menstruation Tracker</h1>
-              <p className="text-gray-600 mt-1">Track your cycle with care and comfort</p>
+              <h1 className="text-3xl font-black text-primary-custom">{t('menstruationTracker')}</h1>
+              <p className="text-secondary-custom mt-1">Track your cycle with care and comfort</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-3">
             <motion.button
               onClick={() => setIsPrivacyMode(true)}
-              className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <EyeOff className="h-5 w-5 text-gray-600" />
+              <EyeOff className="h-5 w-5 text-secondary-custom" />
             </motion.button>
             <motion.button
               onClick={() => setShowSettings(!showSettings)}
-              className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Settings className="h-5 w-5 text-gray-600" />
+              <Settings className="h-5 w-5 text-secondary-custom" />
             </motion.button>
           </div>
         </motion.div>
@@ -538,25 +538,25 @@ const MenstruationPage: React.FC = () => {
         <AnimatePresence>
           {showSettings && (
             <motion.div
-              className="mb-8 bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+              className="mb-8 bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
             >
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Settings</h3>
+              <h3 className="text-lg font-semibold text-primary-custom mb-4">Settings</h3>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Bell className="h-5 w-5 text-pink-600" />
-                  <span className="text-gray-700">Period Reminders</span>
+                  <span className="text-secondary-custom">Period Reminders</span>
                 </div>
                 <button
                   onClick={() => setRemindersEnabled(!remindersEnabled)}
                   className={`w-12 h-6 rounded-full transition-colors ${
-                    remindersEnabled ? 'bg-pink-500' : 'bg-gray-300'
+                    remindersEnabled ? 'bg-pink-500' : 'bg-white/20'
                   }`}
                 >
                   <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
+                    className={`w-5 h-5 bg-card-surface rounded-full shadow-md transform transition-transform ${
                       remindersEnabled ? 'translate-x-6' : 'translate-x-1'
                     }`}
                   />
@@ -567,7 +567,7 @@ const MenstruationPage: React.FC = () => {
         </AnimatePresence>
 
         {/* Tab Navigation */}
-        <div className="flex bg-white rounded-2xl p-1 mb-8 shadow-lg border border-gray-100">
+        <div className="flex bg-card-surface rounded-2xl p-1 mb-8 shadow-lg border border-card-custom">
           {[
             { id: 'calendar', label: 'Calendar', icon: Calendar },
             { id: 'insights', label: 'Insights', icon: Sparkles },
@@ -579,7 +579,7 @@ const MenstruationPage: React.FC = () => {
               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-xl font-medium transition-all ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                  : 'text-secondary-custom hover:text-primary-custom hover:bg-white/5'
               }`}
             >
               <tab.icon className="h-5 w-5" />
@@ -600,10 +600,10 @@ const MenstruationPage: React.FC = () => {
             >
               {/* Calendar */}
               <div className="lg:col-span-2">
-                <div className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100">
+                <div className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom">
                   {/* Calendar Header */}
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-bold text-gray-800">
+                    <h2 className="text-xl font-bold text-primary-custom">
                       {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                     </h2>
                     <div className="flex items-center space-x-2">
@@ -611,13 +611,13 @@ const MenstruationPage: React.FC = () => {
                         onClick={() => navigateMonth('prev')}
                         className="p-2 rounded-full hover:bg-pink-50 transition-colors"
                       >
-                        <ChevronLeft className="h-5 w-5 text-gray-600" />
+                        <ChevronLeft className="h-5 w-5 text-secondary-custom" />
                       </button>
                       <button
                         onClick={() => navigateMonth('next')}
                         className="p-2 rounded-full hover:bg-pink-50 transition-colors"
                       >
-                        <ChevronRight className="h-5 w-5 text-gray-600" />
+                        <ChevronRight className="h-5 w-5 text-secondary-custom" />
                       </button>
                     </div>
                   </div>
@@ -626,7 +626,7 @@ const MenstruationPage: React.FC = () => {
                   <div className="grid grid-cols-7 gap-2 mb-4">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
                       <div key={day} className="h-8 flex items-center justify-center">
-                        <span className="text-sm font-medium text-gray-500">{day}</span>
+                        <span className="text-sm font-medium text-secondary-custom">{day}</span>
                       </div>
                     ))}
                   </div>
@@ -639,19 +639,19 @@ const MenstruationPage: React.FC = () => {
                   <div className="mt-6 flex flex-wrap items-center justify-center space-x-4 text-sm">
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-pink-200 rounded-full"></div>
-                      <span className="text-gray-600">Spotting</span>
+                      <span className="text-secondary-custom">Spotting</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-pink-300 rounded-full"></div>
-                      <span className="text-gray-600">Light</span>
+                      <span className="text-secondary-custom">Light</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-pink-400 rounded-full"></div>
-                      <span className="text-gray-600">Medium</span>
+                      <span className="text-secondary-custom">Medium</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-pink-600 rounded-full"></div>
-                      <span className="text-gray-600">Heavy</span>
+                      <span className="text-secondary-custom">Heavy</span>
                     </div>
                   </div>
                 </div>
@@ -661,11 +661,11 @@ const MenstruationPage: React.FC = () => {
               <div className="space-y-6">
                 {selectedDate ? (
                   <motion.div
-                    className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+                    className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                   >
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    <h3 className="text-lg font-semibold text-primary-custom mb-4">
                       {new Date(selectedDate).toLocaleDateString('en-US', { 
                         weekday: 'long', 
                         month: 'long', 
@@ -675,7 +675,7 @@ const MenstruationPage: React.FC = () => {
 
                     {/* Flow Selection */}
                     <div className="mb-6">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Flow Intensity</p>
+                      <p className="text-sm font-medium text-secondary-custom mb-3">Flow Intensity</p>
                       <div className="grid grid-cols-2 gap-2">
                         {[
                           { value: 'spotting', label: 'Spotting', color: 'bg-pink-200' },
@@ -689,7 +689,7 @@ const MenstruationPage: React.FC = () => {
                             className={`p-3 rounded-xl border-2 transition-all ${
                               getPeriodDay(selectedDate)?.flow === flow.value
                                 ? `${flow.color} border-pink-500 text-white`
-                                : 'border-gray-200 hover:border-pink-300 text-gray-700'
+                                : 'border-card-custom hover:border-pink-300 text-secondary-custom'
                             }`}
                           >
                             <div className="text-center">
@@ -703,7 +703,7 @@ const MenstruationPage: React.FC = () => {
 
                     {/* Symptoms */}
                     <div className="mb-6">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Symptoms</p>
+                      <p className="text-sm font-medium text-secondary-custom mb-3">Symptoms</p>
                       <div className="flex flex-wrap gap-2">
                         {['cramps', 'headache', 'bloating', 'mood swings', 'fatigue'].map((symptom) => (
                           <button
@@ -719,7 +719,7 @@ const MenstruationPage: React.FC = () => {
                             className={`px-3 py-2 rounded-full text-xs font-medium transition-all ${
                               getPeriodDay(selectedDate)?.symptoms?.includes(symptom)
                                 ? 'bg-purple-500 text-white'
-                                : 'bg-gray-100 text-gray-600 hover:bg-purple-100'
+                                : 'bg-white/5 text-secondary-custom hover:bg-purple-100'
                             }`}
                           >
                             {symptom}
@@ -731,15 +731,15 @@ const MenstruationPage: React.FC = () => {
                     {/* Clear Day */}
                     <button
                       onClick={() => addPeriodDay(selectedDate, null, [])}
-                      className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                      className="w-full py-2 text-sm text-secondary-custom hover:text-secondary-custom transition-colors"
                     >
                       Clear Day
                     </button>
                   </motion.div>
                 ) : (
-                  <div className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100 text-center">
+                  <div className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom text-center">
                     <Flower2 className="h-12 w-12 text-pink-300 mx-auto mb-4" />
-                    <p className="text-gray-600">Select a date to track your period</p>
+                    <p className="text-secondary-custom">Select a date to track your period</p>
                   </div>
                 )}
               </div>
@@ -769,7 +769,7 @@ const MenstruationPage: React.FC = () => {
               <div className="glass-card p-6 border border-card-custom">
                 <div className="flex items-center mb-4">
                   <Heart className="h-6 w-6 text-brand-from mr-3 animate-pulse" />
-                  <h3 className="text-lg font-black text-primary-custom">Self-Care Tips</h3>
+                  <h3 className="text-lg font-black text-primary-custom">{t('selfCareTips')}</h3>
                 </div>
                 <div className="space-y-4">
                   {[

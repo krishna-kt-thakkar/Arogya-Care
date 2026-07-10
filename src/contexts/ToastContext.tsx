@@ -73,14 +73,14 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
               className={`pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-xl border shadow-lg backdrop-blur-sm ${bgColors[toast.type]}`}
             >
               {icons[toast.type]}
-              <p className="flex-1 text-sm font-medium text-gray-800 dark:text-gray-200">
+              <p className="flex-1 text-sm font-medium text-primary-custom">
                 {toast.message}
               </p>
               <button
                 onClick={() => dismissToast(toast.id)}
                 className="p-1 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
               >
-                <X className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                <X className="h-4 w-4 text-secondary-custom" />
               </button>
             </motion.div>
           ))}

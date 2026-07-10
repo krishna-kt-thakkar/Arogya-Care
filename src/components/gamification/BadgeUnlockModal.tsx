@@ -47,7 +47,7 @@ const BadgeUnlockModal: React.FC = () => {
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden transition-colors duration-300"
+          className="bg-card-surface rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden transition-colors duration-300"
           initial={{ scale: 0.5, opacity: 0, y: 50 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.5, opacity: 0, y: 50 }}
@@ -82,9 +82,9 @@ const BadgeUnlockModal: React.FC = () => {
           {/* Close Button */}
           <button
             onClick={dismissBadgeUnlock}
-            className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 z-10"
+            className="absolute top-4 right-4 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 z-10"
           >
-            <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+            <X className="h-5 w-5 text-secondary-custom" />
           </button>
 
           {/* Content */}
@@ -108,7 +108,7 @@ const BadgeUnlockModal: React.FC = () => {
             </motion.div>
 
             <motion.h2
-              className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-300"
+              className="text-3xl font-bold text-primary-custom mb-2 transition-colors duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -142,13 +142,13 @@ const BadgeUnlockModal: React.FC = () => {
                 <h3 className={`text-xl font-bold ${newlyUnlockedBadge.color} transition-colors duration-300`}>
                   {newlyUnlockedBadge.name}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300">Day {streakData.currentStreak} Achievement</p>
+                <p className="text-sm text-secondary-custom transition-colors duration-300">Day {streakData.currentStreak} Achievement</p>
               </div>
             </motion.div>
 
             {/* Description */}
             <motion.p
-              className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 italic transition-colors duration-300"
+              className="text-secondary-custom leading-relaxed mb-6 italic transition-colors duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
@@ -199,7 +199,7 @@ const BadgeUnlockModal: React.FC = () => {
 
             <motion.button
               onClick={dismissBadgeUnlock}
-              className="w-full mt-4 py-3 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors duration-300 font-medium"
+              className="w-full mt-4 py-3 text-secondary-custom hover:text-primary-custom transition-colors duration-300 font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3 }}

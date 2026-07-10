@@ -254,7 +254,7 @@ const SleepTracker: React.FC = () => {
       case 'good': return 'text-blue-600 dark:text-blue-400';
       case 'fair': return 'text-yellow-600 dark:text-yellow-400';
       case 'poor': return 'text-red-600 dark:text-red-400';
-      default: return 'text-gray-600 dark:text-gray-400';
+      default: return 'text-secondary-custom';
     }
   };
 
@@ -319,9 +319,9 @@ const SleepTracker: React.FC = () => {
             <Moon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
           </motion.div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Sleep Hours</h3>
+            <h3 className="text-lg font-semibold text-primary-custom">Sleep Hours</h3>
             {lastUpdated && (
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-secondary-custom">
                 Updated {formatLastUpdated(lastUpdated)}
               </p>
             )}
@@ -397,7 +397,7 @@ const SleepTracker: React.FC = () => {
         >
           {sleepDuration > 0 ? `${sleepDuration}h` : '--'}
         </motion.p>
-        <p className="text-sm text-gray-600 dark:text-gray-300">
+        <p className="text-sm text-secondary-custom">
           {getSleepStatus()}
         </p>
         
@@ -411,7 +411,7 @@ const SleepTracker: React.FC = () => {
                   className={`w-2 h-2 rounded-full ${
                     i < ['poor', 'fair', 'good', 'excellent'].indexOf(sleepQuality) + 1
                       ? 'bg-indigo-500 dark:bg-indigo-400'
-                      : 'bg-gray-300 dark:bg-gray-600'
+                      : 'bg-white/20'
                   }`}
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -427,7 +427,7 @@ const SleepTracker: React.FC = () => {
 
         {/* Sleep Times */}
         {sleepDuration > 0 && (
-          <div className="flex items-center justify-center space-x-4 mt-3 text-xs text-gray-600 dark:text-gray-300">
+          <div className="flex items-center justify-center space-x-4 mt-3 text-xs text-secondary-custom">
             <div className="flex items-center space-x-1">
               <Moon className="h-3 w-3" />
               <span>{bedTime}</span>
@@ -458,12 +458,12 @@ const SleepTracker: React.FC = () => {
             detectSleepFromDevice();
           }}
           disabled={isDetecting}
-          className="p-2 bg-white dark:bg-gray-800 rounded-xl border border-indigo-200 dark:border-indigo-700 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all text-center disabled:opacity-50"
+          className="p-2 bg-card-surface rounded-xl border border-indigo-200 dark:border-indigo-700 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all text-center disabled:opacity-50"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Watch className="h-4 w-4 text-indigo-600 dark:text-indigo-400 mx-auto mb-1" />
-          <span className="text-xs text-gray-600 dark:text-gray-300">Device</span>
+          <span className="text-xs text-secondary-custom">Device</span>
         </motion.button>
 
         <motion.button
@@ -472,12 +472,12 @@ const SleepTracker: React.FC = () => {
             detectSleepFromAuto();
           }}
           disabled={isDetecting}
-          className="p-2 bg-white dark:bg-gray-800 rounded-xl border border-indigo-200 dark:border-indigo-700 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all text-center disabled:opacity-50"
+          className="p-2 bg-card-surface rounded-xl border border-indigo-200 dark:border-indigo-700 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all text-center disabled:opacity-50"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Smartphone className="h-4 w-4 text-indigo-600 dark:text-indigo-400 mx-auto mb-1" />
-          <span className="text-xs text-gray-600 dark:text-gray-300">Auto</span>
+          <span className="text-xs text-secondary-custom">Auto</span>
         </motion.button>
 
         <motion.button
@@ -485,12 +485,12 @@ const SleepTracker: React.FC = () => {
             e.stopPropagation();
             setIsEditing(true);
           }}
-          className="p-2 bg-white dark:bg-gray-800 rounded-xl border border-indigo-200 dark:border-indigo-700 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all text-center"
+          className="p-2 bg-card-surface rounded-xl border border-indigo-200 dark:border-indigo-700 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all text-center"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Edit className="h-4 w-4 text-indigo-600 dark:text-indigo-400 mx-auto mb-1" />
-          <span className="text-xs text-gray-600 dark:text-gray-300">Manual</span>
+          <span className="text-xs text-secondary-custom">Manual</span>
         </motion.button>
       </div>
 
@@ -551,51 +551,51 @@ const SleepTracker: React.FC = () => {
             onClick={() => setIsEditing(false)}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-3xl p-6 w-full max-w-md shadow-2xl"
+              className="bg-card-surface rounded-3xl p-6 w-full max-w-md shadow-2xl"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+              <h3 className="text-xl font-bold text-primary-custom mb-6">
                 Log Sleep Hours
               </h3>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-secondary-custom mb-2">
                       Bed Time
                     </label>
                     <div className="relative">
-                      <Moon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Moon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input
                         type="time"
                         value={bedTime}
                         onChange={(e) => setBedTime(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        className="w-full pl-10 pr-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-secondary-custom mb-2">
                       Wake Time
                     </label>
                     <div className="relative">
-                      <Sun className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Sun className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-secondary-custom" />
                       <input
                         type="time"
                         value={wakeTime}
                         onChange={(e) => setWakeTime(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        className="w-full pl-10 pr-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-secondary-custom mb-2">
                     Sleep Quality
                   </label>
                   <div className="grid grid-cols-4 gap-2">
@@ -630,13 +630,13 @@ const SleepTracker: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-secondary-custom mb-2">
                     Sleep Notes (Optional)
                   </label>
                   <textarea
                     value={sleepNotes}
                     onChange={(e) => setSleepNotes(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 resize-none"
+                    className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom resize-none"
                     rows={3}
                     placeholder="Had vivid dreams / Slept badly / Woke up refreshed..."
                   />
@@ -646,7 +646,7 @@ const SleepTracker: React.FC = () => {
               <div className="flex space-x-3 mt-6">
                 <button
                   onClick={() => setIsEditing(false)}
-                  className="flex-1 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center space-x-2"
+                  className="flex-1 py-3 border border-card-custom text-secondary-custom rounded-xl font-semibold hover:bg-white/5 transition-colors flex items-center justify-center space-x-2"
                 >
                   <X className="h-4 w-4" />
                   <span>Cancel</span>
@@ -675,7 +675,7 @@ const SleepTracker: React.FC = () => {
             onClick={() => setShowWeekly(false)}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md shadow-2xl"
+              className="bg-card-surface rounded-3xl p-8 w-full max-w-md shadow-2xl"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -683,21 +683,21 @@ const SleepTracker: React.FC = () => {
             >
               <div className="flex items-center mb-6">
                 <TrendingUp className="h-6 w-6 text-indigo-600 dark:text-indigo-400 mr-3" />
-                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Weekly Sleep</h3>
+                <h3 className="text-xl font-bold text-primary-custom">Weekly Sleep</h3>
               </div>
 
               <div className="space-y-3">
                 {weeklyData.map((day, index) => (
                   <motion.div
                     key={day.date}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-xl"
+                    className="flex items-center justify-between p-3 bg-white/5 rounded-xl"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
                     <div className="flex items-center space-x-3">
-                      <Calendar className="h-4 w-4 text-gray-500" />
-                      <span className="font-medium text-gray-800 dark:text-gray-100">
+                      <Calendar className="h-4 w-4 text-secondary-custom" />
+                      <span className="font-medium text-primary-custom">
                         {new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' })}
                       </span>
                     </div>
@@ -715,7 +715,7 @@ const SleepTracker: React.FC = () => {
 
               <button
                 onClick={() => setShowWeekly(false)}
-                className="w-full mt-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                className="w-full mt-6 py-3 bg-white/10 text-primary-custom rounded-xl font-semibold hover:bg-white/20 transition-colors"
               >
                 Close
               </button>
@@ -735,25 +735,25 @@ const SleepTracker: React.FC = () => {
             onClick={() => setShowNotes(false)}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-2xl"
+              className="bg-card-surface rounded-2xl p-6 w-full max-w-sm shadow-2xl"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
+              <h3 className="text-lg font-bold text-primary-custom mb-4">
                 Sleep Notes
               </h3>
               
               <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-200 dark:border-indigo-700">
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <p className="text-secondary-custom leading-relaxed">
                   {sleepNotes}
                 </p>
               </div>
               
               <button
                 onClick={() => setShowNotes(false)}
-                className="w-full mt-4 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                className="w-full mt-4 py-3 bg-white/10 text-primary-custom rounded-xl font-semibold hover:bg-white/20 transition-colors"
               >
                 Close
               </button>

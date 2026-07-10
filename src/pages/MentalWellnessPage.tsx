@@ -237,7 +237,7 @@ const MentalWellnessPage: React.FC = () => {
   const moods = [
     { icon: Smile, name: 'Happy', color: 'text-yellow-500', bg: 'bg-yellow-100/10' },
     { icon: Frown, name: 'Sad', color: 'text-blue-500', bg: 'bg-blue-100/10' },
-    { icon: Meh, name: 'Neutral', color: 'text-gray-500', bg: 'bg-gray-100/10' },
+    { icon: Meh, name: 'Neutral', color: 'text-secondary-custom', bg: 'bg-white/5/10' },
     { icon: Laugh, name: 'Excited', color: 'text-orange-500', bg: 'bg-orange-100/10' },
     { icon: Angry, name: 'Angry', color: 'text-red-500', bg: 'bg-red-100/10' },
     { icon: AlertCircle, name: 'Anxious', color: 'text-purple-500', bg: 'bg-purple-100/10' },
@@ -532,7 +532,7 @@ const MentalWellnessPage: React.FC = () => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl"
+        className="bg-card-surface rounded-3xl p-8 max-w-md w-full shadow-2xl"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
@@ -542,11 +542,11 @@ const MentalWellnessPage: React.FC = () => {
             <AlertCircle className="h-8 w-8 text-yellow-600" />
           </div>
           
-          <h3 className="text-xl font-bold text-gray-800 mb-4">
+          <h3 className="text-xl font-bold text-primary-custom mb-4">
             You've written something meaningful
           </h3>
           
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="text-secondary-custom mb-6 leading-relaxed">
             Would you like to save it before leaving? Your thoughts are precious and shouldn't be lost.
           </p>
           
@@ -561,7 +561,7 @@ const MentalWellnessPage: React.FC = () => {
                   navigate('/dashboard');
                 }
               }}
-              className="flex-1 py-3 border border-gray-200 text-gray-600 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+              className="flex-1 py-3 border border-card-custom text-secondary-custom rounded-xl font-semibold hover:bg-white/5 transition-colors"
             >
               Don't Save
             </button>
@@ -645,12 +645,12 @@ const MentalWellnessPage: React.FC = () => {
         {/* Today's entry form */}
         {!todaysEntry && (
           <motion.div
-            className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+            className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <h3 className="text-xl font-bold text-gray-800 mb-6">How was your day?</h3>
+            <h3 className="text-xl font-bold text-primary-custom mb-6">How was your day?</h3>
             
             {/* Mood selection */}
             <div className="mb-6">
@@ -693,7 +693,7 @@ const MentalWellnessPage: React.FC = () => {
               <textarea
                 value={currentGratitude}
                 onChange={(e) => handleGratitudeChange(e.target.value)}
-                className="w-full h-24 px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none bg-card-surface/40 transition-all text-primary-custom"
+                className="w-full h-24 px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent resize-none bg-card-surface/40 transition-all text-primary-custom"
                 placeholder="I'm grateful for..."
                 onKeyDown={(e) => {
                   // Prevent form submission on Enter
@@ -707,13 +707,13 @@ const MentalWellnessPage: React.FC = () => {
 
             {/* Journal entry */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-secondary-custom mb-3">
                 Tell your diary about your day
               </label>
               <textarea
                 value={currentEntry}
                 onChange={(e) => handleEntryChange(e.target.value)}
-                className="w-full h-32 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none bg-gradient-to-br from-blue-50 to-purple-50 transition-all"
+                className="w-full h-32 px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent resize-none bg-gradient-to-br from-blue-50 to-purple-50 transition-all"
                 placeholder="Dear diary, today was..."
                 onKeyDown={(e) => {
                   // Prevent form submission on Enter
@@ -723,7 +723,7 @@ const MentalWellnessPage: React.FC = () => {
                   }
                 }}
               />
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-secondary-custom mt-2">
                 Tip: Press Ctrl+Enter to save quickly
               </p>
             </div>
@@ -805,13 +805,13 @@ const MentalWellnessPage: React.FC = () => {
 
         {/* Past entries */}
         <motion.div
-          className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+          className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">Past Entries</h3>
+            <h3 className="text-lg font-semibold text-primary-custom">Past Entries</h3>
             <button
               type="button"
               onClick={() => setShowPastEntries(!showPastEntries)}
@@ -833,18 +833,18 @@ const MentalWellnessPage: React.FC = () => {
                 className="space-y-4 max-h-96 overflow-y-auto"
               >
                 {journalEntries.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">No entries yet. Start writing!</p>
+                  <p className="text-secondary-custom text-center py-8">No entries yet. Start writing!</p>
                 ) : (
                   journalEntries.map((entry, index) => (
                     <motion.div
                       key={entry.id}
-                      className="p-4 bg-gray-50 rounded-xl border border-gray-100"
+                      className="p-4 bg-white/5 rounded-xl border border-card-custom"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <p className="font-medium text-gray-800">
+                        <p className="font-medium text-primary-custom">
                           {new Date(entry.date).toLocaleDateString('en-US', { 
                             weekday: 'long', 
                             month: 'long', 
@@ -852,7 +852,7 @@ const MentalWellnessPage: React.FC = () => {
                           })}
                         </p>
                         {entry.mood && (
-                          <span className="text-sm text-gray-600 bg-white px-2 py-1 rounded-full">
+                          <span className="text-sm text-secondary-custom bg-card-surface px-2 py-1 rounded-full">
                             {entry.mood}
                           </span>
                         )}
@@ -860,15 +860,15 @@ const MentalWellnessPage: React.FC = () => {
                       
                       {entry.gratitude && (
                         <div className="mb-3">
-                          <p className="text-xs font-medium text-gray-600 mb-1">Gratitude:</p>
-                          <p className="text-sm text-gray-700">{entry.gratitude}</p>
+                          <p className="text-xs font-medium text-secondary-custom mb-1">Gratitude:</p>
+                          <p className="text-sm text-secondary-custom">{entry.gratitude}</p>
                         </div>
                       )}
                       
                       {entry.content && (
                         <div>
-                          <p className="text-xs font-medium text-gray-600 mb-1">Journal:</p>
-                          <p className="text-sm text-gray-700">{entry.content}</p>
+                          <p className="text-xs font-medium text-secondary-custom mb-1">Journal:</p>
+                          <p className="text-sm text-secondary-custom">{entry.content}</p>
                         </div>
                       )}
                     </motion.div>
@@ -905,7 +905,7 @@ const MentalWellnessPage: React.FC = () => {
         {books.map((book, index) => (
           <motion.div
             key={book.id}
-            className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all"
+            className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom hover:shadow-xl transition-all"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
@@ -923,13 +923,13 @@ const MentalWellnessPage: React.FC = () => {
             {/* Book details */}
             <div className="mb-4">
               <div className="flex items-start justify-between mb-2">
-                <h4 className="font-bold text-gray-800 text-lg leading-tight">{book.title}</h4>
+                <h4 className="font-bold text-primary-custom text-lg leading-tight">{book.title}</h4>
                 <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full ml-2 whitespace-nowrap">
                   {book.category}
                 </span>
               </div>
-              <p className="text-sm text-gray-600 mb-3">by {book.author}</p>
-              <p className="text-sm text-gray-700 leading-relaxed">{book.description}</p>
+              <p className="text-sm text-secondary-custom mb-3">by {book.author}</p>
+              <p className="text-sm text-secondary-custom leading-relaxed">{book.description}</p>
             </div>
 
             {/* Action button */}
@@ -979,7 +979,7 @@ const MentalWellnessPage: React.FC = () => {
 
         {/* Day and time selectors */}
         <motion.div
-          className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+          className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -987,13 +987,13 @@ const MentalWellnessPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Day selector */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-secondary-custom mb-3">
                 Select Day
               </label>
               <select
                 value={selectedDay}
                 onChange={(e) => setSelectedDay(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent"
               >
                 <option value="monday">Monday</option>
                 <option value="tuesday">Tuesday</option>
@@ -1007,7 +1007,7 @@ const MentalWellnessPage: React.FC = () => {
 
             {/* Time selector */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-secondary-custom mb-3">
                 Practice Time
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -1017,7 +1017,7 @@ const MentalWellnessPage: React.FC = () => {
                   className={`p-3 rounded-xl border-2 transition-all flex items-center justify-center space-x-2 ${
                     selectedTime === 'morning'
                       ? 'bg-yellow-100 border-yellow-300 text-yellow-800'
-                      : 'border-gray-200 hover:border-yellow-200 text-gray-700'
+                      : 'border-card-custom hover:border-yellow-200 text-secondary-custom'
                   }`}
                 >
                   <Sun className="h-5 w-5" />
@@ -1029,7 +1029,7 @@ const MentalWellnessPage: React.FC = () => {
                   className={`p-3 rounded-xl border-2 transition-all flex items-center justify-center space-x-2 ${
                     selectedTime === 'evening'
                       ? 'bg-indigo-100 border-indigo-300 text-indigo-800'
-                      : 'border-gray-200 hover:border-indigo-200 text-gray-700'
+                      : 'border-card-custom hover:border-indigo-200 text-secondary-custom'
                   }`}
                 >
                   <Moon className="h-5 w-5" />
@@ -1045,7 +1045,7 @@ const MentalWellnessPage: React.FC = () => {
           {currentVideos.map((video, index) => (
             <motion.div
               key={video.id}
-              className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+              className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
@@ -1068,8 +1068,8 @@ const MentalWellnessPage: React.FC = () => {
                 {/* Video details */}
                 <div className="flex flex-col justify-center">
                   <div className="mb-4">
-                    <h4 className="text-xl font-bold text-gray-800 mb-2">{video.title}</h4>
-                    <p className="text-gray-600 leading-relaxed">{video.description}</p>
+                    <h4 className="text-xl font-bold text-primary-custom mb-2">{video.title}</h4>
+                    <p className="text-secondary-custom leading-relaxed">{video.description}</p>
                   </div>
 
                   <div className="flex flex-wrap gap-2 mb-4">
@@ -1126,24 +1126,24 @@ const MentalWellnessPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleNavigation('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-black text-primary-custom">Mental Wellness</h1>
-              <p className="text-gray-600 mt-1">Nurture your mind, body, and soul</p>
+              <h1 className="text-3xl font-black text-primary-custom">{t('mentalWellness')}</h1>
+              <p className="text-secondary-custom mt-1">Nurture your mind, body, and soul</p>
             </div>
           </div>
           
           <motion.button
             type="button"
             onClick={() => setShowSettings(!showSettings)}
-            className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+            className="p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Settings className="h-5 w-5 text-gray-600" />
+            <Settings className="h-5 w-5 text-secondary-custom" />
           </motion.button>
         </motion.div>
 
@@ -1151,29 +1151,29 @@ const MentalWellnessPage: React.FC = () => {
         <AnimatePresence>
           {showSettings && (
             <motion.div
-              className="mb-8 bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+              className="mb-8 bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
             >
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Settings</h3>
+              <h3 className="text-lg font-semibold text-primary-custom mb-4">Settings</h3>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Bell className="h-5 w-5 text-purple-600" />
                   <div>
-                    <span className="text-gray-700 font-medium">Daily Journal Reminder</span>
-                    <p className="text-sm text-gray-500">Get reminded at 9 PM: "How did your day go? Tell your diary"</p>
+                    <span className="text-secondary-custom font-medium">Daily Journal Reminder</span>
+                    <p className="text-sm text-secondary-custom">Get reminded at 9 PM: "How did your day go? Tell your diary"</p>
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setReminderEnabled(!reminderEnabled)}
                   className={`w-12 h-6 rounded-full transition-colors ${
-                    reminderEnabled ? 'bg-purple-500' : 'bg-gray-300'
+                    reminderEnabled ? 'bg-purple-500' : 'bg-white/20'
                   }`}
                 >
                   <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
+                    className={`w-5 h-5 bg-card-surface rounded-full shadow-md transform transition-transform ${
                       reminderEnabled ? 'translate-x-6' : 'translate-x-1'
                     }`}
                   />
@@ -1184,7 +1184,7 @@ const MentalWellnessPage: React.FC = () => {
         </AnimatePresence>
 
         {/* Tab Navigation */}
-        <div className="flex bg-white rounded-2xl p-1 mb-8 shadow-lg border border-gray-100">
+        <div className="flex bg-card-surface rounded-2xl p-1 mb-8 shadow-lg border border-card-custom">
           {[
             { id: 'journal', label: 'Gratitude Journal', icon: Feather },
             { id: 'books', label: 'Book Recommendations', icon: BookOpen },
@@ -1197,7 +1197,7 @@ const MentalWellnessPage: React.FC = () => {
               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-xl font-medium transition-all ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                  : 'text-secondary-custom hover:text-primary-custom hover:bg-white/5'
               }`}
             >
               <tab.icon className="h-5 w-5" />
@@ -1250,7 +1250,7 @@ const MentalWellnessPage: React.FC = () => {
             animate={{ opacity: 1 }}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+              className="bg-card-surface rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
             >
@@ -1267,8 +1267,8 @@ const MentalWellnessPage: React.FC = () => {
               >
                 <Feather className="h-12 w-12 text-purple-600 mx-auto" />
               </motion.div>
-              <p className="text-lg font-semibold text-gray-800">Saving your thoughts...</p>
-              <p className="text-gray-600 mt-2">Your words are precious</p>
+              <p className="text-lg font-semibold text-primary-custom">Saving your thoughts...</p>
+              <p className="text-secondary-custom mt-2">Your words are precious</p>
             </motion.div>
           </motion.div>
         )}

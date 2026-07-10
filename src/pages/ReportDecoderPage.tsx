@@ -612,7 +612,7 @@ RECOMMENDATIONS:
       case 'low': return 'text-blue-600 bg-blue-100';
       case 'high': return 'text-orange-600 bg-orange-100';
       case 'critical': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      default: return 'text-secondary-custom bg-white/5';
     }
   };
 
@@ -656,7 +656,7 @@ RECOMMENDATIONS:
             ease: "easeInOut"
           }}
         >
-          <div className="bg-white rounded-full p-6 w-20 h-20 mx-auto flex items-center justify-center shadow-lg">
+          <div className="bg-card-surface rounded-full p-6 w-20 h-20 mx-auto flex items-center justify-center shadow-lg">
             <Stethoscope className="h-10 w-10 text-blue-600" />
           </div>
         </motion.div>
@@ -674,7 +674,7 @@ RECOMMENDATIONS:
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Camera Upload */}
         <motion.div
-          className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center"
+          className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom text-center"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
@@ -690,8 +690,8 @@ RECOMMENDATIONS:
             </div>
           </motion.div>
           
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Take a Photo</h3>
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <h3 className="text-xl font-bold text-primary-custom mb-4">Take a Photo</h3>
+          <p className="text-secondary-custom mb-6 leading-relaxed">
             Use your camera to capture a clear photo of your medical report or prescription. 
             Make sure the text is clearly visible and well-lit.
           </p>
@@ -710,7 +710,7 @@ RECOMMENDATIONS:
 
         {/* Gallery Upload */}
         <motion.div
-          className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center"
+          className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom text-center"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
@@ -726,8 +726,8 @@ RECOMMENDATIONS:
             </div>
           </motion.div>
           
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Upload from Gallery</h3>
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <h3 className="text-xl font-bold text-primary-custom mb-4">Upload from Gallery</h3>
+          <p className="text-secondary-custom mb-6 leading-relaxed">
             Choose an existing photo of your medical report from your device gallery. 
             Ensure the image is clear and the text is readable.
           </p>
@@ -747,12 +747,12 @@ RECOMMENDATIONS:
 
       {/* Supported Formats */}
       <motion.div
-        className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+        className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <h3 className="text-lg font-semibold text-primary-custom mb-4 flex items-center">
           <Shield className="h-5 w-5 text-green-600 mr-2" />
           Supported Report Types
         </h3>
@@ -811,25 +811,25 @@ RECOMMENDATIONS:
     <div className="space-y-6">
       {/* Search and Filter */}
       <motion.div
-        className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+        className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-secondary-custom" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search reports by name or tags..."
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent"
             />
           </div>
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent"
           >
             <option value="all">All Types</option>
             <option value="blood_test">Blood Tests</option>
@@ -843,13 +843,13 @@ RECOMMENDATIONS:
       {/* Reports Grid */}
       {filteredReports.length === 0 ? (
         <motion.div
-          className="bg-white rounded-3xl p-12 shadow-lg border border-gray-100 text-center"
+          className="bg-card-surface rounded-3xl p-12 shadow-lg border border-card-custom text-center"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <FileText className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-600 mb-2">No Reports Found</h3>
-          <p className="text-gray-500">
+          <FileText className="h-16 w-16 text-secondary-custom mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-secondary-custom mb-2">No Reports Found</h3>
+          <p className="text-secondary-custom">
             {searchQuery || filterType !== 'all' 
               ? 'Try adjusting your search or filter criteria'
               : 'Upload your first medical report to get started'
@@ -863,7 +863,7 @@ RECOMMENDATIONS:
             return (
               <motion.div
                 key={report.id}
-                className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all"
+                className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom hover:shadow-xl transition-all"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -882,7 +882,7 @@ RECOMMENDATIONS:
                             type="text"
                             value={newReportName}
                             onChange={(e) => setNewReportName(e.target.value)}
-                            className="text-sm font-semibold bg-gray-50 border border-gray-200 rounded px-2 py-1 flex-1"
+                            className="text-sm font-semibold bg-white/5 border border-card-custom rounded px-2 py-1 flex-1"
                             onKeyDown={(e) => {
                               if (e.key === 'Enter') {
                                 renameReport(report.id, newReportName);
@@ -902,7 +902,7 @@ RECOMMENDATIONS:
                         </div>
                       ) : (
                         <h3 
-                          className="font-semibold text-gray-800 cursor-pointer hover:text-blue-600 transition-colors"
+                          className="font-semibold text-primary-custom cursor-pointer hover:text-blue-600 transition-colors"
                           onClick={() => {
                             setEditingReportName(report.id);
                             setNewReportName(report.name);
@@ -911,7 +911,7 @@ RECOMMENDATIONS:
                           {report.name}
                         </h3>
                       )}
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-secondary-custom">
                         {new Date(report.uploadDate).toLocaleDateString()}
                       </p>
                     </div>
@@ -923,7 +923,7 @@ RECOMMENDATIONS:
                       className={`p-2 rounded-full transition-colors ${
                         report.isLocked 
                           ? 'text-red-600 bg-red-50 hover:bg-red-100' 
-                          : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
+                          : 'text-secondary-custom hover:text-secondary-custom hover:bg-white/5'
                       }`}
                     >
                       {report.isLocked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
@@ -942,7 +942,7 @@ RECOMMENDATIONS:
                   <img
                     src={report.imageUrl}
                     alt={report.name}
-                    className="w-full h-32 object-cover rounded-xl border border-gray-200"
+                    className="w-full h-32 object-cover rounded-xl border border-card-custom"
                   />
                 </div>
 
@@ -957,7 +957,7 @@ RECOMMENDATIONS:
                     </span>
                   ))}
                   {report.tags.length > 2 && (
-                    <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                    <span className="px-2 py-1 bg-white/5 text-secondary-custom text-xs rounded-full">
                       +{report.tags.length - 2} more
                     </span>
                   )}
@@ -984,7 +984,7 @@ RECOMMENDATIONS:
                       link.download = `${report.name}.jpg`;
                       link.click();
                     }}
-                    className="p-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors"
+                    className="p-2 bg-white/5 text-secondary-custom hover:bg-white/10 rounded-xl transition-colors"
                   >
                     <Download className="h-4 w-4" />
                   </button>
@@ -1001,10 +1001,10 @@ RECOMMENDATIONS:
   const AnalysisSection = () => {
     if (!selectedReport) {
       return (
-        <div className="bg-white rounded-3xl p-12 shadow-lg border border-gray-100 text-center">
-          <Brain className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-600 mb-2">No Report Selected</h3>
-          <p className="text-gray-500">Select a report from your records to view the AI analysis</p>
+        <div className="bg-card-surface rounded-3xl p-12 shadow-lg border border-card-custom text-center">
+          <Brain className="h-16 w-16 text-secondary-custom mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-secondary-custom mb-2">No Report Selected</h3>
+          <p className="text-secondary-custom">Select a report from your records to view the AI analysis</p>
         </div>
       );
     }
@@ -1056,7 +1056,7 @@ RECOMMENDATIONS:
               ease: "easeInOut"
             }}
           >
-            <div className="bg-white rounded-full p-6 w-20 h-20 mx-auto flex items-center justify-center shadow-lg">
+            <div className="bg-card-surface rounded-full p-6 w-20 h-20 mx-auto flex items-center justify-center shadow-lg">
               <Heart className="h-10 w-10 text-green-600" />
             </div>
           </motion.div>
@@ -1072,7 +1072,7 @@ RECOMMENDATIONS:
 
         {/* Language Selector */}
         <motion.div
-          className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+          className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -1080,7 +1080,7 @@ RECOMMENDATIONS:
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Languages className="h-6 w-6 text-blue-600 mr-3" />
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-lg font-semibold text-primary-custom">
                 In which language would you like to understand your report?
               </h3>
             </div>
@@ -1097,14 +1097,14 @@ RECOMMENDATIONS:
               <AnimatePresence>
                 {showLanguageSelector && (
                   <motion.div
-                    className="absolute right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 max-h-80 overflow-y-auto"
+                    className="absolute right-0 top-full mt-2 bg-card-surface rounded-2xl shadow-2xl border border-card-custom z-50 max-h-80 overflow-y-auto"
                     initial={{ opacity: 0, scale: 0.95, y: -10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -10 }}
                     style={{ minWidth: '300px' }}
                   >
                     <div className="p-4">
-                      <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-3">Select Language</h4>
+                      <h4 className="font-semibold text-primary-custom mb-3">Select Language</h4>
                       <div className="space-y-2">
                         {supportedLanguages.map((language) => (
                           <button
@@ -1116,13 +1116,13 @@ RECOMMENDATIONS:
                             className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-colors ${
                               selectedLanguage.code === language.code
                                 ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200'
-                                : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                                : 'hover:bg-white/5/50'
                             }`}
                           >
-                            <span className="text-xs font-bold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded uppercase w-8 text-center">{language.flag}</span>
+                            <span className="text-xs font-bold bg-white/5 text-primary-custom px-2 py-1 rounded uppercase w-8 text-center">{language.flag}</span>
                             <div className="text-left">
-                              <p className="font-medium text-gray-900 dark:text-gray-100">{language.nativeName}</p>
-                              <p className="text-sm text-gray-500 dark:text-gray-400">{language.name}</p>
+                              <p className="font-medium text-primary-custom">{language.nativeName}</p>
+                              <p className="text-sm text-secondary-custom">{language.name}</p>
                             </div>
                           </button>
                         ))}
@@ -1137,13 +1137,13 @@ RECOMMENDATIONS:
 
         {/* Analysis Tabs */}
         <motion.div
-          className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden"
+          className="bg-card-surface rounded-3xl shadow-lg border border-card-custom overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           {/* Tab Headers */}
-          <div className="flex border-b border-gray-200">
+          <div className="flex border-b border-card-custom">
             {[
               { id: 'summary', label: 'Test Summary', icon: Activity },
               { id: 'medications', label: 'Medicines', icon: Pill },
@@ -1155,7 +1155,7 @@ RECOMMENDATIONS:
                 className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 font-medium transition-colors ${
                   analysisTab === tab.id
                     ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-500'
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                    : 'text-secondary-custom hover:text-primary-custom hover:bg-white/5'
                 }`}
               >
                 <tab.icon className="h-5 w-5" />
@@ -1176,39 +1176,39 @@ RECOMMENDATIONS:
                   className="space-y-6"
                 >
                   <div className="mb-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-4">Overall Summary</h3>
-                    <p className="text-gray-700 leading-relaxed bg-blue-50 p-4 rounded-xl">
+                    <h3 className="text-xl font-bold text-primary-custom mb-4">Overall Summary</h3>
+                    <p className="text-secondary-custom leading-relaxed bg-blue-50 p-4 rounded-xl">
                       {selectedReport.aiAnalysis.summary}
                     </p>
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-800">Test Results</h4>
+                    <h4 className="text-lg font-semibold text-primary-custom">Test Results</h4>
                     {selectedReport.aiAnalysis.testResults.length === 0 ? (
                       <div className="text-center py-8">
-                        <Activity className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                        <p className="text-gray-500">No specific test results found in this report</p>
+                        <Activity className="h-16 w-16 text-secondary-custom mx-auto mb-4" />
+                        <p className="text-secondary-custom">No specific test results found in this report</p>
                       </div>
                     ) : (
                       selectedReport.aiAnalysis.testResults.map((test, index) => (
                         <motion.div
                           key={index}
-                          className="border border-gray-200 rounded-xl p-6"
+                          className="border border-card-custom rounded-xl p-6"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
                         >
                           <div className="flex items-start justify-between mb-4">
                             <div>
-                              <h5 className="font-semibold text-gray-800">{test.test}</h5>
-                              <p className="text-2xl font-bold text-gray-900 mt-1">{test.value}</p>
-                              <p className="text-sm text-gray-500">Normal: {test.normalRange}</p>
+                              <h5 className="font-semibold text-primary-custom">{test.test}</h5>
+                              <p className="text-2xl font-bold text-primary-custom mt-1">{test.value}</p>
+                              <p className="text-sm text-secondary-custom">Normal: {test.normalRange}</p>
                             </div>
                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(test.status)}`}>
                               {test.status.charAt(0).toUpperCase() + test.status.slice(1)}
                             </span>
                           </div>
-                          <p className="text-gray-700 leading-relaxed">{test.explanation}</p>
+                          <p className="text-secondary-custom leading-relaxed">{test.explanation}</p>
                         </motion.div>
                       ))
                     )}
@@ -1224,11 +1224,11 @@ RECOMMENDATIONS:
                   exit={{ opacity: 0, y: -20 }}
                   className="space-y-6"
                 >
-                  <h3 className="text-xl font-bold text-gray-800 mb-6">Prescribed Medications</h3>
+                  <h3 className="text-xl font-bold text-primary-custom mb-6">Prescribed Medications</h3>
                   {selectedReport.aiAnalysis.medications.length === 0 ? (
                     <div className="text-center py-8">
-                      <Pill className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                      <p className="text-gray-500">No medications prescribed in this report</p>
+                      <Pill className="h-16 w-16 text-secondary-custom mx-auto mb-4" />
+                      <p className="text-secondary-custom">No medications prescribed in this report</p>
                     </div>
                   ) : (
                     <div className="space-y-4">
@@ -1248,7 +1248,7 @@ RECOMMENDATIONS:
                               <h5 className="font-bold text-green-800 text-lg">{medication.name}</h5>
                               <p className="text-green-700 font-medium mb-2">{medication.dosage}</p>
                               <p className="text-green-700 mb-3">{medication.purpose}</p>
-                              <div className="bg-white p-3 rounded-lg border border-green-200">
+                              <div className="bg-card-surface p-3 rounded-lg border border-green-200">
                                 <p className="text-sm font-medium text-green-800 mb-1">Instructions:</p>
                                 <p className="text-green-700">{medication.instructions}</p>
                               </div>
@@ -1270,7 +1270,7 @@ RECOMMENDATIONS:
                   className="space-y-6"
                 >
                   <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-6">Recommended Next Steps</h3>
+                    <h3 className="text-xl font-bold text-primary-custom mb-6">Recommended Next Steps</h3>
                     <div className="space-y-4">
                       {selectedReport.aiAnalysis.nextSteps.map((step, index) => (
                         <motion.div
@@ -1291,7 +1291,7 @@ RECOMMENDATIONS:
 
                   {selectedReport.aiAnalysis.concerns.length > 0 && (
                     <div>
-                      <h4 className="text-lg font-semibold text-gray-800 mb-4">Areas to Monitor</h4>
+                      <h4 className="text-lg font-semibold text-primary-custom mb-4">Areas to Monitor</h4>
                       <div className="space-y-3">
                         {selectedReport.aiAnalysis.concerns.map((concern, index) => (
                           <motion.div
@@ -1316,12 +1316,12 @@ RECOMMENDATIONS:
 
         {/* Action Buttons */}
         <motion.div
-          className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+          className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+          <h3 className="text-lg font-semibold text-primary-custom mb-4">Quick Actions</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <motion.button
               className="flex items-center justify-center space-x-2 p-4 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl transition-colors"
@@ -1364,8 +1364,8 @@ RECOMMENDATIONS:
           animate={{ opacity: 1, scale: 1 }}
         >
           <Lock className="h-16 w-16 text-blue-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Privacy Mode Enabled</h2>
-          <p className="text-gray-600 mb-6">Your medical reports are protected</p>
+          <h2 className="text-2xl font-bold text-primary-custom mb-2">Privacy Mode Enabled</h2>
+          <p className="text-secondary-custom mb-6">Your medical reports are protected</p>
           <button
             onClick={() => setShowPrivacyMode(false)}
             className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl font-semibold"
@@ -1393,30 +1393,30 @@ RECOMMENDATIONS:
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Report Decoder & Records</h1>
-              <p className="text-gray-600 mt-1">AI-powered medical report analysis and translation</p>
+              <h1 className="text-3xl font-bold text-primary-custom">Report Decoder & Records</h1>
+              <p className="text-secondary-custom mt-1">AI-powered medical report analysis and translation</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-3">
             <motion.button
               onClick={() => setShowPrivacyMode(true)}
-              className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <EyeOff className="h-5 w-5 text-gray-600" />
+              <EyeOff className="h-5 w-5 text-secondary-custom" />
             </motion.button>
           </div>
         </motion.div>
 
         {/* Tab Navigation */}
-        <div className="flex bg-white rounded-2xl p-1 mb-8 shadow-lg border border-gray-100">
+        <div className="flex bg-card-surface rounded-2xl p-1 mb-8 shadow-lg border border-card-custom">
           {[
             { id: 'upload', label: 'Upload Report', icon: Upload },
             { id: 'reports', label: `My Reports (${reports.length})`, icon: FileText },
@@ -1428,7 +1428,7 @@ RECOMMENDATIONS:
               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-xl font-medium transition-all ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                  : 'text-secondary-custom hover:text-primary-custom hover:bg-white/5'
               }`}
             >
               <tab.icon className="h-5 w-5" />
@@ -1483,7 +1483,7 @@ RECOMMENDATIONS:
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="bg-white rounded-3xl p-8 shadow-2xl text-center max-w-md mx-4"
+                className="bg-card-surface rounded-3xl p-8 shadow-2xl text-center max-w-md mx-4"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -1504,12 +1504,12 @@ RECOMMENDATIONS:
                   </div>
                 </motion.div>
                 
-                <h3 className="text-xl font-bold text-gray-800 mb-4">
+                <h3 className="text-xl font-bold text-primary-custom mb-4">
                   {isUploading && !isAnalyzing ? 'Uploading your report...' : 
                    ocrProgress < 100 ? 'Reading text from your report...' : 
                    'Analyzing with AI...'}
                 </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
+                <p className="text-secondary-custom leading-relaxed mb-6">
                   {isUploading && !isAnalyzing 
                     ? 'Please wait while we securely upload your medical report.'
                     : ocrProgress < 100 
@@ -1521,11 +1521,11 @@ RECOMMENDATIONS:
                 <div className="space-y-4">
                   {/* OCR Progress */}
                   <div>
-                    <div className="flex justify-between text-sm text-gray-600 mb-2">
+                    <div className="flex justify-between text-sm text-secondary-custom mb-2">
                       <span>Text Extraction</span>
                       <span>{Math.round(ocrProgress)}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-white/10 rounded-full h-2">
                       <motion.div
                         className="bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full"
                         initial={{ width: 0 }}
@@ -1537,11 +1537,11 @@ RECOMMENDATIONS:
 
                   {/* AI Analysis Progress */}
                   <div>
-                    <div className="flex justify-between text-sm text-gray-600 mb-2">
+                    <div className="flex justify-between text-sm text-secondary-custom mb-2">
                       <span>AI Analysis</span>
                       <span>{Math.round(analysisProgress)}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-white/10 rounded-full h-2">
                       <motion.div
                         className="bg-gradient-to-r from-blue-400 to-indigo-500 h-2 rounded-full"
                         initial={{ width: 0 }}

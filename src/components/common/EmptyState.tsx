@@ -17,7 +17,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   description,
   actionLabel,
   onAction,
-  color = 'text-gray-400 dark:text-gray-500',
+  color = 'text-secondary-custom',
 }) => {
   return (
     <motion.div
@@ -27,17 +27,17 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="mb-6 p-6 rounded-full bg-gray-100 dark:bg-gray-800/50"
+        className="mb-6 p-6 rounded-full bg-white/5/50"
         animate={{ scale: [1, 1.05, 1] }}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
       >
         <Icon className={`h-12 w-12 ${color}`} />
       </motion.div>
       
-      <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">
+      <h3 className="text-xl font-bold text-secondary-custom mb-2">
         {title}
       </h3>
-      <p className="text-gray-500 dark:text-gray-400 max-w-sm mb-6">
+      <p className="text-secondary-custom max-w-sm mb-6">
         {description}
       </p>
       

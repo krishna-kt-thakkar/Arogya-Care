@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/layout/Header';
+import { useLanguage } from '../hooks/useLanguage';
+
 
 interface Hospital {
   id: string;
@@ -42,6 +44,7 @@ interface UserLocation {
 
 const NearbyHospitalsPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   // State management
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
@@ -436,12 +439,12 @@ const NearbyHospitalsPage: React.FC = () => {
         <AnimatePresence>
           {showToast && (
             <motion.div
-              className="fixed top-4 right-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 shadow-lg z-50"
+              className="fixed top-4 right-4 bg-card-surface border border-card-custom rounded-xl px-4 py-3 shadow-lg z-50"
               initial={{ opacity: 0, scale: 0, x: 100 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               exit={{ opacity: 0, scale: 0, x: 100 }}
             >
-              <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{showToast}</p>
+              <p className="text-sm font-medium text-primary-custom">{showToast}</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -456,13 +459,13 @@ const NearbyHospitalsPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Nearby Hospitals</h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">Find healthcare services near you</p>
+              <h1 className="text-3xl font-bold text-primary-custom">{t('nearbyServices')}</h1>
+              <p className="text-secondary-custom mt-1">Find healthcare services near you</p>
               <div className="flex items-center mt-2 space-x-4">
                 <div className="flex items-center space-x-1">
                   {isOnline ? (
@@ -475,7 +478,7 @@ const NearbyHospitalsPage: React.FC = () => {
                   </span>
                 </div>
                 {hospitals.length > 0 && (
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="text-xs text-secondary-custom">
                     {hospitals.length} hospitals found
                   </span>
                 )}
@@ -500,7 +503,7 @@ const NearbyHospitalsPage: React.FC = () => {
 
         {/* Controls */}
         <motion.div
-          className="mb-8 bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+          className="mb-8 bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -508,13 +511,13 @@ const NearbyHospitalsPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Data Provider Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-custom mb-2">
                 Data Provider
               </label>
               <select
                 value={activeProvider}
                 onChange={(e) => setActiveProvider(e.target.value as any)}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
               >
                 <option value="overpass">OpenStreetMap (Detailed)</option>
                 <option value="nominatim">Nominatim (Fast)</option>
@@ -524,7 +527,7 @@ const NearbyHospitalsPage: React.FC = () => {
 
             {/* Search Radius */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-custom mb-2">
                 Search Radius: {searchRadius} km
               </label>
               <input
@@ -533,19 +536,19 @@ const NearbyHospitalsPage: React.FC = () => {
                 max="50"
                 value={searchRadius}
                 onChange={(e) => setSearchRadius(parseInt(e.target.value))}
-                className="w-full h-3 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
+                className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer"
               />
             </div>
 
             {/* Filter Type */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-custom mb-2">
                 Filter
               </label>
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value as any)}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
               >
                 <option value="all">All Hospitals</option>
                 <option value="emergency">Emergency Only</option>
@@ -592,10 +595,10 @@ const NearbyHospitalsPage: React.FC = () => {
               >
                 <Loader className="h-12 w-12 text-red-500 mx-auto" />
               </motion.div>
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
+              <h3 className="text-lg font-semibold text-primary-custom mb-2">
                 Finding nearby hospitals...
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-secondary-custom">
                 Using {activeProvider.toUpperCase()} to search for healthcare services
               </p>
             </div>
@@ -613,7 +616,7 @@ const NearbyHospitalsPage: React.FC = () => {
             {hospitals.map((hospital, index) => (
               <motion.div
                 key={hospital.id}
-                className={`bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 cursor-pointer transition-all hover:shadow-xl hover:scale-105 ${
+                className={`bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom cursor-pointer transition-all hover:shadow-xl hover:scale-105 ${
                   selectedHospital?.id === hospital.id ? 'ring-2 ring-red-500' : ''
                 }`}
                 initial={{ opacity: 0, y: 20 }}
@@ -623,18 +626,18 @@ const NearbyHospitalsPage: React.FC = () => {
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h3 className="font-bold text-gray-800 dark:text-gray-100 text-lg mb-2">
+                    <h3 className="font-bold text-primary-custom text-lg mb-2">
                       {hospital.name}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
+                    <p className="text-secondary-custom text-sm mb-2">
                       {hospital.address}
                     </p>
                     
                     <div className="flex items-center space-x-4 mb-3">
                       {hospital.distance && (
                         <div className="flex items-center space-x-1">
-                          <MapPin className="h-4 w-4 text-gray-500" />
-                          <span className="text-sm text-gray-600 dark:text-gray-300">
+                          <MapPin className="h-4 w-4 text-secondary-custom" />
+                          <span className="text-sm text-secondary-custom">
                             {hospital.distance.toFixed(1)} km
                           </span>
                         </div>
@@ -643,7 +646,7 @@ const NearbyHospitalsPage: React.FC = () => {
                       {hospital.rating && (
                         <div className="flex items-center space-x-1">
                           <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                          <span className="text-sm text-gray-600 dark:text-gray-300">
+                          <span className="text-sm text-secondary-custom">
                             {hospital.rating}
                           </span>
                         </div>
@@ -658,8 +661,8 @@ const NearbyHospitalsPage: React.FC = () => {
 
                     {hospital.opening_hours && (
                       <div className="flex items-center space-x-1 mb-3">
-                        <Clock className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                        <Clock className="h-4 w-4 text-secondary-custom" />
+                        <span className="text-sm text-secondary-custom">
                           {hospital.opening_hours}
                         </span>
                       </div>
@@ -729,11 +732,11 @@ const NearbyHospitalsPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <Hospital className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+            <Hospital className="h-16 w-16 text-secondary-custom mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-primary-custom mb-2">
               No hospitals found nearby
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-secondary-custom mb-6">
               Try increasing the search radius or changing the data provider.
             </p>
             <motion.button
@@ -750,12 +753,12 @@ const NearbyHospitalsPage: React.FC = () => {
         {/* Provider Information */}
         {hospitals.length > 0 && (
           <motion.div
-            className="mt-8 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="mt-8 bg-card-surface rounded-2xl p-6 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Data Providers</h3>
+            <h3 className="text-lg font-semibold text-primary-custom mb-4">Data Providers</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
                 <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">OpenStreetMap Overpass</h4>

@@ -150,7 +150,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed bottom-20 right-4 z-[60] w-[360px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[calc(100vh-8rem)] flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+          className="fixed bottom-20 right-4 z-[60] w-[360px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[calc(100vh-8rem)] flex flex-col bg-card-surface rounded-2xl shadow-2xl border border-card-custom overflow-hidden"
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -196,7 +196,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
                 <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 ${
                   msg.role === 'user'
                     ? 'bg-gradient-to-r from-teal-500 to-emerald-600 text-white rounded-br-md'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-bl-md'
+                    : 'bg-white/5 text-primary-custom rounded-bl-md'
                 }`}>
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                 </div>
@@ -210,9 +210,9 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <div className="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-bl-md px-4 py-3 flex items-center space-x-2">
+                <div className="bg-white/5 rounded-2xl rounded-bl-md px-4 py-3 flex items-center space-x-2">
                   <Loader2 className="h-4 w-4 text-teal-500 animate-spin" />
-                  <span className="text-sm text-gray-500 dark:text-gray-400">Thinking...</span>
+                  <span className="text-sm text-secondary-custom">Thinking...</span>
                 </div>
               </motion.div>
             )}
@@ -235,7 +235,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
           </div>
 
           {/* Deep-link bar */}
-          <div className="px-3 py-2 border-t border-gray-100 dark:border-gray-700 flex space-x-2">
+          <div className="px-3 py-2 border-t border-card-custom flex space-x-2">
             <button
               onClick={() => { onClose(); navigate('/ai-assistant'); }}
               className="flex-1 text-[10px] font-medium text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg py-1.5 flex items-center justify-center space-x-1 transition-colors"
@@ -253,7 +253,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
           </div>
 
           {/* Input */}
-          <div className="px-3 py-3 border-t border-gray-100 dark:border-gray-700">
+          <div className="px-3 py-3 border-t border-card-custom">
             <div className="flex items-center space-x-2">
               <input
                 ref={inputRef}
@@ -262,7 +262,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask about health & wellness..."
-                className="flex-1 bg-gray-100 dark:bg-gray-700 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-teal-500 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 transition-all"
+                className="flex-1 bg-white/5 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand-from text-primary-custom placeholder-secondary-custom transition-all"
                 disabled={isLoading}
               />
               <motion.button

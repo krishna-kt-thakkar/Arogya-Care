@@ -72,8 +72,8 @@ const defaultBadges: Badge[] = [
     symbol: 'Iron Resolve',
     description: 'Steel-sharp consistency. Your willpower is unbreakable.',
     daysRequired: 365,
-    color: 'text-gray-600',
-    bgColor: 'bg-gray-100',
+    color: 'text-secondary-custom',
+    bgColor: 'bg-white/5',
     aura: 'shadow-gray-400/50',
     unlocked: false
   },
@@ -117,7 +117,7 @@ const defaultBadges: Badge[] = [
     description: 'Beyond limits of time. You are one with the eternal flow.',
     daysRequired: 4000,
     color: 'text-black',
-    bgColor: 'bg-gray-900',
+    bgColor: 'bg-card-surface',
     aura: 'shadow-black/50',
     unlocked: false
   },

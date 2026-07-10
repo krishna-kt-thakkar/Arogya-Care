@@ -25,6 +25,8 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/layout/Header';
+import { useLanguage } from '../hooks/useLanguage';
+
 
 interface EmergencyContact {
   id: string;
@@ -47,6 +49,7 @@ interface LocationData {
 
 const EmergencyContactsPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   // State management
   const [contacts, setContacts] = useState<EmergencyContact[]>([]);
@@ -372,13 +375,13 @@ const EmergencyContactsPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Emergency Contacts</h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">Stay prepared with trusted emergency contacts</p>
+              <h1 className="text-3xl font-bold text-primary-custom">{t('emergencyContacts')}</h1>
+              <p className="text-secondary-custom mt-1">Stay prepared with trusted emergency contacts</p>
             </div>
           </div>
           
@@ -388,7 +391,7 @@ const EmergencyContactsPage: React.FC = () => {
               className={`px-4 py-2 rounded-xl font-medium transition-all ${
                 showTestMode 
                   ? 'bg-yellow-500 text-white shadow-lg' 
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                  : 'bg-white/10 text-secondary-custom'
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -451,14 +454,14 @@ const EmergencyContactsPage: React.FC = () => {
         {/* Status Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-2xl p-6 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">Emergency Contacts</p>
+                <p className="text-secondary-custom text-sm">{t('emergencyContacts')}</p>
                 <p className="text-3xl font-bold text-red-600 dark:text-red-400">{contacts.length}/5</p>
               </div>
               <Users className="h-8 w-8 text-red-500" />
@@ -466,14 +469,14 @@ const EmergencyContactsPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-2xl p-6 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">Location Access</p>
+                <p className="text-secondary-custom text-sm">Location Access</p>
                 <p className={`text-lg font-semibold ${
                   locationPermission === 'granted' 
                     ? 'text-green-600 dark:text-green-400' 
@@ -489,15 +492,15 @@ const EmergencyContactsPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-2xl p-6 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">Last Emergency Action</p>
-                <p className="text-sm font-medium text-gray-800 dark:text-gray-100">
+                <p className="text-secondary-custom text-sm">Last Emergency Action</p>
+                <p className="text-sm font-medium text-primary-custom">
                   {lastEmergencyAction || 'None'}
                 </p>
               </div>
@@ -509,16 +512,16 @@ const EmergencyContactsPage: React.FC = () => {
         {/* Contacts List */}
         {contacts.length === 0 ? (
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-3xl p-12 shadow-lg border border-gray-100 dark:border-gray-700 text-center"
+            className="bg-card-surface rounded-3xl p-12 shadow-lg border border-card-custom text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            <Shield className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            <Shield className="h-16 w-16 text-secondary-custom mx-auto mb-6" />
+            <h3 className="text-xl font-bold text-primary-custom mb-4">
               No emergency contacts saved
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+            <p className="text-secondary-custom mb-6 max-w-md mx-auto">
               Add trusted numbers to stay prepared for emergencies. You can save up to 5 contacts.
             </p>
             <motion.button
@@ -535,10 +538,10 @@ const EmergencyContactsPage: React.FC = () => {
             {contacts.map((contact, index) => (
               <motion.div
                 key={contact.id}
-                className={`bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border transition-all ${
+                className={`bg-card-surface rounded-3xl p-6 shadow-lg border transition-all ${
                   contact.isPrimary 
                     ? 'border-yellow-300 dark:border-yellow-600 ring-2 ring-yellow-200 dark:ring-yellow-800' 
-                    : 'border-gray-100 dark:border-gray-700'
+                    : 'border-card-custom'
                 }`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -558,16 +561,16 @@ const EmergencyContactsPage: React.FC = () => {
                 {/* Contact Info */}
                 <div className="text-center mb-6">
                   <div className="text-4xl mb-3">{contact.avatar}</div>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">
+                  <h3 className="text-xl font-bold text-primary-custom mb-1">
                     {contact.name}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
+                  <p className="text-secondary-custom text-sm mb-2">
                     {contact.relationship}
                   </p>
-                  <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
+                  <p className="text-secondary-custom font-mono text-sm">
                     {formatPhoneNumber(contact.phone, contact.countryCode)}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  <p className="text-xs text-secondary-custom mt-2">
                     Added {formatLastUpdated(contact.createdAt)}
                   </p>
                 </div>
@@ -603,7 +606,7 @@ const EmergencyContactsPage: React.FC = () => {
                       className={`p-2 rounded-xl transition-colors ${
                         contact.isPrimary
                           ? 'text-yellow-500 cursor-not-allowed'
-                          : 'text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
+                          : 'text-secondary-custom hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
                       }`}
                       whileHover={{ scale: contact.isPrimary ? 1 : 1.1 }}
                       whileTap={{ scale: contact.isPrimary ? 1 : 0.9 }}
@@ -614,7 +617,7 @@ const EmergencyContactsPage: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <motion.button
                         onClick={() => startEditing(contact)}
-                        className="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                        className="p-2 text-secondary-custom hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -623,7 +626,7 @@ const EmergencyContactsPage: React.FC = () => {
                       
                       <motion.button
                         onClick={() => setShowDeleteConfirm(contact.id)}
-                        className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                        className="p-2 text-secondary-custom hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -670,19 +673,19 @@ const EmergencyContactsPage: React.FC = () => {
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md shadow-2xl"
+                className="bg-card-surface rounded-3xl p-8 w-full max-w-md shadow-2xl"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
               >
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+                <h2 className="text-2xl font-bold text-primary-custom mb-6">
                   {editingContact ? 'Edit Contact' : 'Add Emergency Contact'}
                 </h2>
                 
                 <div className="space-y-4">
                   {/* Avatar Selection */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-secondary-custom mb-2">
                       Avatar
                     </label>
                     <div className="grid grid-cols-10 gap-2">
@@ -694,7 +697,7 @@ const EmergencyContactsPage: React.FC = () => {
                           className={`p-2 rounded-xl border-2 transition-all ${
                             formData.avatar === avatar
                               ? 'border-red-500 bg-red-100 dark:bg-red-900/30'
-                              : 'border-gray-200 dark:border-gray-600 hover:border-red-300'
+                              : 'border-card-custom hover:border-red-300'
                           }`}
                         >
                           <span className="text-lg">{avatar}</span>
@@ -705,14 +708,14 @@ const EmergencyContactsPage: React.FC = () => {
 
                   {/* Name */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-secondary-custom mb-2">
                       Full Name *
                     </label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                       placeholder="Enter full name"
                       maxLength={50}
                     />
@@ -720,13 +723,13 @@ const EmergencyContactsPage: React.FC = () => {
 
                   {/* Relationship */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-secondary-custom mb-2">
                       Relationship *
                     </label>
                     <select
                       value={formData.relationship}
                       onChange={(e) => setFormData({...formData, relationship: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                     >
                       <option value="">Select relationship</option>
                       {relationshipOptions.map((option) => (
@@ -737,14 +740,14 @@ const EmergencyContactsPage: React.FC = () => {
 
                   {/* Phone Number */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-secondary-custom mb-2">
                       Phone Number *
                     </label>
                     <div className="flex space-x-2">
                       <select
                         value={formData.countryCode}
                         onChange={(e) => setFormData({...formData, countryCode: e.target.value})}
-                        className="px-3 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        className="px-3 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                       >
                         {countryCodes.map((country) => (
                           <option key={country.code} value={country.code}>
@@ -756,7 +759,7 @@ const EmergencyContactsPage: React.FC = () => {
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
-                        className="flex-1 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        className="flex-1 px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                         placeholder="Phone number"
                         maxLength={15}
                       />
@@ -777,7 +780,7 @@ const EmergencyContactsPage: React.FC = () => {
                         avatar: 'bg-red-500'
                       });
                     }}
-                    className="flex-1 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center space-x-2"
+                    className="flex-1 py-3 border border-card-custom text-secondary-custom rounded-xl font-semibold hover:bg-white/5 transition-colors flex items-center justify-center space-x-2"
                   >
                     <X className="h-4 w-4" />
                     <span>Cancel</span>
@@ -805,7 +808,7 @@ const EmergencyContactsPage: React.FC = () => {
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md shadow-2xl"
+                className="bg-card-surface rounded-3xl p-8 w-full max-w-md shadow-2xl"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -814,28 +817,28 @@ const EmergencyContactsPage: React.FC = () => {
                   <div className="bg-red-100 dark:bg-red-900/30 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                     <AlertTriangle className="h-8 w-8 text-red-600 dark:text-red-400" />
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+                  <h2 className="text-2xl font-bold text-primary-custom mb-2">
                     Emergency Contact
                   </h2>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-secondary-custom">
                     {showTestMode ? 'Test Mode Active' : 'Choose how to contact for help'}
                   </p>
                 </div>
 
                 <div className="space-y-3">
                   {contacts.map((contact) => (
-                    <div key={contact.id} className="border border-gray-200 dark:border-gray-600 rounded-xl p-4">
+                    <div key={contact.id} className="border border-card-custom rounded-xl p-4">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center space-x-3">
                           <div className={`h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-sm uppercase ${contact.avatar || 'bg-red-500'}`}>
                             {contact.name.charAt(0)}
                           </div>
                           <div>
-                            <p className="font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-1">
+                            <p className="font-semibold text-primary-custom flex items-center gap-1">
                               {contact.name}
                               {contact.isPrimary && <Star className="h-3.5 w-3.5 fill-yellow-500 text-yellow-500 inline" />}
                             </p>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">{contact.relationship}</p>
+                            <p className="text-sm text-secondary-custom">{contact.relationship}</p>
                           </div>
                         </div>
                       </div>
@@ -867,7 +870,7 @@ const EmergencyContactsPage: React.FC = () => {
 
                 <button
                   onClick={() => setShowEmergencyDialog(false)}
-                  className="w-full mt-6 py-3 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors font-medium"
+                  className="w-full mt-6 py-3 text-secondary-custom hover:text-primary-custom transition-colors font-medium"
                 >
                   Cancel
                 </button>
@@ -886,22 +889,22 @@ const EmergencyContactsPage: React.FC = () => {
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-2xl"
+                className="bg-card-surface rounded-2xl p-6 w-full max-w-sm shadow-2xl"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
               >
-                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
+                <h3 className="text-lg font-bold text-primary-custom mb-4">
                   Delete Contact?
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                <p className="text-secondary-custom mb-6">
                   Are you sure you want to delete this emergency contact? This action cannot be undone.
                 </p>
                 
                 <div className="flex space-x-3">
                   <button
                     onClick={() => setShowDeleteConfirm(null)}
-                    className="flex-1 py-2 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex-1 py-2 border border-card-custom text-secondary-custom rounded-xl font-medium hover:bg-white/5 transition-colors"
                   >
                     Cancel
                   </button>

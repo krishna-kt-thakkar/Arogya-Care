@@ -96,11 +96,11 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
           </div>
         </motion.div>
         
-        <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-300">
+        <h3 className="text-2xl font-bold text-primary-custom mb-2 transition-colors duration-300">
           {streakData.currentStreak === 0 ? 'Ready to Start?' : `Day ${streakData.currentStreak}`}
         </h3>
         
-        <p className="text-gray-600 dark:text-gray-300 transition-colors duration-300">
+        <p className="text-secondary-custom transition-colors duration-300">
           {streakData.currentStreak === 0 
             ? 'Begin your journey to greatness today!'
             : 'of your incredible journey'
@@ -108,7 +108,7 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
         </p>
         
         {streakData.longestStreak > streakData.currentStreak && (
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 transition-colors duration-300">
+          <p className="text-sm text-secondary-custom mt-2 transition-colors duration-300">
             Personal best: {streakData.longestStreak} days
           </p>
         )}
@@ -120,14 +120,14 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center space-x-2">
               <Target className="h-5 w-5 text-purple-600 dark:text-purple-400 transition-colors duration-300" />
-              <span className="font-semibold text-gray-800 dark:text-gray-100 transition-colors duration-300">Next Badge</span>
+              <span className="font-semibold text-primary-custom transition-colors duration-300">Next Badge</span>
             </div>
-            <span className="text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300">
+            <span className="text-sm text-secondary-custom transition-colors duration-300">
               {streakData.currentStreak}/{nextBadge.daysRequired} days
             </span>
           </div>
           
-          <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-3 transition-colors duration-300">
+          <div className="bg-white/10 rounded-full h-3 mb-3 transition-colors duration-300">
             <motion.div
               className="bg-gradient-to-r from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-700 h-3 rounded-full transition-colors duration-300"
               initial={{ width: 0 }}
@@ -156,7 +156,7 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
         <div>
           <div className="flex items-center space-x-2 mb-3">
             <Trophy className="h-5 w-5 text-yellow-600 dark:text-yellow-400 transition-colors duration-300" />
-            <span className="font-semibold text-gray-800 dark:text-gray-100 transition-colors duration-300">Your Achievements</span>
+            <span className="font-semibold text-primary-custom transition-colors duration-300">Your Achievements</span>
             <span className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full text-xs font-medium transition-colors duration-300">
               {unlockedBadges.length}
             </span>
@@ -166,7 +166,7 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
             {unlockedBadges.slice(-3).map((badge) => (
               <motion.div
                 key={badge.id}
-                className={`flex items-center space-x-2 p-2 ${badge.bgColor} rounded-xl border border-gray-200 dark:border-gray-600 transition-colors duration-300`}
+                className={`flex items-center space-x-2 p-2 ${badge.bgColor} rounded-xl border border-card-custom transition-colors duration-300`}
                 whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -183,8 +183,8 @@ const StreakDisplay: React.FC<StreakDisplayProps> = ({ compact = false }) => {
             ))}
             
             {unlockedBadges.length > 3 && (
-              <div className="flex items-center justify-center p-2 bg-gray-100 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 transition-colors duration-300">
-                <span className="text-sm text-gray-600 dark:text-gray-300 font-medium transition-colors duration-300">
+              <div className="flex items-center justify-center p-2 bg-white/5 rounded-xl border border-card-custom transition-colors duration-300">
+                <span className="text-sm text-secondary-custom font-medium transition-colors duration-300">
                   +{unlockedBadges.length - 3} more
                 </span>
               </div>

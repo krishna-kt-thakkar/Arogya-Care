@@ -17,9 +17,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useStreak } from '../contexts/StreakContext';
 import Header from '../components/layout/Header';
+import { useLanguage } from '../hooks/useLanguage';
+
 
 const AchievementsPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { streakData, exportBadge, getNextBadge } = useStreak();
   const [selectedBadge, setSelectedBadge] = useState<any>(null);
   
@@ -70,9 +73,9 @@ const AchievementsPage: React.FC = () => {
         >
           <button
             onClick={() => navigate('/dashboard')}
-            className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+            className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
           >
-            <ArrowLeft className="h-6 w-6 text-gray-600" />
+            <ArrowLeft className="h-6 w-6 text-secondary-custom" />
           </button>
           <div>
             <h1 className="text-3xl font-black text-primary-custom">Your Achievements</h1>
@@ -150,26 +153,26 @@ const AchievementsPage: React.FC = () => {
         {/* Next Badge Progress */}
         {nextBadge && (
           <motion.div
-            className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 mb-8"
+            className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
             <div className="flex items-center mb-6">
               <Target className="h-8 w-8 text-purple-600 mr-3" />
-              <h2 className="text-2xl font-bold text-gray-800">Next Achievement</h2>
+              <h2 className="text-2xl font-bold text-primary-custom">Next Achievement</h2>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-semibold text-gray-800">Progress to {nextBadge.name}</span>
-                  <span className="text-sm text-gray-600">
+                  <span className="font-semibold text-primary-custom">Progress to {nextBadge.name}</span>
+                  <span className="text-sm text-secondary-custom">
                     {streakData.currentStreak}/{nextBadge.daysRequired} days
                   </span>
                 </div>
                 
-                <div className="bg-gray-200 rounded-full h-4 mb-4">
+                <div className="bg-white/10 rounded-full h-4 mb-4">
                   <motion.div
                     className="bg-gradient-to-r from-purple-400 to-purple-600 h-4 rounded-full"
                     initial={{ width: 0 }}
@@ -178,7 +181,7 @@ const AchievementsPage: React.FC = () => {
                   />
                 </div>
                 
-                <p className="text-gray-600">
+                <p className="text-secondary-custom">
                   Only <span className="font-bold text-purple-600">
                     {nextBadge.daysRequired - streakData.currentStreak}
                   </span> more days to unlock this achievement!
@@ -210,7 +213,7 @@ const AchievementsPage: React.FC = () => {
           >
             <div className="flex items-center mb-6">
               <Trophy className="h-8 w-8 text-yellow-600 mr-3" />
-              <h2 className="text-2xl font-bold text-gray-800">Earned Badges</h2>
+              <h2 className="text-2xl font-bold text-primary-custom">Earned Badges</h2>
               <span className="ml-3 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
                 {unlockedBadges.length}
               </span>
@@ -222,7 +225,7 @@ const AchievementsPage: React.FC = () => {
                 return (
                   <motion.div
                     key={badge.id}
-                    className={`bg-white rounded-3xl p-6 shadow-lg border border-gray-100 cursor-pointer hover:shadow-xl transition-all ${badge.aura}`}
+                    className={`bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom cursor-pointer hover:shadow-xl transition-all ${badge.aura}`}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
@@ -238,11 +241,11 @@ const AchievementsPage: React.FC = () => {
                         {badge.name}
                       </h3>
                       
-                      <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                      <p className="text-sm text-secondary-custom mb-4 leading-relaxed">
                         {badge.description}
                       </p>
                       
-                      <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center justify-between text-xs text-secondary-custom">
                         <span>Day {badge.daysRequired}</span>
                         {badge.unlockedDate && (
                           <span>
@@ -289,9 +292,9 @@ const AchievementsPage: React.FC = () => {
             transition={{ delay: 0.7 }}
           >
             <div className="flex items-center mb-6">
-              <Lock className="h-8 w-8 text-gray-400 mr-3" />
-              <h2 className="text-2xl font-bold text-gray-800">Future Achievements</h2>
-              <span className="ml-3 bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
+              <Lock className="h-8 w-8 text-secondary-custom mr-3" />
+              <h2 className="text-2xl font-bold text-primary-custom">Future Achievements</h2>
+              <span className="ml-3 bg-white/5 text-secondary-custom px-3 py-1 rounded-full text-sm font-medium">
                 {lockedBadges.length}
               </span>
             </div>
@@ -300,32 +303,32 @@ const AchievementsPage: React.FC = () => {
               {lockedBadges.map((badge, index) => (
                 <motion.div
                   key={badge.id}
-                  className="bg-gray-50 rounded-3xl p-6 shadow-lg border border-gray-200 opacity-75"
+                  className="bg-white/5 rounded-3xl p-6 shadow-lg border border-card-custom opacity-75"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 0.75, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
                 >
                   <div className="text-center">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
-                      <Lock className="h-6 w-6 text-gray-400" />
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-4">
+                      <Lock className="h-6 w-6 text-secondary-custom" />
                     </div>
                     
-                    <h3 className="text-lg font-bold text-gray-600 mb-2">
+                    <h3 className="text-lg font-bold text-secondary-custom mb-2">
                       {badge.name}
                     </h3>
                     
-                    <p className="text-sm text-gray-500 mb-4">
+                    <p className="text-sm text-secondary-custom mb-4">
                       Unlock at {badge.daysRequired} days
                     </p>
                     
-                    <div className="bg-gray-200 rounded-full h-2">
+                    <div className="bg-white/10 rounded-full h-2">
                       <div 
-                        className="bg-gray-400 h-2 rounded-full"
+                        className="bg-white/20 h-2 rounded-full"
                         style={{ width: `${Math.min((streakData.currentStreak / badge.daysRequired) * 100, 100)}%` }}
                       />
                     </div>
                     
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-secondary-custom mt-2">
                       {badge.daysRequired - streakData.currentStreak} days to go
                     </p>
                   </div>
@@ -346,7 +349,7 @@ const AchievementsPage: React.FC = () => {
               onClick={() => setSelectedBadge(null)}
             >
               <motion.div
-                className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl"
+                className="bg-card-surface rounded-3xl p-8 max-w-md w-full shadow-2xl"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -364,18 +367,18 @@ const AchievementsPage: React.FC = () => {
                     {selectedBadge.name}
                   </h3>
                   
-                  <p className="text-gray-700 leading-relaxed mb-6 italic">
+                  <p className="text-secondary-custom leading-relaxed mb-6 italic">
                     "{selectedBadge.description}"
                   </p>
                   
-                  <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                  <div className="bg-white/5 rounded-xl p-4 mb-6">
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
-                        <p className="text-gray-500">Achievement Day</p>
+                        <p className="text-secondary-custom">Achievement Day</p>
                         <p className="font-semibold">{selectedBadge.daysRequired}</p>
                       </div>
                       <div>
-                        <p className="text-gray-500">Unlocked On</p>
+                        <p className="text-secondary-custom">Unlocked On</p>
                         <p className="font-semibold">
                           {selectedBadge.unlockedDate 
                             ? new Date(selectedBadge.unlockedDate).toLocaleDateString()
@@ -406,7 +409,7 @@ const AchievementsPage: React.FC = () => {
                   
                   <button
                     onClick={() => setSelectedBadge(null)}
-                    className="w-full mt-4 py-3 text-gray-600 hover:text-gray-800 transition-colors"
+                    className="w-full mt-4 py-3 text-secondary-custom hover:text-primary-custom transition-colors"
                   >
                     Close
                   </button>

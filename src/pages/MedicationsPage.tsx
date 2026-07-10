@@ -213,13 +213,13 @@ const MedicationsPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
               <h1 className="text-3xl font-black text-primary-custom">{t('medicationReminder')}</h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">Never miss your medications</p>
+              <p className="text-secondary-custom mt-1">Never miss your medications</p>
             </div>
           </div>
           
@@ -236,23 +236,23 @@ const MedicationsPage: React.FC = () => {
 
         {/* Progress Overview */}
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 mb-8 transition-colors duration-300"
+          className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom mb-8 transition-colors duration-300"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Today's Progress</h2>
-              <p className="text-gray-600 dark:text-gray-300">Keep up the great work!</p>
+              <h2 className="text-2xl font-bold text-primary-custom">Today's Progress</h2>
+              <p className="text-secondary-custom">Keep up the great work!</p>
             </div>
             <div className="text-right">
               <p className="text-4xl font-bold text-green-600 dark:text-green-400">{takenCount}/{totalCount}</p>
-              <p className="text-gray-600 dark:text-gray-300">Medications taken</p>
+              <p className="text-secondary-custom">Medications taken</p>
             </div>
           </div>
           
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 transition-colors duration-300">
+          <div className="w-full bg-white/10 rounded-full h-4 transition-colors duration-300">
             <motion.div
               className="bg-gradient-to-r from-green-400 to-green-500 h-4 rounded-full"
               initial={{ width: 0 }}
@@ -267,7 +267,7 @@ const MedicationsPage: React.FC = () => {
           {medications.map((medication, index) => (
             <motion.div
               key={medication.id}
-              className={`bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 ${
+              className={`bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom transition-all duration-300 ${
                 medication.taken ? 'opacity-75' : ''
               }`}
               initial={{ opacity: 0, y: 20 }}
@@ -279,35 +279,35 @@ const MedicationsPage: React.FC = () => {
                   <Pill className="h-6 w-6" />
                 </div>
                 <div className="flex space-x-2">
-                  <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                  <button className="p-2 text-secondary-custom hover:text-secondary-custom transition-colors">
                     <Edit className="h-4 w-4" />
                   </button>
                   <button 
                     onClick={() => deleteMedication(medication.id)}
-                    className="p-2 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                    className="p-2 text-secondary-custom hover:text-red-600 dark:hover:text-red-400 transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
               </div>
 
-              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">{medication.name}</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-1">{medication.dosage}</p>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">{medication.frequency}</p>
+              <h3 className="text-lg font-bold text-primary-custom mb-2">{medication.name}</h3>
+              <p className="text-secondary-custom mb-1">{medication.dosage}</p>
+              <p className="text-secondary-custom mb-4">{medication.frequency}</p>
 
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center text-gray-600 dark:text-gray-300">
+                <div className="flex items-center text-secondary-custom">
                   <Clock className="h-4 w-4 mr-2" />
                   <span className="text-sm">{medication.time}</span>
                 </div>
-                <div className="flex items-center text-gray-600 dark:text-gray-300">
+                <div className="flex items-center text-secondary-custom">
                   <Bell className="h-4 w-4 mr-2" />
                   <span className="text-sm">Reminder on</span>
                 </div>
               </div>
 
               {medication.lastUpdated && (
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                <p className="text-xs text-secondary-custom mb-4">
                   Updated {formatLastUpdated(medication.lastUpdated)}
                 </p>
               )}
@@ -337,48 +337,48 @@ const MedicationsPage: React.FC = () => {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md transition-colors duration-300"
+              className="bg-card-surface rounded-3xl p-8 w-full max-w-md transition-colors duration-300"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
             >
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Add New Medication</h2>
+              <h2 className="text-2xl font-bold text-primary-custom mb-6">Add New Medication</h2>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-secondary-custom mb-2">
                     Medication Name
                   </label>
                   <input
                     type="text"
                     value={newMedication.name}
                     onChange={(e) => setNewMedication({...newMedication, name: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                     placeholder="Enter medication name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-secondary-custom mb-2">
                     Dosage
                   </label>
                   <input
                     type="text"
                     value={newMedication.dosage}
                     onChange={(e) => setNewMedication({...newMedication, dosage: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                     placeholder="e.g., 500mg, 1 tablet"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-secondary-custom mb-2">
                     Frequency
                   </label>
                   <select
                     value={newMedication.frequency}
                     onChange={(e) => setNewMedication({...newMedication, frequency: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                   >
                     <option value="Once daily">Once daily</option>
                     <option value="Twice daily">Twice daily</option>
@@ -388,14 +388,14 @@ const MedicationsPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-secondary-custom mb-2">
                     Time
                   </label>
                   <input
                     type="time"
                     value={newMedication.time}
                     onChange={(e) => setNewMedication({...newMedication, time: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                   />
                 </div>
               </div>
@@ -403,7 +403,7 @@ const MedicationsPage: React.FC = () => {
               <div className="flex space-x-4 mt-8">
                 <button
                   onClick={() => setShowAddForm(false)}
-                  className="flex-1 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  className="flex-1 py-3 border border-card-custom text-secondary-custom rounded-xl font-semibold hover:bg-white/5 transition-colors"
                 >
                   Cancel
                 </button>

@@ -877,7 +877,7 @@ const WorkoutPage: React.FC = () => {
             </div>
             <button
               onClick={editPreferences}
-              className="bg-white text-teal-600 px-4 py-2 rounded-xl font-semibold hover:bg-teal-50 transition-colors"
+              className="bg-card-surface text-teal-600 px-4 py-2 rounded-xl font-semibold hover:bg-teal-50 transition-colors"
             >
               Edit Preferences
             </button>
@@ -904,30 +904,30 @@ const WorkoutPage: React.FC = () => {
 
         {/* Diet Plan */}
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
+          className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
           <div className="flex items-center mb-6">
             <Utensils className="h-8 w-8 text-green-600 dark:text-green-400 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Weekly Diet Plan</h2>
+            <h2 className="text-2xl font-bold text-primary-custom">{t('weeklyDietPlan')}</h2>
           </div>
           
           <div className="space-y-6">
             {dietPlan.map((day, index) => (
-              <div key={day.day} className="border border-gray-200 rounded-2xl p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{day.day}</h3>
+              <div key={day.day} className="border border-card-custom rounded-2xl p-6">
+                <h3 className="text-xl font-bold text-primary-custom mb-4">{day.day}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {day.meals.map((meal, mealIndex) => (
                     <div key={mealIndex} className="bg-green-50 rounded-xl p-4">
                       <div className="text-sm font-semibold text-green-800 mb-1">{meal.time}</div>
-                      <div className="font-bold text-gray-800 mb-2">{meal.name}</div>
-                      <div className="text-sm text-gray-600 mb-2">{meal.description}</div>
+                      <div className="font-bold text-primary-custom mb-2">{meal.name}</div>
+                      <div className="text-sm text-secondary-custom mb-2">{meal.description}</div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm font-semibold text-green-600">{meal.calories} kcal</span>
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">{meal.benefits}</div>
+                      <div className="text-xs text-secondary-custom mt-1">{meal.benefits}</div>
                     </div>
                   ))}
                 </div>
@@ -938,28 +938,28 @@ const WorkoutPage: React.FC = () => {
 
         {/* Workout Plan */}
         <motion.div
-          className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100"
+          className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           <div className="flex items-center mb-6">
             <Dumbbell className="h-8 w-8 text-orange-600 mr-3" />
-            <h2 className="text-2xl font-black text-primary-custom">Weekly Workout Plan</h2>
+            <h2 className="text-2xl font-black text-primary-custom">{t('weeklyWorkoutPlan')}</h2>
           </div>
           
           <div className="space-y-6">
             {workoutPlan.map((day, index) => (
-              <div key={day.day} className="border border-gray-200 rounded-2xl p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{day.day}</h3>
+              <div key={day.day} className="border border-card-custom rounded-2xl p-6">
+                <h3 className="text-xl font-bold text-primary-custom mb-4">{day.day}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {day.exercises.map((exercise, exerciseIndex) => (
                     <div key={exerciseIndex} className="bg-orange-50 rounded-xl p-4">
-                      <div className="font-bold text-gray-800 mb-2">{exercise.name}</div>
-                      <div className="text-sm text-gray-600 mb-2">{exercise.description}</div>
+                      <div className="font-bold text-primary-custom mb-2">{exercise.name}</div>
+                      <div className="text-sm text-secondary-custom mb-2">{exercise.description}</div>
                       <div className="text-sm font-semibold text-orange-600 mb-2">{exercise.duration}</div>
                       {exercise.sets && (
-                        <div className="text-sm text-gray-600 mb-2">{exercise.sets}</div>
+                        <div className="text-sm text-secondary-custom mb-2">{exercise.sets}</div>
                       )}
                       {exercise.youtubeLink && (
                         <a
@@ -984,18 +984,18 @@ const WorkoutPage: React.FC = () => {
 
   const renderCalorieEstimator = () => (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
+      className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <Calculator className="h-8 w-8 text-purple-600 dark:text-purple-400 mr-3" />
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">AI Calorie Estimator</h2>
+          <h2 className="text-2xl font-bold text-primary-custom">{t('calorieEstimator')}</h2>
         </div>
         <button
           onClick={() => setShowCalorieEstimator(false)}
-          className="text-gray-500 hover:text-gray-700 dark:text-gray-400"
+          className="text-secondary-custom hover:text-secondary-custom"
         >
           <X className="h-6 w-6" />
         </button>
@@ -1003,11 +1003,11 @@ const WorkoutPage: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Upload Food Photo</h3>
+          <h3 className="text-lg font-semibold text-primary-custom mb-4">Upload Food Photo</h3>
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center">
-              <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-400 mb-4">Take a photo or upload image</p>
+            <div className="border-2 border-dashed border-card-custom rounded-xl p-8 text-center">
+              <Camera className="h-12 w-12 text-secondary-custom mx-auto mb-4" />
+              <p className="text-secondary-custom mb-4">Take a photo or upload image</p>
               <input
                 type="file"
                 accept="image/*"
@@ -1024,24 +1024,24 @@ const WorkoutPage: React.FC = () => {
             </div>
             
             {uploadedPhoto && (
-              <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <div className="border border-card-custom rounded-xl p-4">
                 <img src={uploadedPhoto} alt="Uploaded food" className="w-full h-48 object-cover rounded-lg mb-4" />
-                <p className="text-sm text-gray-600 dark:text-gray-400 text-center">Photo uploaded successfully!</p>
+                <p className="text-sm text-secondary-custom text-center">Photo uploaded successfully!</p>
               </div>
             )}
           </div>
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Type Food Name</h3>
+          <h3 className="text-lg font-semibold text-primary-custom mb-4">Type Food Name</h3>
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Type className="h-5 w-5 text-gray-400" />
+              <Type className="h-5 w-5 text-secondary-custom" />
               <input
                 type="text"
                 value={calorieInput}
                 onChange={(e) => setCalorieInput(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-200 dark:border-gray-750 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="flex-1 px-4 py-3 border border-card-custom dark:text-white rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent"
                 placeholder="e.g., rice, chicken, apple..."
               />
             </div>
@@ -1059,7 +1059,7 @@ const WorkoutPage: React.FC = () => {
       {isAnalyzing && (
         <div className="mt-8 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">AI is analyzing your food...</p>
+          <p className="text-secondary-custom">AI is analyzing your food...</p>
         </div>
       )}
 
@@ -1091,19 +1091,19 @@ const WorkoutPage: React.FC = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{calorieResult.calories}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-450">Calories</div>
+                  <div className="text-sm text-secondary-custom">Calories</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{calorieResult.protein}g</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-450">Protein</div>
+                  <div className="text-sm text-secondary-custom">Protein</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-green-600 dark:text-green-400">{calorieResult.carbs}g</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-450">Carbs</div>
+                  <div className="text-sm text-secondary-custom">Carbs</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{calorieResult.fat}g</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-450">Fat</div>
+                  <div className="text-sm text-secondary-custom">Fat</div>
                 </div>
               </div>
               
@@ -1115,18 +1115,18 @@ const WorkoutPage: React.FC = () => {
                 </div>
               )}
               
-              <div className="bg-white dark:bg-gray-700 rounded-xl p-4 mb-4">
-                <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Analysis Notes:</h4>
-                <p className="text-gray-600 dark:text-gray-300">{calorieResult.tips}</p>
+              <div className="bg-card-surface rounded-xl p-4 mb-4">
+                <h4 className="font-semibold text-primary-custom mb-2">Analysis Notes:</h4>
+                <p className="text-secondary-custom">{calorieResult.tips}</p>
               </div>
 
               <div className="flex items-center space-x-4">
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Add to meal:</label>
+                  <label className="block text-sm font-medium text-secondary-custom mb-2">Add to meal:</label>
                   <select
                     value={selectedMeal}
                     onChange={(e) => setSelectedMeal(e.target.value as any)}
-                    className="w-full px-4 py-2 border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-card-custom dark:text-white rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent"
                   >
                     <option value="breakfast">Breakfast</option>
                     <option value="lunch">Lunch</option>
@@ -1147,27 +1147,27 @@ const WorkoutPage: React.FC = () => {
       )}
 
       {/* Manual Entry Section */}
-      <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Manual Entry</h3>
+      <div className="mt-8 p-6 bg-white/5/50 rounded-2xl border border-card-custom">
+        <h3 className="text-lg font-semibold text-primary-custom mb-4">Manual Entry</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <input
             type="text"
             value={manualEntry.foodName}
             onChange={(e) => setManualEntry({...manualEntry, foodName: e.target.value})}
-            className="px-4 py-2 border border-gray-200 dark:border-gray-650 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+            className="px-4 py-2 border border-card-custom dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             placeholder="Food name"
           />
           <input
             type="number"
             value={manualEntry.calories}
             onChange={(e) => setManualEntry({...manualEntry, calories: e.target.value})}
-            className="px-4 py-2 border border-gray-200 dark:border-gray-650 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+            className="px-4 py-2 border border-card-custom dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             placeholder="Calories"
           />
           <select
             value={manualEntry.meal}
             onChange={(e) => setManualEntry({...manualEntry, meal: e.target.value as any})}
-            className="px-4 py-2 border border-gray-200 dark:border-gray-650 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+            className="px-4 py-2 border border-card-custom dark:text-white rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-transparent"
           >
             <option value="breakfast">Breakfast</option>
             <option value="lunch">Lunch</option>
@@ -1177,7 +1177,7 @@ const WorkoutPage: React.FC = () => {
         </div>
         <button
           onClick={addManualEntry}
-          className="mt-4 w-full bg-gray-600 text-white py-2 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
+          className="mt-4 w-full bg-white/15 text-white py-2 rounded-xl font-semibold hover:bg-white/20 transition-colors"
         >
           Add Manual Entry
         </button>
@@ -1191,18 +1191,18 @@ const WorkoutPage: React.FC = () => {
 
     return (
       <motion.div
-        className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100"
+        className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <Calendar className="h-8 w-8 text-indigo-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Calorie Calendar</h2>
+            <h2 className="text-2xl font-bold text-primary-custom">{t('calorieCalendar')}</h2>
           </div>
           <button
             onClick={() => setShowCalorieCalendar(false)}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400"
+            className="text-secondary-custom hover:text-secondary-custom"
           >
             <X className="h-6 w-6" />
           </button>
@@ -1212,25 +1212,25 @@ const WorkoutPage: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => setCurrentWeek(new Date(currentWeek.getTime() - 7 * 24 * 60 * 60 * 1000))}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
           >
-            <ChevronLeft className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+            <ChevronLeft className="h-5 w-5 text-secondary-custom" />
           </button>
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+          <h3 className="text-lg font-semibold text-primary-custom">
             Week of {weekDates[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {weekDates[6].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
           </h3>
           <button
             onClick={() => setCurrentWeek(new Date(currentWeek.getTime() + 7 * 24 * 60 * 60 * 1000))}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
           >
-            <ChevronRight className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+            <ChevronRight className="h-5 w-5 text-secondary-custom" />
           </button>
         </div>
 
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-4 mb-6">
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
-            <div key={day} className="text-center font-semibold text-gray-600 dark:text-gray-400 py-2">
+            <div key={day} className="text-center font-semibold text-secondary-custom py-2">
               {day}
             </div>
           ))}
@@ -1244,15 +1244,15 @@ const WorkoutPage: React.FC = () => {
               <div
                 key={index}
                 className={`border rounded-xl p-3 min-h-[120px] ${
-                  isToday ? 'border-indigo-300 bg-indigo-50 dark:bg-indigo-950/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'
+                  isToday ? 'border-indigo-300 bg-indigo-50 dark:bg-indigo-950/20' : 'border-card-custom bg-card-surface'
                 }`}
               >
                 <div className="text-center mb-2">
-                  <div className={`text-lg font-semibold ${isToday ? 'text-indigo-600' : 'text-gray-800 dark:text-gray-250'}`}>
+                  <div className={`text-lg font-semibold ${isToday ? 'text-indigo-600' : 'text-primary-custom'}`}>
                     {date.getDate()}
                   </div>
                   {totalCalories > 0 && (
-                    <div className="text-xs text-gray-600 dark:text-gray-400">
+                    <div className="text-xs text-secondary-custom">
                       {totalCalories} / {recommendedCalories} kcal
                     </div>
                   )}
@@ -1266,8 +1266,8 @@ const WorkoutPage: React.FC = () => {
                     
                     return (
                       <div key={meal} className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-gray-400 dark:text-gray-500 mr-1">{mealCode}</span>
-                        <span className={mealCalories > 0 ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-gray-400 dark:text-gray-600'}>
+                        <span className="font-bold text-secondary-custom mr-1">{mealCode}</span>
+                        <span className={mealCalories > 0 ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-secondary-custom'}>
                           {mealCalories || '-'}
                         </span>
                       </div>
@@ -1277,7 +1277,7 @@ const WorkoutPage: React.FC = () => {
                 
                 {totalCalories > 0 && (
                   <div className="mt-2">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1">
+                    <div className="w-full bg-white/10 rounded-full h-1">
                       <div
                         className={`h-1 rounded-full ${
                           totalCalories > recommendedCalories ? 'bg-red-450' : 'bg-green-450'
@@ -1293,24 +1293,24 @@ const WorkoutPage: React.FC = () => {
         </div>
 
         {/* Today's Detailed View */}
-        <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Today's Meals</h3>
+        <div className="border-t border-card-custom pt-6">
+          <h3 className="text-lg font-semibold text-primary-custom mb-4">Today's Meals</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {['breakfast', 'lunch', 'snacks', 'dinner'].map((meal) => {
               const todayEntries = getEntriesForDate(new Date()).filter(entry => entry.meal === meal);
               
               return (
-                <div key={meal} className="bg-gray-50 dark:bg-gray-900/40 rounded-xl p-4">
-                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-3 capitalize">
+                <div key={meal} className="bg-white/5/40 rounded-xl p-4">
+                  <h4 className="font-semibold text-primary-custom mb-3 capitalize">
                     {meal}
                   </h4>
                   <div className="space-y-2">
                     {todayEntries.length > 0 ? (
                       todayEntries.map((entry) => (
-                        <div key={entry.id} className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-2 border border-gray-150 dark:border-gray-705">
+                        <div key={entry.id} className="flex items-center justify-between bg-card-surface rounded-lg p-2 border border-gray-150">
                           <div className="flex-1">
-                            <div className="font-medium text-sm text-gray-800 dark:text-gray-200">{entry.foodName}</div>
-                            <div className="text-xs text-gray-600 dark:text-gray-400">{entry.calories} kcal</div>
+                            <div className="font-medium text-sm text-primary-custom">{entry.foodName}</div>
+                            <div className="text-xs text-secondary-custom">{entry.calories} kcal</div>
                           </div>
                           {entry.photo && (
                             <img src={entry.photo} alt={entry.foodName} className="w-8 h-8 rounded object-cover mr-2" />
@@ -1324,7 +1324,7 @@ const WorkoutPage: React.FC = () => {
                         </div>
                       ))
                     ) : (
-                      <div className="text-gray-400 dark:text-gray-600 text-sm text-center py-4">
+                      <div className="text-secondary-custom text-sm text-center py-4">
                         No meals logged
                       </div>
                     )}
@@ -1367,16 +1367,16 @@ const WorkoutPage: React.FC = () => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md text-center"
+        className="bg-card-surface rounded-3xl p-8 w-full max-w-md text-center"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
       >
         <Clock className="h-16 w-16 text-teal-600 dark:text-teal-400 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+        <h2 className="text-2xl font-bold text-primary-custom mb-4">
           We truly appreciate your motivation and energy!
         </h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+        <p className="text-secondary-custom mb-6 leading-relaxed">
           But to keep you safe and healthy, we recommend setting a more realistic goal.
           It's better to grow slowly and sustainably than burn out quickly.
         </p>
@@ -1405,13 +1405,13 @@ const WorkoutPage: React.FC = () => {
           >
             <button
               onClick={() => setShowCalorieCalendar(false)}
-              className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Calorie Calendar</h1>
-              <p className="text-gray-600 mt-1">Track your daily calorie intake and meal history</p>
+              <h1 className="text-3xl font-bold text-primary-custom">{t('calorieCalendar')}</h1>
+              <p className="text-secondary-custom mt-1">Track your daily calorie intake and meal history</p>
             </div>
           </motion.div>
           {renderCalorieCalendar()}
@@ -1432,13 +1432,13 @@ const WorkoutPage: React.FC = () => {
           >
             <button
               onClick={() => setShowCalorieEstimator(false)}
-              className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">AI Calorie Estimator</h1>
-              <p className="text-gray-600 mt-1">Estimate calories and nutrition in your food using AI</p>
+              <h1 className="text-3xl font-bold text-primary-custom">{t('calorieEstimator')}</h1>
+              <p className="text-secondary-custom mt-1">Estimate calories and nutrition in your food using AI</p>
             </div>
           </motion.div>
           {renderCalorieEstimator()}
@@ -1460,13 +1460,13 @@ const WorkoutPage: React.FC = () => {
             <div className="flex items-center">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+                className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
               >
-                <ArrowLeft className="h-6 w-6 text-gray-600" />
+                <ArrowLeft className="h-6 w-6 text-secondary-custom" />
               </button>
               <div>
-                <h1 className="text-3xl font-black text-primary-custom">AI Workout & Diet Plans</h1>
-                <p className="text-gray-600 mt-1">Your personalized fitness and nutrition plan</p>
+                <h1 className="text-3xl font-black text-primary-custom">{t('workoutDietPlans')}</h1>
+                <p className="text-secondary-custom mt-1">Your personalized fitness and nutrition plan</p>
               </div>
             </div>
             <div className="flex space-x-4">
@@ -1482,7 +1482,7 @@ const WorkoutPage: React.FC = () => {
                 className="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center space-x-2"
               >
                 <Calendar className="h-5 w-5" />
-                <span>Calorie Calendar</span>
+                <span>{t('calorieCalendar')}</span>
               </button>
             </div>
           </motion.div>
@@ -1505,24 +1505,24 @@ const WorkoutPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-black text-primary-custom">AI Workout & Diet Plans</h1>
-              <p className="text-gray-600 mt-1">Get your personalized fitness and nutrition plan</p>
+              <h1 className="text-3xl font-black text-primary-custom">{t('workoutDietPlans')}</h1>
+              <p className="text-secondary-custom mt-1">Get your personalized fitness and nutrition plan</p>
             </div>
           </div>
         </motion.div>
 
         {/* Progress Bar */}
         <div className="mb-8">
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <div className="flex justify-between text-sm text-secondary-custom mb-2">
             <span>Step {currentStep + 1} of {totalSteps}</span>
             <span>{Math.round(((currentStep + 1) / totalSteps) * 100)}% Complete</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-white/10 rounded-full h-2">
             <motion.div
               className="bg-gradient-to-r from-teal-500 to-teal-600 h-2 rounded-full"
               initial={{ width: 0 }}
@@ -1534,7 +1534,7 @@ const WorkoutPage: React.FC = () => {
 
         {/* Quiz Content */}
         <motion.div
-          className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 mb-8"
+          className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           key={currentStep}
@@ -1549,8 +1549,8 @@ const WorkoutPage: React.FC = () => {
             disabled={currentStep === 0}
             className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-semibold transition-all ${
               currentStep === 0 
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                ? 'bg-white/5 text-secondary-custom cursor-not-allowed' 
+                : 'bg-white/10 text-secondary-custom hover:bg-white/20'
             }`}
             whileHover={currentStep > 0 ? { scale: 1.05 } : {}}
             whileTap={currentStep > 0 ? { scale: 0.95 } : {}}
@@ -1576,7 +1576,7 @@ const WorkoutPage: React.FC = () => {
               (currentStep === 4 && quizData.cuisines.length === 0) ||
               (currentStep === 6 && !quizData.gender) ||
               (currentStep === 8 && !quizData.userType)
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                ? 'bg-white/20 text-secondary-custom cursor-not-allowed'
                 : 'bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-xl'
             }`}
             whileHover={{ scale: 1.05 }}

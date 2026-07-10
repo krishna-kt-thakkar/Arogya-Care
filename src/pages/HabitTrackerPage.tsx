@@ -356,7 +356,7 @@ const HabitTrackerPage: React.FC = () => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+        className="bg-card-surface rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
@@ -365,10 +365,10 @@ const HabitTrackerPage: React.FC = () => {
           <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <Lightbulb className="h-8 w-8 text-white" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+          <h2 className="text-2xl font-bold text-primary-custom mb-2">
             What's your personal development goal?
           </h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-secondary-custom">
             Choose a focus area and we'll suggest powerful habits to help you grow
           </p>
         </div>
@@ -379,16 +379,16 @@ const HabitTrackerPage: React.FC = () => {
               <motion.button
                 key={goal.id}
                 onClick={() => setSelectedGoal(goal.id)}
-                className="p-6 bg-gray-50 dark:bg-gray-700 rounded-2xl border border-gray-200 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500 transition-all text-left group"
+                className="p-6 bg-white/5 rounded-2xl border border-card-custom hover:border-purple-300 dark:hover:border-purple-500 transition-all text-left group"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <div className="flex items-center space-x-4">
-                  <div className={`p-3 rounded-full bg-white dark:bg-gray-600 ${goal.color} group-hover:scale-110 transition-transform`}>
+                  <div className={`p-3 rounded-full bg-card-surface ${goal.color} group-hover:scale-110 transition-transform`}>
                     <goal.icon className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">{goal.label}</h3>
+                    <h3 className="font-semibold text-primary-custom">{goal.label}</h3>
                   </div>
                 </div>
               </motion.button>
@@ -399,11 +399,11 @@ const HabitTrackerPage: React.FC = () => {
             <div className="flex items-center mb-6">
               <button
                 onClick={() => setSelectedGoal('')}
-                className="mr-4 p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                className="mr-4 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
               >
-                <ArrowLeft className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                <ArrowLeft className="h-5 w-5 text-secondary-custom" />
               </button>
-              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+              <h3 className="text-xl font-bold text-primary-custom">
                 Suggested Habits for {goalCategories.find(g => g.id === selectedGoal)?.label}
               </h3>
             </div>
@@ -412,7 +412,7 @@ const HabitTrackerPage: React.FC = () => {
               {habitSuggestions[selectedGoal]?.map((suggestion, index) => (
                 <motion.div
                   key={index}
-                  className="p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl border border-gray-200 dark:border-gray-600"
+                  className="p-4 bg-white/5 rounded-2xl border border-card-custom"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -421,10 +421,10 @@ const HabitTrackerPage: React.FC = () => {
                     <div className="flex items-start space-x-4 flex-1">
                       <span className="text-2xl">{suggestion.emoji}</span>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-1">
+                        <h4 className="font-semibold text-primary-custom mb-1">
                           {suggestion.title}
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                        <p className="text-sm text-secondary-custom mb-2">
                           {suggestion.description}
                         </p>
                         <span className="inline-block bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-full text-xs font-medium">
@@ -450,13 +450,13 @@ const HabitTrackerPage: React.FC = () => {
         <div className="flex justify-between mt-8">
           <button
             onClick={() => setShowSuggestions(false)}
-            className="px-6 py-3 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
+            className="px-6 py-3 text-secondary-custom hover:text-primary-custom transition-colors"
           >
             Skip for now
           </button>
           <button
             onClick={() => setShowAddForm(true)}
-            className="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            className="px-6 py-3 bg-white/10 text-primary-custom rounded-xl font-medium hover:bg-white/20 transition-colors"
           >
             Create Custom Habit
           </button>
@@ -474,31 +474,31 @@ const HabitTrackerPage: React.FC = () => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-md w-full shadow-2xl"
+        className="bg-card-surface rounded-3xl p-8 max-w-md w-full shadow-2xl"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
       >
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+        <h2 className="text-2xl font-bold text-primary-custom mb-6">
           Create New Habit
         </h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-custom mb-2">
               Habit Title
             </label>
             <input
               type="text"
               value={newHabit.title}
               onChange={(e) => setNewHabit({...newHabit, title: e.target.value})}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
               placeholder="e.g., Read for 10 minutes"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-custom mb-2">
               Color Theme
             </label>
             <div className="flex space-x-2">
@@ -518,13 +518,13 @@ const HabitTrackerPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-custom mb-2">
               Frequency
             </label>
             <select
               value={newHabit.frequency}
               onChange={(e) => setNewHabit({...newHabit, frequency: e.target.value as 'daily' | 'custom'})}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
             >
               <option value="daily">Daily</option>
               <option value="custom">Custom Days</option>
@@ -533,7 +533,7 @@ const HabitTrackerPage: React.FC = () => {
 
           {newHabit.frequency === 'custom' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-custom mb-2">
                 Select Days
               </label>
               <div className="grid grid-cols-7 gap-2">
@@ -549,7 +549,7 @@ const HabitTrackerPage: React.FC = () => {
                     className={`p-2 rounded-lg text-xs font-medium transition-all ${
                       newHabit.customDays.includes(day)
                         ? 'bg-purple-500 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+                        : 'bg-white/5 text-secondary-custom'
                     }`}
                   >
                     {day.slice(0, 3)}
@@ -560,14 +560,14 @@ const HabitTrackerPage: React.FC = () => {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-custom mb-2">
               Reminder Time
             </label>
             <input
               type="time"
               value={newHabit.reminderTime}
               onChange={(e) => setNewHabit({...newHabit, reminderTime: e.target.value})}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
             />
           </div>
         </div>
@@ -575,7 +575,7 @@ const HabitTrackerPage: React.FC = () => {
         <div className="flex space-x-4 mt-8">
           <button
             onClick={() => setShowAddForm(false)}
-            className="flex-1 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="flex-1 py-3 border border-card-custom text-secondary-custom rounded-xl font-semibold hover:bg-white/5 transition-colors"
           >
             Cancel
           </button>
@@ -600,14 +600,14 @@ const HabitTrackerPage: React.FC = () => {
       <div className="space-y-6">
         {/* Progress Overview */}
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+          className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Today's Progress</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <h3 className="text-xl font-bold text-primary-custom">Today's Progress</h3>
+              <p className="text-secondary-custom">
                 {new Date(selectedDate).toLocaleDateString('en-US', { 
                   weekday: 'long', 
                   month: 'long', 
@@ -619,11 +619,11 @@ const HabitTrackerPage: React.FC = () => {
               <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">
                 {completionPercentage}%
               </p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Complete</p>
+              <p className="text-sm text-secondary-custom">Complete</p>
             </div>
           </div>
           
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+          <div className="w-full bg-white/10 rounded-full h-3">
             <motion.div
               className="bg-gradient-to-r from-purple-500 to-pink-500 h-3 rounded-full"
               initial={{ width: 0 }}
@@ -647,15 +647,15 @@ const HabitTrackerPage: React.FC = () => {
         <div className="space-y-4">
           {todayHabits.length === 0 ? (
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 text-center"
+              className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Target className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
+              <Target className="h-12 w-12 text-secondary-custom mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-primary-custom mb-2">
                 No habits for today
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
+              <p className="text-secondary-custom mb-6">
                 Start building powerful habits to transform your life
               </p>
               <button
@@ -671,10 +671,10 @@ const HabitTrackerPage: React.FC = () => {
               return (
                 <motion.div
                   key={habit.id}
-                  className={`bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border transition-all ${
+                  className={`bg-card-surface rounded-3xl p-6 shadow-lg border transition-all ${
                     isCompleted 
                       ? 'border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900/20' 
-                      : 'border-gray-100 dark:border-gray-700'
+                      : 'border-card-custom'
                   }`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -687,7 +687,7 @@ const HabitTrackerPage: React.FC = () => {
                         className={`p-2 rounded-full transition-all ${
                           isCompleted 
                             ? 'bg-green-500 text-white' 
-                            : 'bg-gray-100 dark:bg-gray-700 text-gray-400 hover:bg-purple-100 dark:hover:bg-purple-900/30'
+                            : 'bg-white/5 text-secondary-custom hover:bg-purple-100 dark:hover:bg-purple-900/30'
                         }`}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -712,12 +712,12 @@ const HabitTrackerPage: React.FC = () => {
                           <h4 className={`font-semibold transition-all ${
                             isCompleted 
                               ? 'text-green-800 dark:text-green-300 line-through' 
-                              : 'text-gray-800 dark:text-gray-100'
+                              : 'text-primary-custom'
                           }`}>
                             {habit.title}
                           </h4>
                           {habit.description && (
-                            <p className="text-sm text-gray-600 dark:text-gray-300">
+                            <p className="text-sm text-secondary-custom">
                               {habit.description}
                             </p>
                           )}
@@ -728,11 +728,11 @@ const HabitTrackerPage: React.FC = () => {
                                 {habit.streak} day streak
                               </span>
                             </div>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                            <span className="text-xs text-secondary-custom">
                               Best: {habit.longestStreak} days
                             </span>
                             {habit.lastUpdated && (
-                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                              <span className="text-xs text-secondary-custom">
                                 Updated {formatLastUpdated(habit.lastUpdated)}
                               </span>
                             )}
@@ -747,7 +747,7 @@ const HabitTrackerPage: React.FC = () => {
                       )}
                       <button
                         onClick={() => setEditingHabit(habit)}
-                        className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                        className="p-2 text-secondary-custom hover:text-secondary-custom transition-colors"
                       >
                         <Edit className="h-4 w-4" />
                       </button>
@@ -776,66 +776,66 @@ const HabitTrackerPage: React.FC = () => {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-2xl p-4 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
             <div className="text-center">
               <Target className="h-8 w-8 text-purple-600 dark:text-purple-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">{totalHabits}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Total Habits</p>
+              <p className="text-2xl font-bold text-primary-custom">{totalHabits}</p>
+              <p className="text-sm text-secondary-custom">Total Habits</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-2xl p-4 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
             <div className="text-center">
               <BarChart3 className="h-8 w-8 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">{avgCompletion}%</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Avg Completion</p>
+              <p className="text-2xl font-bold text-primary-custom">{avgCompletion}%</p>
+              <p className="text-sm text-secondary-custom">Avg Completion</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-2xl p-4 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
             <div className="text-center">
               <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">{totalCompletions}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Total Completions</p>
+              <p className="text-2xl font-bold text-primary-custom">{totalCompletions}</p>
+              <p className="text-sm text-secondary-custom">Total Completions</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-2xl p-4 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
             <div className="text-center">
               <Flame className="h-8 w-8 text-orange-600 dark:text-orange-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">{bestStreak}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Best Streak</p>
+              <p className="text-2xl font-bold text-primary-custom">{bestStreak}</p>
+              <p className="text-sm text-secondary-custom">Best Streak</p>
             </div>
           </motion.div>
         </div>
 
         {/* Habits Performance */}
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+          className="bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">Habit Performance</h3>
+          <h3 className="text-xl font-bold text-primary-custom mb-6">Habit Performance</h3>
           
           <div className="space-y-4">
             {habits.map((habit, index) => {
@@ -846,7 +846,7 @@ const HabitTrackerPage: React.FC = () => {
               return (
                 <motion.div
                   key={habit.id}
-                  className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl"
+                  className="flex items-center justify-between p-4 bg-white/5 rounded-xl"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -861,8 +861,8 @@ const HabitTrackerPage: React.FC = () => {
                       );
                     })()}
                     <div>
-                      <p className="font-medium text-gray-800 dark:text-gray-100">{habit.title}</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <p className="font-medium text-primary-custom">{habit.title}</p>
+                      <p className="text-sm text-secondary-custom">
                         {habit.streak} day streak • Best: {habit.longestStreak}
                       </p>
                     </div>
@@ -871,7 +871,7 @@ const HabitTrackerPage: React.FC = () => {
                     <p className="text-lg font-bold text-purple-600 dark:text-purple-400">
                       {completionRate}%
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-secondary-custom">
                       {habit.completedDates.length} completions
                     </p>
                   </div>
@@ -911,20 +911,20 @@ const HabitTrackerPage: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+              <ArrowLeft className="h-6 w-6 text-secondary-custom" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Habit Tracker</h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">Build powerful habits that transform your life</p>
+              <h1 className="text-3xl font-bold text-primary-custom">{t('habitTracker')}</h1>
+              <p className="text-secondary-custom mt-1">Build powerful habits that transform your life</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-3">
             <motion.button
               onClick={() => setShowSuggestions(true)}
-              className="p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all"
+              className="p-2 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -943,7 +943,7 @@ const HabitTrackerPage: React.FC = () => {
         </motion.div>
 
         {/* Tab Navigation */}
-        <div className="flex bg-white dark:bg-gray-800 rounded-2xl p-1 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
+        <div className="flex bg-card-surface rounded-2xl p-1 mb-8 shadow-lg border border-card-custom">
           {[
             { id: 'today', label: 'Today', icon: CheckCircle },
             { id: 'analytics', label: 'Analytics', icon: BarChart3 },
@@ -955,7 +955,7 @@ const HabitTrackerPage: React.FC = () => {
               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-xl font-medium transition-all ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  : 'text-secondary-custom hover:text-primary-custom hover:bg-white/5'
               }`}
             >
               <tab.icon className="h-5 w-5" />
@@ -994,13 +994,13 @@ const HabitTrackerPage: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 text-center"
+              className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom text-center"
             >
               <Calendar className="h-12 w-12 text-purple-600 dark:text-purple-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+              <h3 className="text-xl font-bold text-primary-custom mb-2">
                 Calendar View
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-secondary-custom">
                 Coming soon! Visual calendar with habit completion tracking.
               </p>
             </motion.div>

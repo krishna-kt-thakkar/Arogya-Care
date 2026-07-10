@@ -54,7 +54,7 @@ const GlobalThemeSelector: React.FC = () => {
                   {theme === opt.id && (
                     <motion.div 
                       layoutId="activeThemeCheck"
-                      className="absolute inset-0.5 rounded-full bg-white flex items-center justify-center"
+                      className="absolute inset-0.5 rounded-full bg-card-surface flex items-center justify-center"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                     >

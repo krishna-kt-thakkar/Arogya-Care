@@ -424,18 +424,18 @@ const BMIPage: React.FC = () => {
             type="number"
             value={systolic}
             onChange={(e) => handleInputChange(stat.id, `${e.target.value}/${diastolic}`)}
-            className="w-20 px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent text-center bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+            className="w-20 px-3 py-2 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent text-center bg-card-surface text-primary-custom"
             placeholder="120"
           />
-          <span className="text-gray-500 dark:text-gray-400 font-medium">/</span>
+          <span className="text-secondary-custom font-medium">/</span>
           <input
             type="number"
             value={diastolic}
             onChange={(e) => handleInputChange(stat.id, `${systolic}/${e.target.value}`)}
-            className="w-20 px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent text-center bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+            className="w-20 px-3 py-2 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent text-center bg-card-surface text-primary-custom"
             placeholder="80"
           />
-          <span className="text-sm text-gray-600 dark:text-gray-300 ml-2">{stat.unit}</span>
+          <span className="text-sm text-secondary-custom ml-2">{stat.unit}</span>
         </div>
       );
     }
@@ -446,11 +446,11 @@ const BMIPage: React.FC = () => {
           type="number"
           value={currentValue}
           onChange={(e) => handleInputChange(stat.id, e.target.value)}
-          className="w-24 px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent text-center bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+          className="w-24 px-3 py-2 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent text-center bg-card-surface text-primary-custom"
           placeholder={stat.value}
           step={stat.id === 'temperature' ? '0.1' : '1'}
         />
-        <span className="text-sm text-gray-600 dark:text-gray-300">{stat.unit}</span>
+        <span className="text-sm text-secondary-custom">{stat.unit}</span>
       </div>
     );
   };
@@ -522,7 +522,7 @@ const BMIPage: React.FC = () => {
               onClick={handleEditToggle}
               className={`px-6 py-3 rounded-xl font-semibold shadow-lg transition-all flex items-center space-x-2 ${
                 isEditing 
-                  ? 'bg-gray-500 hover:bg-gray-600 text-white' 
+                  ? 'bg-gray-500 hover:bg-white/15 text-white' 
                   : 'bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-xl'
               }`}
               whileHover={{ scale: 1.05 }}
@@ -537,24 +537,24 @@ const BMIPage: React.FC = () => {
         <AnimatePresence>
           {showSettings && (
             <motion.div
-              className="mb-8 bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+              className="mb-8 bg-card-surface rounded-3xl p-6 shadow-lg border border-card-custom"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
             >
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Settings</h3>
+              <h3 className="text-lg font-semibold text-primary-custom mb-4">Settings</h3>
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <span className="text-gray-700 dark:text-gray-300 font-medium">Unit System</span>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Choose between metric and imperial units</p>
+                  <span className="text-secondary-custom font-medium">Unit System</span>
+                  <p className="text-sm text-secondary-custom">Choose between metric and imperial units</p>
                 </div>
-                <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                <div className="flex bg-white/5 rounded-lg p-1">
                   <button
                     onClick={() => setUnit('metric')}
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                       unit === 'metric'
-                        ? 'bg-white dark:bg-gray-600 text-teal-600 dark:text-teal-400 shadow-sm'
-                        : 'text-gray-600 dark:text-gray-300'
+                        ? 'bg-card-surface text-teal-600 dark:text-teal-400 shadow-sm'
+                        : 'text-secondary-custom'
                     }`}
                   >
                     Metric
@@ -563,8 +563,8 @@ const BMIPage: React.FC = () => {
                     onClick={() => setUnit('imperial')}
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                       unit === 'imperial'
-                        ? 'bg-white dark:bg-gray-600 text-teal-600 dark:text-teal-400 shadow-sm'
-                        : 'text-gray-600 dark:text-gray-300'
+                        ? 'bg-card-surface text-teal-600 dark:text-teal-400 shadow-sm'
+                        : 'text-secondary-custom'
                     }`}
                   >
                     Imperial
@@ -574,8 +574,8 @@ const BMIPage: React.FC = () => {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-gray-700 dark:text-gray-300 font-medium">Reset All Data</span>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Clear all vital stats and BMI history</p>
+                  <span className="text-secondary-custom font-medium">Reset All Data</span>
+                  <p className="text-sm text-secondary-custom">Clear all vital stats and BMI history</p>
                 </div>
                 <motion.button
                   onClick={resetAllData}
@@ -594,19 +594,19 @@ const BMIPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* BMI Calculator */}
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <div className="flex items-center mb-6">
               <Scale className="h-8 w-8 text-blue-600 dark:text-blue-400 mr-3" />
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">BMI Calculator</h2>
+              <h2 className="text-2xl font-bold text-primary-custom">BMI Calculator</h2>
             </div>
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-custom mb-2">
                   Height ({unit === 'metric' ? 'cm' : 'inches'})
                 </label>
                 <div className="relative">
@@ -617,14 +617,14 @@ const BMIPage: React.FC = () => {
                     type="number"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-full pl-12 pr-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                     placeholder={`Enter height in ${unit === 'metric' ? 'cm' : 'inches'}`}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-custom mb-2">
                   Weight ({unit === 'metric' ? 'kg' : 'lbs'})
                 </label>
                 <div className="relative">
@@ -635,7 +635,7 @@ const BMIPage: React.FC = () => {
                     type="number"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-full pl-12 pr-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-brand-from focus:border-transparent bg-card-surface text-primary-custom"
                     placeholder={`Enter weight in ${unit === 'metric' ? 'kg' : 'lbs'}`}
                   />
                 </div>
@@ -657,21 +657,21 @@ const BMIPage: React.FC = () => {
                   className={`p-6 rounded-2xl ${getBMICategory(bmi).bg} border ${getBMICategory(bmi).border}`}
                 >
                   <div className="text-center">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Your BMI</p>
+                    <p className="text-sm text-secondary-custom mb-2">Your BMI</p>
                     <p className={`text-4xl font-bold ${getBMICategory(bmi).color} mb-2`}>
                       {bmi.toFixed(1)}
                     </p>
                     <p className={`text-lg font-semibold ${getBMICategory(bmi).color} mb-3`}>
                       {getBMICategory(bmi).category}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-secondary-custom">
                       {getBMIStatus(bmi).message}
                     </p>
                   </div>
                   
                   <motion.button
                     onClick={saveBMIRecord}
-                    className="w-full mt-4 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 rounded-xl font-medium shadow-sm hover:shadow-md transition-all flex items-center justify-center space-x-2"
+                    className="w-full mt-4 bg-card-surface text-primary-custom py-2 rounded-xl font-medium shadow-sm hover:shadow-md transition-all flex items-center justify-center space-x-2"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -685,7 +685,7 @@ const BMIPage: React.FC = () => {
 
           {/* Vital Stats Update */}
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
+            className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -693,7 +693,7 @@ const BMIPage: React.FC = () => {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
                 <TrendingUp className="h-8 w-8 text-green-600 dark:text-green-400 mr-3" />
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Vital Statistics</h2>
+                <h2 className="text-2xl font-bold text-primary-custom">Vital Statistics</h2>
               </div>
               {isEditing && (
                 <motion.button
@@ -715,14 +715,14 @@ const BMIPage: React.FC = () => {
                 return (
                   <motion.div
                     key={stat.id}
-                    className={`p-6 rounded-2xl ${stat.bgColor} dark:bg-opacity-20 border border-gray-100 dark:border-gray-600`}
+                    className={`p-6 rounded-2xl ${stat.bgColor} dark:bg-opacity-20 border border-card-custom`}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center">
-                        <div className={`p-3 rounded-full bg-white dark:bg-gray-700 shadow-sm mr-4`}>
+                        <div className={`p-3 rounded-full bg-card-surface shadow-sm mr-4`}>
                           <motion.div
                             animate={stat.id === 'heartRate' ? { scale: [1, 1.1, 1] } : {}}
                             transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
@@ -731,8 +731,8 @@ const BMIPage: React.FC = () => {
                           </motion.div>
                         </div>
                         <div>
-                          <h3 className="font-semibold text-gray-800 dark:text-gray-100 text-lg">{stat.label}</h3>
-                          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
+                          <h3 className="font-semibold text-primary-custom text-lg">{stat.label}</h3>
+                          <div className="flex items-center text-sm text-secondary-custom mt-1">
                             <Clock className="h-3 w-3 mr-1" />
                             <span>Updated {formatLastUpdated(stat.lastUpdated)}</span>
                           </div>
@@ -743,7 +743,7 @@ const BMIPage: React.FC = () => {
                     <div className="flex items-center justify-between">
                       {isEditing ? (
                         <div className="flex-1">
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          <label className="block text-sm font-medium text-secondary-custom mb-2">
                             Enter new value:
                           </label>
                           {renderInput(stat)}
@@ -753,7 +753,7 @@ const BMIPage: React.FC = () => {
                           <span className={`text-3xl font-bold ${stat.color} mr-2`}>
                             {stat.value}
                           </span>
-                          <span className="text-lg text-gray-600 dark:text-gray-400">{stat.unit}</span>
+                          <span className="text-lg text-secondary-custom">{stat.unit}</span>
                         </div>
                       )}
                       
@@ -780,8 +780,8 @@ const BMIPage: React.FC = () => {
                     </div>
                     
                     {!isEditing && (
-                      <div className="mt-3 p-3 bg-white dark:bg-gray-700 rounded-xl">
-                        <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <div className="mt-3 p-3 bg-card-surface rounded-xl">
+                        <p className="text-sm font-semibold text-secondary-custom flex items-center gap-2">
                           <Lightbulb className="h-4 w-4 text-amber-500 flex-shrink-0 animate-pulse" />
                           <span>{status.message}</span>
                         </p>
@@ -802,10 +802,10 @@ const BMIPage: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           {/* BMI Categories */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom">
             <div className="flex items-center mb-6">
               <Target className="h-8 w-8 text-purple-600 dark:text-purple-400 mr-3" />
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">BMI Categories</h2>
+              <h2 className="text-2xl font-bold text-primary-custom">BMI Categories</h2>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -830,10 +830,10 @@ const BMIPage: React.FC = () => {
           </div>
 
           {/* BMI History */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-surface rounded-3xl p-8 shadow-lg border border-card-custom">
             <div className="flex items-center mb-6">
               <Clock className="h-8 w-8 text-indigo-600 dark:text-indigo-400 mr-3" />
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">BMI History</h2>
+              <h2 className="text-2xl font-bold text-primary-custom">BMI History</h2>
             </div>
 
             {bmiHistory.length > 0 ? (
@@ -841,20 +841,20 @@ const BMIPage: React.FC = () => {
                 {bmiHistory.slice(0, 5).map((entry, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl"
+                    className="flex items-center justify-between p-4 bg-white/5 rounded-xl"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
                     <div>
-                      <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{entry.bmi.toFixed(1)}</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">{entry.date}</div>
+                      <div className="font-bold text-primary-custom text-lg">{entry.bmi.toFixed(1)}</div>
+                      <div className="text-sm text-secondary-custom">{entry.date}</div>
                     </div>
                     <div className="text-right">
                       <div className={`px-3 py-1 rounded-full text-sm font-medium ${getBMICategory(entry.bmi).color} ${getBMICategory(entry.bmi).bg}`}>
                         {entry.category}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <div className="text-xs text-secondary-custom mt-1">
                         {entry.weight}kg, {entry.height}cm
                       </div>
                     </div>
@@ -863,9 +863,9 @@ const BMIPage: React.FC = () => {
               </div>
             ) : (
               <div className="text-center py-8">
-                <Scale className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-400">No BMI records yet</p>
-                <p className="text-sm text-gray-400 dark:text-gray-500">Calculate and save your first BMI</p>
+                <Scale className="h-12 w-12 text-secondary-custom mx-auto mb-4" />
+                <p className="text-secondary-custom">No BMI records yet</p>
+                <p className="text-sm text-secondary-custom">Calculate and save your first BMI</p>
               </div>
             )}
           </div>
@@ -879,7 +879,7 @@ const BMIPage: React.FC = () => {
             animate={{ opacity: 1 }}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl text-center"
+              className="bg-card-surface rounded-3xl p-8 shadow-2xl text-center"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
             >
@@ -896,8 +896,8 @@ const BMIPage: React.FC = () => {
               >
                 <Heart className="h-12 w-12 text-teal-600 dark:text-teal-400 mx-auto" />
               </motion.div>
-              <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">Saving your vital stats...</p>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">Your health data is being securely stored.</p>
+              <p className="text-lg font-semibold text-primary-custom">Saving your vital stats...</p>
+              <p className="text-secondary-custom mt-2">Your health data is being securely stored.</p>
             </motion.div>
           </motion.div>
         )}

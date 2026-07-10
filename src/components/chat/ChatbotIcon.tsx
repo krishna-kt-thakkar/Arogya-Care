@@ -19,7 +19,7 @@ const ChatbotIcon: React.FC = () => {
           onClick={() => setIsOpen(!isOpen)}
           className={`p-4 rounded-full shadow-lg cursor-pointer transition-all duration-300 ${
             isOpen
-              ? 'bg-gray-600 hover:bg-gray-700'
+              ? 'bg-white/15 hover:bg-white/20'
               : 'bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 shadow-teal-500/30'
           }`}
           whileHover={{ scale: 1.1 }}
