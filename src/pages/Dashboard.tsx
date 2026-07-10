@@ -160,14 +160,6 @@ const Dashboard: React.FC = () => {
       color: 'from-red-500 to-rose-700',
       bgColor: 'rgba(239, 68, 68, 0.25)',
       route: '/nearby'
-    },
-    {
-      title: t('doctorBooking'),
-      description: 'Book slots with specialists and check live clinic queue wait times in real time',
-      icon: Calendar,
-      color: 'from-purple-500 to-indigo-600',
-      bgColor: 'rgba(124, 58, 237, 0.25)',
-      route: '/doctor-booking'
     }
   ];
 
@@ -460,6 +452,50 @@ const Dashboard: React.FC = () => {
                       onClick={() => navigate(card.route)}
                     />
                   ))}
+                </motion.div>
+              </div>
+            )}
+
+            {/* Upcoming Updates / previews */}
+            {activeTab !== 'trackers' && (
+              <div className="space-y-4 pt-4">
+                <div className="flex items-center space-x-2">
+                  <AlertTriangle className="h-5 w-5 text-orange-500 animate-pulse" />
+                  <h3 className="text-lg font-black uppercase tracking-wider text-primary-custom">Upcoming Updates (Beta Preview)</h3>
+                </div>
+
+                <motion.div 
+                  onClick={() => navigate('/doctor-booking')}
+                  className="glass-card p-6 border border-orange-500/20 hover:border-orange-500/40 relative flex flex-col md:flex-row items-center justify-between overflow-hidden cursor-pointer gap-6 transition-all"
+                  whileHover={{ y: -3, scale: 1.01 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="absolute inset-0 bg-orange-500/[0.02] pointer-events-none" />
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between md:justify-start gap-4 mb-3">
+                      <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20">
+                        <Calendar className="h-6 w-6 text-orange-500" />
+                      </div>
+                      <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/25">
+                        Development Preview
+                      </span>
+                    </div>
+
+                    <h4 className="text-xl font-black text-primary-custom flex items-center gap-2">
+                      AI Doctor Booking & Clinic Queue
+                    </h4>
+                    <p className="text-xs text-secondary-custom mt-1.5 leading-relaxed max-w-2xl">
+                      Book clinic slots with top specialists, view live patient waiting tokens, check lunch hours, and get WhatsApp appointment confirmation redirections automatically.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-bold text-orange-500 border-t md:border-t-0 md:border-l border-card-custom pt-4 md:pt-0 md:pl-6 flex-shrink-0 w-full md:w-auto">
+                    <span className="md:hidden">Check booking availability preview</span>
+                    <div className="flex items-center space-x-2">
+                      <span className="hidden md:inline font-extrabold uppercase tracking-wide text-[10px]">Configure Slots Preview</span>
+                      <ArrowRight className="h-4.5 w-4.5" />
+                    </div>
+                  </div>
                 </motion.div>
               </div>
             )}
