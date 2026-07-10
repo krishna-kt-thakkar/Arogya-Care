@@ -28,6 +28,7 @@ import LiveDeploymentPage from './pages/LiveDeploymentPage';
 import AIMoodCompanionPage from './pages/AIMoodCompanionPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import EmergencyContactsPage from './pages/EmergencyContactsPage';
+import WelcomePage from './pages/WelcomePage';
 
 const AppRoutes: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -41,7 +42,9 @@ const AppRoutes: React.FC = () => {
           <Route
             path="/"
             element={
-              isLoading ? null : user ? <Navigate to="/dashboard" replace /> : <PageTransition><LandingPage /></PageTransition>
+              isLoading ? null : user ? (
+                localStorage.getItem('arogya_hasSeenWelcome') ? <Navigate to="/dashboard" replace /> : <Navigate to="/welcome" replace />
+              ) : <PageTransition><LandingPage /></PageTransition>
             }
           />
 
@@ -49,12 +52,21 @@ const AppRoutes: React.FC = () => {
           <Route
             path="/login"
             element={
-              isLoading ? null : user ? <Navigate to="/dashboard" replace /> : <PageTransition><LoginPage /></PageTransition>
+              isLoading ? null : user ? (
+                localStorage.getItem('arogya_hasSeenWelcome') ? <Navigate to="/dashboard" replace /> : <Navigate to="/welcome" replace />
+              ) : <PageTransition><LoginPage /></PageTransition>
             }
           />
 
+          {/* Welcome / Onboarding screen */}
+          <Route path="/welcome" element={<ProtectedRoute><PageTransition><WelcomePage /></PageTransition></ProtectedRoute>} />
+
           {/* Protected Routes */}
-          <Route path="/dashboard" element={<ProtectedRoute><PageTransition><Dashboard /></PageTransition></ProtectedRoute>} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <PageTransition><Dashboard /></PageTransition>
+            </ProtectedRoute>
+          } />
           <Route path="/bmi" element={<ProtectedRoute><PageTransition><BMIPage /></PageTransition></ProtectedRoute>} />
           <Route path="/water-tracker" element={<ProtectedRoute><PageTransition><WaterTrackerPage /></PageTransition></ProtectedRoute>} />
           <Route path="/medications" element={<ProtectedRoute><PageTransition><MedicationsPage /></PageTransition></ProtectedRoute>} />

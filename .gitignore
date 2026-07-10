@@ -29,3 +29,5 @@ healthoi-main
 healthoi-main.zip
 dist
 
+# Fix/instruction docs (not source code)
+AarogyaCare_*.md

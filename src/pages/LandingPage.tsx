@@ -13,7 +13,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTheme, Theme } from '../contexts/ThemeContext';
 import { hasFirebaseConfig } from '../backend/firebase';
 
-type AuthMode = 'login' | 'signup' | 'otp-send' | 'otp-verify' | 'forgot' | 'email-sent';
+type AuthMode = 'login' | 'signup' | 'signup-verify' | 'otp-send' | 'otp-verify' | 'forgot' | 'email-sent';
 
 // Scroll-animated section wrapper
 const AnimatedSection: React.FC<{ children: React.ReactNode; className?: string; delay?: number }> = ({ children, className = '', delay = 0 }) => {
@@ -76,7 +76,7 @@ const LandingPage: React.FC = () => {
 
   // Read initial auth mode from URL search params (for browser back button support)
   const urlMode = searchParams.get('mode') as AuthMode | null;
-  const validModes: AuthMode[] = ['login', 'signup', 'otp-send', 'otp-verify', 'forgot', 'email-sent'];
+  const validModes: AuthMode[] = ['login', 'signup', 'signup-verify', 'otp-send', 'otp-verify', 'forgot', 'email-sent'];
   const initialMode: AuthMode = (urlMode && validModes.includes(urlMode)) ? urlMode : 'login';
 
   // Auth portal state
@@ -92,6 +92,9 @@ const LandingPage: React.FC = () => {
   const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
+  const [signupOtpCode, setSignupOtpCode] = useState(['', '', '', '', '', '']);
+  const signupOtpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // Google Account Selector Mock States
   const [showGoogleMockModal, setShowGoogleMockModal] = useState(false);
@@ -103,10 +106,15 @@ const LandingPage: React.FC = () => {
   const [mockGoogleError, setMockGoogleError] = useState('');
   const mockGoogleOtpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Centralized navigation: whenever user becomes truthy, go to dashboard
+  // Centralized navigation: whenever user becomes truthy, route appropriately
   useEffect(() => {
     if (user && !isLoading) {
-      navigate('/dashboard', { replace: true });
+      const hasSeenWelcome = localStorage.getItem('arogya_hasSeenWelcome');
+      if (hasSeenWelcome) {
+        navigate('/dashboard', { replace: true });
+      } else {
+        navigate('/welcome', { replace: true });
+      }
     }
   }, [user, isLoading, navigate]);
 
@@ -187,13 +195,21 @@ const LandingPage: React.FC = () => {
     setIsSubmitting(true);
     const result = await signup(name, email, password, gender);
     if (result.success) {
-      if (result.needsEmailConfirmation) {
-        switchAuthTo('email-sent');
-        setAuthSuccess(`Verification email sent to ${email}. Please check your inbox and click the confirmation link.`);
+      // Account created — now send OTP for mandatory email verification
+      const otpResult = await sendOtp(email);
+      if (otpResult.success) {
+        setSignupOtpCode(['', '', '', '', '', '']);
+        switchAuthTo('signup-verify');
+        setAuthSuccess(`Verification code sent to ${email}`);
+        startResendCooldown();
+        setTimeout(() => signupOtpRefs.current[0]?.focus(), 100);
+      } else {
+        // Account was created but OTP failed — still show verify screen so they can resend
+        setSignupOtpCode(['', '', '', '', '', '']);
+        switchAuthTo('signup-verify');
+        setAuthError('Could not send verification code. Tap Resend below.');
       }
-      // If no email confirmation needed, navigation happens automatically via centralized useEffect
     } else {
-      // If the error says account already exists, auto-switch to login mode with email pre-filled
       if (result.error && result.error.includes('already exists')) {
         setAuthError(result.error);
         switchAuthTo('login');
@@ -201,6 +217,62 @@ const LandingPage: React.FC = () => {
         setAuthError(result.error || 'Sign up failed');
       }
     }
+    setIsSubmitting(false);
+  };
+
+  const startResendCooldown = () => {
+    setResendCooldown(45);
+    const interval = setInterval(() => {
+      setResendCooldown(prev => {
+        if (prev <= 1) { clearInterval(interval); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const handleResendSignupOtp = async () => {
+    if (resendCooldown > 0) return;
+    setAuthError('');
+    setIsSubmitting(true);
+    const result = await sendOtp(email);
+    if (result.success) {
+      setAuthSuccess(`New code sent to ${email}`);
+      startResendCooldown();
+    } else {
+      setAuthError(result.error || 'Failed to resend code');
+    }
+    setIsSubmitting(false);
+  };
+
+  const handleSignupOtpChange = (index: number, value: string) => {
+    if (value.length > 1) value = value.slice(-1);
+    if (!/^\d*$/.test(value)) return;
+    const newOtp = [...signupOtpCode];
+    newOtp[index] = value;
+    setSignupOtpCode(newOtp);
+    if (value && index < 5) {
+      signupOtpRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleSignupOtpKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === 'Backspace' && !signupOtpCode[index] && index > 0) {
+      signupOtpRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleSignupVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    const code = signupOtpCode.join('');
+    if (code.length !== 6) { setAuthError('Please enter the 6-digit verification code'); return; }
+
+    setIsSubmitting(true);
+    const result = await verifyOtp(email, code);
+    if (!result.success) {
+      setAuthError(result.error || 'Invalid or expired code. Try again or resend.');
+    }
+    // On success, user state updates → centralized useEffect navigates to /welcome
     setIsSubmitting(false);
   };
 
@@ -707,6 +779,61 @@ const LandingPage: React.FC = () => {
                 <button onClick={() => switchAuthTo('login')} className="text-xs font-bold text-brand-from hover:text-white transition-colors underline underline-offset-4">
                   ← Return to Sign In
                 </button>
+              </motion.div>
+            )}
+
+            {/* Mandatory Signup Email Verification */}
+            {authMode === 'signup-verify' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="text-center mb-6">
+                  <div className="inline-flex p-3 rounded-2xl bg-gradient-to-br from-emerald-400/20 to-teal-500/20 border border-emerald-500/20 mb-3">
+                    <Shield className="h-6 w-6 text-emerald-400" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white">Verify Your Email</h3>
+                  <p className="text-xs text-blue-200/60 mt-1">A 6-digit code was sent to <span className="text-white font-semibold">{email}</span></p>
+                  <p className="text-[10px] text-blue-200/40 mt-1">You must verify your email to complete registration</p>
+                </div>
+                <form onSubmit={handleSignupVerifyOtp} className="space-y-4">
+                  <div className="flex justify-center gap-2">
+                    {signupOtpCode.map((digit, i) => (
+                      <input
+                        key={i}
+                        ref={el => { signupOtpRefs.current[i] = el; }}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        value={digit}
+                        onChange={e => handleSignupOtpChange(i, e.target.value)}
+                        onKeyDown={e => handleSignupOtpKeyDown(i, e)}
+                        className="w-11 h-12 text-center text-xl font-bold bg-white/5 border border-card-custom rounded-xl text-white focus:border-emerald-400 outline-none focus:bg-white/10 transition-all"
+                        placeholder="·"
+                      />
+                    ))}
+                  </div>
+                  {authError && (
+                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-300 flex items-center gap-2">
+                      <AlertCircle className="h-4 w-4" /> {authError}
+                    </div>
+                  )}
+                  {authSuccess && !authError && (
+                    <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" /> {authSuccess}
+                    </div>
+                  )}
+                  <button type="submit" disabled={isSubmitting} className="w-full py-3 btn-brand rounded-xl text-sm disabled:opacity-50">
+                    {isSubmitting ? 'Verifying...' : 'Verify & Continue'}
+                  </button>
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={handleResendSignupOtp}
+                      disabled={resendCooldown > 0 || isSubmitting}
+                      className="text-xs font-bold text-brand-from hover:text-white transition-colors disabled:text-blue-200/30 disabled:cursor-not-allowed"
+                    >
+                      {resendCooldown > 0 ? `Resend code in ${resendCooldown}s` : 'Resend Code'}
+                    </button>
+                  </div>
+                </form>
               </motion.div>
             )}
 
