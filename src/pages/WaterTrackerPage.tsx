@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Droplets, Plus, Minus, Target, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Droplets, Plus, Minus, Target, TrendingUp, CupSoda, GlassWater } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 import { useStreak } from '../contexts/StreakContext';
@@ -181,7 +181,7 @@ const WaterTrackerPage: React.FC = () => {
             <ArrowLeft className="h-6 w-6 text-gray-600 dark:text-gray-300" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">{t('waterIntake')} 💧</h1>
+            <h1 className="text-3xl font-black text-primary-custom">{t('waterIntake')}</h1>
             <p className="text-gray-600 dark:text-gray-300 mt-1">Stay hydrated and track your daily water consumption</p>
             {lastUpdated && (
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -356,26 +356,29 @@ const WaterTrackerPage: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Quick Add</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { amount: 1, label: '1 Glass', icon: '🥛' },
-              { amount: 2, label: '2 Glasses', icon: '🥤' },
-              { amount: 3, label: '3 Glasses', icon: '🧊' },
-              { amount: 4, label: 'Bottle', icon: '🍼' }
-            ].map((item, index) => (
-              <motion.button
-                key={item.label}
-                onClick={() => addQuickWater(item.amount)}
-                className="p-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-xl transition-all duration-300 text-center"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <div className="text-2xl mb-2">{item.icon}</div>
-                <p className="font-medium text-gray-800 dark:text-gray-100">{item.label}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">+{item.amount}</p>
-              </motion.button>
-            ))}
+              { amount: 1, label: '1 Glass', icon: GlassWater, color: 'text-sky-500' },
+              { amount: 2, label: '2 Glasses', icon: GlassWater, color: 'text-blue-500' },
+              { amount: 3, label: '3 Glasses', icon: CupSoda, color: 'text-indigo-500' },
+              { amount: 4, label: 'Bottle', icon: Droplets, color: 'text-teal-500' }
+            ].map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.button
+                  key={item.label}
+                  onClick={() => addQuickWater(item.amount)}
+                  className="p-4 bg-white/5 border border-card-custom hover:bg-white/10 rounded-xl transition-all duration-300 text-center flex flex-col items-center justify-center"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <IconComponent className={`h-8 w-8 mb-2 ${item.color}`} />
+                  <p className="font-semibold text-primary-custom">{item.label}</p>
+                  <p className="text-sm text-secondary-custom">+{item.amount}</p>
+                </motion.button>
+              );
+            })}
           </div>
         </motion.div>
       </main>

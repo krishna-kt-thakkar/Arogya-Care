@@ -235,14 +235,14 @@ const MentalWellnessPage: React.FC = () => {
 
   // Mood options
   const moods = [
-    { emoji: '😊', name: 'Happy', color: 'text-yellow-500', bg: 'bg-yellow-100' },
-    { emoji: '😔', name: 'Sad', color: 'text-blue-500', bg: 'bg-blue-100' },
-    { emoji: '😐', name: 'Neutral', color: 'text-gray-500', bg: 'bg-gray-100' },
-    { emoji: '😄', name: 'Excited', color: 'text-orange-500', bg: 'bg-orange-100' },
-    { emoji: '😠', name: 'Angry', color: 'text-red-500', bg: 'bg-red-100' },
-    { emoji: '😰', name: 'Anxious', color: 'text-purple-500', bg: 'bg-purple-100' },
-    { emoji: '🥰', name: 'Grateful', color: 'text-pink-500', bg: 'bg-pink-100' },
-    { emoji: '😴', name: 'Tired', color: 'text-indigo-500', bg: 'bg-indigo-100' }
+    { icon: Smile, name: 'Happy', color: 'text-yellow-500', bg: 'bg-yellow-100/10' },
+    { icon: Frown, name: 'Sad', color: 'text-blue-500', bg: 'bg-blue-100/10' },
+    { icon: Meh, name: 'Neutral', color: 'text-gray-500', bg: 'bg-gray-100/10' },
+    { icon: Laugh, name: 'Excited', color: 'text-orange-500', bg: 'bg-orange-100/10' },
+    { icon: Angry, name: 'Angry', color: 'text-red-500', bg: 'bg-red-100/10' },
+    { icon: AlertCircle, name: 'Anxious', color: 'text-purple-500', bg: 'bg-purple-100/10' },
+    { icon: Heart, name: 'Grateful', color: 'text-pink-500', bg: 'bg-pink-100/10' },
+    { icon: Moon, name: 'Tired', color: 'text-indigo-500', bg: 'bg-indigo-100/10' }
   ];
 
   // Book recommendations
@@ -654,43 +654,46 @@ const MentalWellnessPage: React.FC = () => {
             
             {/* Mood selection */}
             <div className="mb-6">
-              <p className="text-sm font-medium text-gray-700 mb-3">How are you feeling?</p>
+              <p className="text-sm font-medium text-secondary-custom mb-3">How are you feeling?</p>
               <div className="grid grid-cols-4 gap-3">
-                {moods.map((mood) => (
-                  <motion.button
-                    key={mood.name}
-                    type="button"
-                    onClick={() => handleMoodChange(mood.name)}
-                    className={`p-3 rounded-xl border-2 transition-all ${
-                      selectedMood === mood.name
-                        ? `${mood.bg} border-purple-300 shadow-md`
-                        : 'border-gray-200 hover:border-purple-200'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <div className="text-center">
-                      <div className="text-2xl mb-1">{mood.emoji}</div>
-                      <p className={`text-xs font-medium ${
-                        selectedMood === mood.name ? mood.color : 'text-gray-600'
-                      }`}>
-                        {mood.name}
-                      </p>
-                    </div>
-                  </motion.button>
-                ))}
+                {moods.map((mood) => {
+                  const IconComponent = mood.icon;
+                  return (
+                    <motion.button
+                      key={mood.name}
+                      type="button"
+                      onClick={() => handleMoodChange(mood.name)}
+                      className={`p-3 rounded-xl border transition-all ${
+                        selectedMood === mood.name
+                          ? 'border-purple-500 bg-purple-500/15 shadow-md'
+                          : 'border-card-custom hover:border-purple-500/30 bg-card-surface/40'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <div className="text-center flex flex-col items-center">
+                        <IconComponent className={`h-6 w-6 mb-1.5 ${mood.color}`} />
+                        <p className={`text-xs font-semibold ${
+                          selectedMood === mood.name ? mood.color : 'text-secondary-custom'
+                        }`}>
+                          {mood.name}
+                        </p>
+                      </div>
+                    </motion.button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Gratitude section */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                What are you grateful for today? ✨
+              <label className="block text-sm font-medium text-secondary-custom mb-3">
+                What are you grateful for today?
               </label>
               <textarea
                 value={currentGratitude}
                 onChange={(e) => handleGratitudeChange(e.target.value)}
-                className="w-full h-24 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none bg-gradient-to-br from-yellow-50 to-orange-50 transition-all"
+                className="w-full h-24 px-4 py-3 border border-card-custom rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none bg-card-surface/40 transition-all text-primary-custom"
                 placeholder="I'm grateful for..."
                 onKeyDown={(e) => {
                   // Prevent form submission on Enter
