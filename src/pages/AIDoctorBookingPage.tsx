@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Calendar, Clock, Phone, MessageSquare, MapPin, 
-  User, CheckCircle, AlertTriangle, Coffee, ShieldAlert, X, ChevronRight
+  User, CheckCircle, AlertTriangle, Coffee, ShieldAlert, X, ChevronRight, Star, Award, Briefcase, Heart
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
@@ -26,6 +26,10 @@ interface Doctor {
   id: string;
   name: string;
   specialty: string;
+  qualifications: string;
+  experienceYears: number;
+  rating: number;
+  consultsCount: number;
   address: string;
   mapLink: string;
   timing: string;
@@ -38,11 +42,11 @@ interface Doctor {
   avgWaitMins: number;
   phone: string;
   whatsapp: string;
-  // Visual assets (3 per doctor -> 12 total)
   docPhoto: string;
   assistantName: string;
   assistantPhoto: string;
   clinicPhoto: string;
+  services: string[];
 }
 
 const AIDoctorBookingPage: React.FC = () => {
@@ -54,22 +58,29 @@ const AIDoctorBookingPage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedSlot, setSelectedSlot] = useState<string>('');
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  
   const [bookingForm, setBookingForm] = useState({
     patientName: '',
     age: '',
     symptoms: '',
     phone: ''
   });
+  
+  const [duplicateError, setDuplicateError] = useState<string>('');
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastBookedAppointment, setLastBookedAppointment] = useState<Appointment | null>(null);
 
-  // Doctors Catalog Database with rich visual assets (12 images total)
+  // Doctors Database with credentials and services
   const [doctors, setDoctors] = useState<Doctor[]>([
     {
       id: 'doc-1',
       name: 'Dr. Neha Sharma',
       specialty: 'Pediatrician (Child Specialist)',
+      qualifications: 'MBBS, MD (Pediatrics) - AIIMS Delhi, DCH (London)',
+      experienceYears: 16,
+      rating: 4.9,
+      consultsCount: 2450,
       address: 'Arogya Child Care Clinic, Sector 15, Noida, UP',
       mapLink: 'https://maps.google.com/?q=Sector+15+Noida',
       timing: '10:00 AM - 05:00 PM',
@@ -77,7 +88,7 @@ const AIDoctorBookingPage: React.FC = () => {
       lunchBreak: '01:00 PM - 02:00 PM',
       surgeryTime: '03:00 PM - 04:00 PM (Emergency Ward Rounds)',
       emergencyAway: false,
-      activeToken: 8,
+      activeToken: 5,
       waitingPatients: 2,
       avgWaitMins: 15,
       phone: '+919876543201',
@@ -85,19 +96,24 @@ const AIDoctorBookingPage: React.FC = () => {
       docPhoto: 'https://images.unsplash.com/photo-1594824813573-246434e33963?auto=format&fit=crop&w=400&h=400&q=80',
       assistantName: 'Amit Kumar (Compounder)',
       assistantPhoto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&h=300&q=80',
-      clinicPhoto: 'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=600&h=400&q=80'
+      clinicPhoto: 'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=600&h=400&q=80',
+      services: ['Childhood Immunizations', 'Growth & Nutrition Assessment', 'Newborn Screening']
     },
     {
       id: 'doc-2',
       name: 'Dr. Rajesh Iyer',
-      specialty: 'Cardiologist (Heart Surgeon)',
+      specialty: 'Cardiologist (Heart Specialist)',
+      qualifications: 'MBBS, MD (Medicine), DM (Cardiology) - BHU, FACC (USA)',
+      experienceYears: 22,
+      rating: 5.0,
+      consultsCount: 4120,
       address: 'Arogya Heart Hospital, Salt Lake, Sector V, Kolkata',
       mapLink: 'https://maps.google.com/?q=Salt+Lake+Kolkata',
       timing: '02:00 PM - 07:00 PM',
       slotsLeft: 0,
       lunchBreak: 'None',
-      surgeryTime: '04:00 PM - 06:30 PM (Away on Emergency Cardiac Surgery)',
-      emergencyAway: true, // Emergency surgery status
+      surgeryTime: '04:00 PM - 06:30 PM (Emergency Heart Surgery)',
+      emergencyAway: true,
       activeToken: 0,
       waitingPatients: 0,
       avgWaitMins: 0,
@@ -106,12 +122,17 @@ const AIDoctorBookingPage: React.FC = () => {
       docPhoto: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&h=400&q=80',
       assistantName: 'Joy Dutta (Head Assistant)',
       assistantPhoto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&h=300&q=80',
-      clinicPhoto: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&h=400&q=80'
+      clinicPhoto: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&h=400&q=80',
+      services: ['Angiography & Angioplasty', 'Echocardiography (ECG)', 'Hypertension Management']
     },
     {
       id: 'doc-3',
       name: 'Dr. Amit Verma',
       specialty: 'General Physician (Family Doctor)',
+      qualifications: 'MBBS, MD (General Medicine) - KMC Manipal',
+      experienceYears: 12,
+      rating: 4.8,
+      consultsCount: 3100,
       address: 'Arogya Family Clinic, Indiranagar 12th Main, Bengaluru',
       mapLink: 'https://maps.google.com/?q=Indiranagar+Bengaluru',
       timing: '09:00 AM - 04:00 PM',
@@ -119,7 +140,7 @@ const AIDoctorBookingPage: React.FC = () => {
       lunchBreak: '01:00 PM - 02:00 PM',
       surgeryTime: 'None',
       emergencyAway: false,
-      activeToken: 14,
+      activeToken: 12,
       waitingPatients: 4,
       avgWaitMins: 10,
       phone: '+919876543203',
@@ -127,12 +148,17 @@ const AIDoctorBookingPage: React.FC = () => {
       docPhoto: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&h=400&q=80',
       assistantName: 'Rahul Singh (Receptionist)',
       assistantPhoto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&h=300&q=80',
-      clinicPhoto: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&h=400&q=80'
+      clinicPhoto: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&h=400&q=80',
+      services: ['Chronic Disease Management', 'Diagnostic Preventive Health checkups', 'Infectious Diseases Therapy']
     },
     {
       id: 'doc-4',
       name: 'Dr. Priya Patel',
       specialty: 'Dermatologist (Skin Specialist)',
+      qualifications: 'MBBS, DDVL - Grant Medical College Mumbai',
+      experienceYears: 14,
+      rating: 4.9,
+      consultsCount: 2890,
       address: 'Arogya Skin & Laser Center, Andheri West, Mumbai',
       mapLink: 'https://maps.google.com/?q=Andheri+West+Mumbai',
       timing: '11:00 AM - 03:00 PM',
@@ -140,7 +166,7 @@ const AIDoctorBookingPage: React.FC = () => {
       lunchBreak: 'None',
       surgeryTime: '12:30 PM - 01:00 PM (Laser Therapy Sessions)',
       emergencyAway: false,
-      activeToken: 6,
+      activeToken: 8,
       waitingPatients: 1,
       avgWaitMins: 12,
       phone: '+919876543204',
@@ -148,7 +174,8 @@ const AIDoctorBookingPage: React.FC = () => {
       docPhoto: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&h=400&q=80',
       assistantName: 'Sneha Shah (Clinical Associate)',
       assistantPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&h=300&q=80',
-      clinicPhoto: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=600&h=400&q=80'
+      clinicPhoto: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=600&h=400&q=80',
+      services: ['Laser Acne Scar Treatment', 'Anti-Aging Therapy', 'Clinical Dermatitis & Eczema care']
     }
   ]);
 
@@ -165,9 +192,21 @@ const AIDoctorBookingPage: React.FC = () => {
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setDuplicateError('');
     if (!selectedDoctor || !selectedSlot || !selectedDate) return;
 
-    // Token and queue estimation calculations
+    // Duplicate booking prevention check: unique patientName is required
+    const targetName = bookingForm.patientName.trim().toLowerCase();
+    const hasDuplicate = appointments.some(
+      app => app.patientName.trim().toLowerCase() === targetName
+    );
+
+    if (hasDuplicate) {
+      setDuplicateError('Duplicate Booking Detected: An active slot is already reserved for this patient name. Please cancel your existing appointment or use a different patient name.');
+      return;
+    }
+
+    // Token and arrival timing estimates
     const token = selectedDoctor.activeToken + selectedDoctor.waitingPatients + 1;
     const estWait = selectedDoctor.waitingPatients * selectedDoctor.avgWaitMins + selectedDoctor.avgWaitMins;
     
@@ -179,7 +218,7 @@ const AIDoctorBookingPage: React.FC = () => {
       id: 'app-' + Date.now(),
       doctorName: selectedDoctor.name,
       specialty: selectedDoctor.specialty,
-      patientName: bookingForm.patientName,
+      patientName: bookingForm.patientName.trim(),
       age: bookingForm.age,
       symptoms: bookingForm.symptoms,
       phone: bookingForm.phone,
@@ -189,12 +228,12 @@ const AIDoctorBookingPage: React.FC = () => {
       date: selectedDate
     };
 
-    // Store in LocalStorage
+    // Store in state and LocalStorage
     const updatedAppointments = [newAppointment, ...appointments];
     setAppointments(updatedAppointments);
     localStorage.setItem('arogya_doctor_appointments', JSON.stringify(updatedAppointments));
 
-    // Decrement slots left and increment queue count in state
+    // Decrement slots left and increment waiting count
     setDoctors(prev => prev.map(doc => {
       if (doc.id === selectedDoctor.id) {
         return {
@@ -270,15 +309,15 @@ const AIDoctorBookingPage: React.FC = () => {
           <div className="flex items-center">
             <button 
               onClick={() => navigate('/dashboard')}
-              className="mr-4 p-2.5 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all"
+              className="mr-4 p-2.5 rounded-full bg-card-surface shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
               <ArrowLeft className="h-5 w-5 text-secondary-custom" />
             </button>
             <div>
               <h1 className="text-3xl font-black tracking-tight text-primary-custom flex items-center gap-2">
                 {t('doctorBooking')}
-                <span className="text-xs bg-orange-500/10 text-orange-500 border border-orange-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold">
-                  Development Mode
+                <span className="text-xs bg-orange-500/10 text-orange-500 border border-orange-500/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider font-extrabold">
+                  Development Preview
                 </span>
               </h1>
               <p className="text-secondary-custom mt-1 text-sm">
@@ -332,7 +371,7 @@ const AIDoctorBookingPage: React.FC = () => {
                       className="w-full h-full object-cover opacity-90 transition-transform duration-500 hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
-                      <span className="text-[9px] bg-brand-gradient text-white px-2 py-0.5 rounded-md font-bold uppercase tracking-wider w-max mb-1">
+                      <span className="text-[9px] bg-brand-gradient text-white px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider w-max mb-1">
                         Verified Facility
                       </span>
                       <h4 className="text-white font-extrabold text-sm flex items-center gap-1">
@@ -346,17 +385,52 @@ const AIDoctorBookingPage: React.FC = () => {
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
                       {/* Doctor details */}
-                      <div className="flex items-center space-x-3.5 mb-4">
+                      <div className="flex items-start space-x-3.5 mb-4">
                         <img 
                           src={doc.docPhoto} 
                           alt={doc.name} 
-                          className="w-12 h-12 rounded-full object-cover border border-card-custom"
+                          className="w-14 h-14 rounded-full object-cover border-2 border-purple-500/30 flex-shrink-0"
                         />
                         <div>
-                          <h3 className="font-extrabold text-primary-custom text-sm">{doc.name}</h3>
+                          <h3 className="font-extrabold text-primary-custom text-base flex items-center gap-1.5">
+                            {doc.name}
+                            <span className="inline-flex items-center text-[10px] text-amber-500 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded-md">
+                              <Star className="h-3 w-3 fill-amber-500 mr-0.5" />
+                              {doc.rating}
+                            </span>
+                          </h3>
                           <p className="text-[10px] text-brand-from font-extrabold uppercase tracking-wide">
                             {doc.specialty}
                           </p>
+                          <span className="text-[10px] text-secondary-custom font-semibold flex items-center mt-1">
+                            <Award className="h-3.5 w-3.5 text-purple-500 mr-1 flex-shrink-0" />
+                            {doc.qualifications}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Professional Bio */}
+                      <div className="mb-4 text-xs text-secondary-custom flex items-center space-x-3 bg-white/5 border border-card-custom p-2.5 rounded-xl">
+                        <div className="flex items-center text-purple-500">
+                          <Briefcase className="h-4 w-4 mr-1 flex-shrink-0" />
+                          <span className="font-extrabold">{doc.experienceYears}+ Yrs</span>
+                        </div>
+                        <span className="opacity-40">|</span>
+                        <div className="flex items-center text-emerald-500">
+                          <Heart className="h-4 w-4 mr-1 flex-shrink-0 fill-emerald-500/20" />
+                          <span className="font-extrabold">{doc.consultsCount}+ Patients</span>
+                        </div>
+                      </div>
+
+                      {/* Services list */}
+                      <div className="mb-4">
+                        <span className="block text-[8px] text-secondary-custom uppercase tracking-wider font-extrabold mb-1.5">Key Focus Services</span>
+                        <div className="flex flex-wrap gap-1">
+                          {doc.services.map((svc, i) => (
+                            <span key={i} className="text-[9px] font-bold bg-purple-500/5 text-purple-600 dark:text-purple-400 border border-purple-500/10 px-2 py-0.5 rounded-md">
+                              {svc}
+                            </span>
+                          ))}
                         </div>
                       </div>
 
@@ -400,7 +474,7 @@ const AIDoctorBookingPage: React.FC = () => {
                           href={doc.mapLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-2.5 py-1.5 bg-brand-gradient text-white text-[8px] font-black rounded-lg uppercase tracking-wider shadow-sm"
+                          className="px-2.5 py-1.5 bg-brand-gradient text-white text-[8px] font-black rounded-lg uppercase tracking-wider shadow-sm cursor-pointer"
                         >
                           Find Desk Map
                         </a>
@@ -438,10 +512,9 @@ const AIDoctorBookingPage: React.FC = () => {
                         <button
                           onClick={() => {
                             setSelectedDoctor(doc);
-                            // Auto select first slot
                             setSelectedSlot(timeSlots[0]);
                           }}
-                          className="w-full py-2.5 bg-brand-gradient text-white font-extrabold rounded-xl text-xs tracking-wider uppercase shadow-md flex items-center justify-center gap-1.5"
+                          className="w-full py-2.5 bg-brand-gradient text-white font-extrabold rounded-xl text-xs tracking-wider uppercase shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
                         >
                           Select Doctor & Date
                         </button>
@@ -472,7 +545,7 @@ const AIDoctorBookingPage: React.FC = () => {
                     <button
                       key={dt.raw}
                       onClick={() => setSelectedDate(dt.raw)}
-                      className={`p-2.5 rounded-xl border text-[10px] font-extrabold text-center transition-all ${
+                      className={`p-2.5 rounded-xl border text-[10px] font-extrabold text-center transition-all cursor-pointer ${
                         selectedDate === dt.raw
                           ? 'bg-brand-gradient text-white border-transparent shadow-md'
                           : 'bg-white/5 border-card-custom text-secondary-custom hover:bg-white/10'
@@ -497,7 +570,7 @@ const AIDoctorBookingPage: React.FC = () => {
                         setSelectedDoctor(doc);
                         setSelectedSlot(timeSlots[0]);
                       }}
-                      className={`w-full p-3 rounded-xl border flex items-center justify-between text-left transition-all ${
+                      className={`w-full p-3 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                         selectedDoctor?.id === doc.id
                           ? 'bg-purple-500/10 border-purple-500 text-primary-custom'
                           : 'bg-white/5 border-card-custom text-secondary-custom hover:bg-white/10'
@@ -537,7 +610,7 @@ const AIDoctorBookingPage: React.FC = () => {
                           key={slot}
                           disabled={status !== 'FREE'}
                           onClick={() => setSelectedSlot(slot)}
-                          className={`p-2.5 rounded-xl border text-[10px] font-bold text-center flex flex-col justify-center items-center transition-all ${
+                          className={`p-2.5 rounded-xl border text-[10px] font-bold text-center flex flex-col justify-center items-center transition-all cursor-pointer ${
                             status === 'LUNCH'
                               ? 'bg-amber-500/10 border-amber-500/25 text-amber-500 opacity-60 cursor-not-allowed'
                               : status === 'SURGERY'
@@ -574,7 +647,10 @@ const AIDoctorBookingPage: React.FC = () => {
                       type="text"
                       required
                       value={bookingForm.patientName}
-                      onChange={e => setBookingForm({...bookingForm, patientName: e.target.value})}
+                      onChange={e => {
+                        setBookingForm({...bookingForm, patientName: e.target.value});
+                        setDuplicateError('');
+                      }}
                       placeholder="e.g. Abhijit Chauhan"
                       className="w-full px-4 py-2.5 bg-white/5 border border-card-custom rounded-xl text-xs text-primary-custom focus:outline-none focus:border-brand-from"
                     />
@@ -623,9 +699,17 @@ const AIDoctorBookingPage: React.FC = () => {
                     />
                   </div>
 
+                  {/* Duplicate Booking Warning block */}
+                  {duplicateError && (
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl p-3 text-[10px] font-bold flex items-start space-x-2">
+                      <ShieldAlert className="h-4 w-4 mt-0.5 flex-shrink-0 animate-pulse" />
+                      <span>{duplicateError}</span>
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full py-3 bg-brand-gradient text-white font-extrabold rounded-xl text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all"
+                    className="w-full py-3 bg-brand-gradient text-white font-extrabold rounded-xl text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all cursor-pointer"
                   >
                     Generate Slot Token & Book
                   </button>
@@ -672,49 +756,44 @@ const AIDoctorBookingPage: React.FC = () => {
         </div>
       </main>
 
-      {/* Entry warning modal (Development Mode) */}
+      {/* Entry Warning Modal - OVERHAULED RED THEME & ENGLISH ONLY */}
       <AnimatePresence>
         {showWarningModal && (
-          <div className="fixed inset-0 bg-black/75 flex items-center justify-center z-[200] p-4 backdrop-blur-md">
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-[200] p-4 backdrop-blur-md">
             <motion.div 
-              className="bg-card-surface border border-card-custom rounded-3xl p-6 w-full max-w-lg shadow-2xl relative"
+              className="bg-card-surface border-2 border-red-500 rounded-3xl p-6 w-full max-w-lg shadow-2xl relative"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
             >
-              <div className="w-14 h-14 bg-orange-500/20 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-orange-500/30">
-                <AlertTriangle className="h-7 w-7" />
+              {/* Alert Icon & Brand Logo Wrapper */}
+              <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-500/25">
+                <ShieldAlert className="h-8 w-8 animate-pulse" />
               </div>
 
-              <h3 className="text-xl font-black text-primary-custom text-center mb-1 flex items-center justify-center gap-2">
-                🚧 Development Mode Notice
+              <h3 className="text-2xl font-black text-primary-custom text-center mb-1 tracking-tight flex items-center justify-center gap-2">
+                DEVELOPMENT MODE WARNING
               </h3>
-              <p className="text-[10px] text-orange-500 uppercase tracking-widest font-black text-center mb-6">
-                डेवलपमेंट मोड सूचना
+              <p className="text-[10px] text-red-500 uppercase tracking-widest font-black text-center mb-6">
+                Arogya Care Sandbox Simulation
               </p>
 
-              <div className="space-y-4 text-xs leading-relaxed text-secondary-custom max-h-64 overflow-y-auto pr-1">
-                <div className="p-3 bg-white/5 border border-card-custom rounded-2xl">
-                  <p className="font-bold text-primary-custom mb-1">English Notification:</p>
-                  <p>
-                    Please note that this feature is currently in **Development Mode**. All doctor availability, slots, working hours, active tokens, and waiting lists are mock simulated data. In future updates, this feature will be integrated with hospital APIs to sync live coordinates and data.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-white/5 border border-card-custom rounded-2xl">
-                  <p className="font-bold text-primary-custom mb-1">हिंदी अधिसूचना (Hindi):</p>
-                  <p>
-                    कृपया ध्यान दें कि यह फ़ीचर वर्तमान में **डेवलपमेंट मोड** में है। सभी डॉक्टरों की उपलब्धता, टाइम स्लॉट, वर्किंग ऑवर्स, एक्टिव टोकन और वेटिंग लिस्ट मॉक सिम्युलेटेड डेटा हैं। आगामी अपडेट में, इस फ़ीचर को लाइव डेटा सिंक करने के लिए वास्तविक अस्पताल APIs के साथ एकीकृत किया जाएगा।
-                  </p>
-                </div>
+              {/* English Description Box */}
+              <div className="p-4 bg-red-500/[0.02] border border-red-500/10 rounded-2xl text-xs text-secondary-custom leading-relaxed space-y-3">
+                <p>
+                  This patient scheduling module is a **simulated development preview** using mock databases. All hospital listing options, specialist calendars, consultation slot timings, active tokens, and waiting queues are generated for interface testing.
+                </p>
+                <p className="font-semibold text-red-400">
+                  Future updates will synchronize this dashboard in real-time with actual hospital databases and clinical desk coordinates via API integrations.
+                </p>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 flex gap-4">
                 <button
                   onClick={() => setShowWarningModal(false)}
-                  className="w-full py-3 bg-brand-gradient text-white font-extrabold rounded-xl text-xs uppercase tracking-wider"
+                  className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-red-600/15 cursor-pointer"
                 >
-                  I Understand / समझ गया (Proceed)
+                  Acknowledge & Proceed
                 </button>
               </div>
             </motion.div>
@@ -733,7 +812,7 @@ const AIDoctorBookingPage: React.FC = () => {
               exit={{ scale: 0.95, opacity: 0 }}
             >
               <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-500/30">
-                <CheckCircle className="h-8 w-8" />
+                <CheckCircle className="h-8 w-8 text-green-500" />
               </div>
 
               <h3 className="text-xl font-black text-primary-custom mb-1">🎉 Congratulations!</h3>
@@ -762,7 +841,7 @@ const AIDoctorBookingPage: React.FC = () => {
 
               <button
                 onClick={handleWhatsAppRedirect}
-                className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-green-600/20"
+                className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-green-600/20 cursor-pointer"
               >
                 <MessageSquare className="h-4.5 w-4.5" /> Confirm Appointment on WhatsApp
               </button>
