@@ -17,15 +17,15 @@
 }
 
 .theme-light {
-  --brand-gradient: linear-gradient(135deg, #6366f1, #3b82f6);
-  --brand-from: #6366f1;
-  --brand-to: #3b82f6;
-  --brand-bg: #f8fafc;
-  --card-bg: #ffffff;
+  --brand-gradient: linear-gradient(135deg, #4f46e5, #0ea5e9);
+  --brand-from: #4f46e5;
+  --brand-to: #0ea5e9;
+  --brand-bg: #f1f5f9; /* Premium slate-50 base */
+  --card-bg: rgba(255, 255, 255, 0.75); /* Soft glassmorphism cards */
   --card-border: rgba(15, 23, 42, 0.08);
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --glow-color: rgba(99, 102, 241, 0.15);
+  --text-primary: #0f172a; /* Slate-900 high-readability text */
+  --text-secondary: #334155; /* Slate-700 description text */
+  --glow-color: rgba(79, 70, 229, 0.08);
 }
 
 .theme-dark {
