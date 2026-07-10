@@ -817,4 +817,53 @@ export const translations: Translations = {
     en: 'Period Reminders', hi: 'मासिक धर्म अनुस्मारक', hinglish: 'Period Reminders',
     te: 'ఋతుచక్ర రిమైండర్లు', gu: 'માસિક ધર્મ રીમાઇન્ડર્સ', es: 'Recordatorios del período', fr: 'Rappels de règles', de: 'Periodenerinnerungen'
   },
+
+  doctorBooking: {
+    en: 'AI Doctor Booking', hi: 'एआई डॉक्टर बुकिंग', hinglish: 'AI Doctor Booking',
+    te: 'AI డాక్టర్ బుకింగ్', gu: 'AI ડૉક્ટર બુકિંગ', es: 'Reserva de médicos IA', fr: 'Réservation de médecin IA', de: 'KI-Arztbuchung'
+  },
+  queueStatus: {
+    en: 'Live Queue Status', hi: 'लाइव कतार स्थिति', hinglish: 'Live Queue Status',
+    te: 'లైవ్ క్యూ స్థితి', gu: 'લાઈવ લાઈન સ્થિતિ', es: 'Estado de la cola en vivo', fr: "Statut de la file d'attente", de: 'Live-Warteschlangenstatus'
+  },
+  remainingSlots: {
+    en: 'slots left', hi: 'स्लॉट शेष', hinglish: 'slots bache hain',
+    te: 'స్లాట్లు మిగిలి ఉన్నాయి', gu: 'સ્લોટ બાકી છે', es: 'ranuras restantes', fr: 'créneaux restants', de: 'Plätze übrig'
+  },
+  lunchBreak: {
+    en: 'Lunch Break', hi: 'लंच ब्रेक', hinglish: 'Lunch break',
+    te: 'మధ్యాహ్న భోజన విరామం', gu: 'લંચ બ્રેક', es: 'Almuerzo', fr: 'Pause déjeuner', de: 'Mittagspause'
+  },
+  emergencyAway: {
+    en: 'Away on emergency surgery', hi: 'आपातकालीन सर्जरी पर बाहर', hinglish: 'Emergency surgery pe gaye hain',
+    te: 'అత్యవసర శస్త్రచికిత్స కోసం వెళ్లారు', gu: 'ઇમરજન્સી સર્જરી પર બહાર', es: 'Fuera por cirugía de emergencia', fr: "Parti pour chirurgie d'urgence", de: 'Wegen Notoperation abwesend'
+  },
+  contactAssistant: {
+    en: 'Contact Assistant', hi: 'सहायक से संपर्क करें', hinglish: 'Assistant ko contact karein',
+    te: 'സహాయకుడిని సంప్రదించండి', gu: 'સહાયકનો સંપર્ક કરો', es: 'Contactar asistente', fr: "Contacter l'assistant", de: 'Assistent kontaktieren'
+  },
+  contactReception: {
+    en: 'Call Reception', hi: 'रिसेप्शन पर कॉल करें', hinglish: 'Reception pe call karein',
+    te: 'రిసెప్షన్ కాల్ చేయండి', gu: 'રિસેપ્શન કૉલ કરો', es: 'Llamar recepción', fr: 'Appeler la réception', de: 'Rezeption anrufen'
+  },
+  noPaymentApp: {
+    en: 'No advance payment is processed inside this app.', hi: 'इस ऐप के भीतर कोई अग्रिम भुगतान संसाधित नहीं किया जाता है।', hinglish: 'App me koi advance payment nahi li jaati.',
+    te: 'ఈ యాప్‌లో ఎలాంటి ముందస్తు చెల్లింపు జరగదు.', gu: 'આ એપમાં કોઈ એડવાન્સ પેમેન્ટ લેવામાં આવતું નથી.', es: 'No se procesa ningún pago por adelantado dentro de esta aplicación.', fr: "Aucun paiement d'avance n'est traité dans cette application.", de: 'In dieser App wird keine Anzahlung verarbeitet.'
+  },
+  bookAppointment: {
+    en: 'Book Appointment', hi: 'नियुक्ति बुक करें', hinglish: 'Appointment Book Karein',
+    te: 'అపాయింట్‌మెంట్ బుక్ చేయండి', gu: 'એપોઇન્ટમેન્ટ બુક કરો', es: 'Reservar cita', fr: 'Prendre rendez-vous', de: 'Termin buchen'
+  },
+  currentPatient: {
+    en: 'Current Patient Token', hi: 'वर्तमान रोगी टोकन', hinglish: 'Current Patient Token',
+    te: 'ప్రస్తుత రోగి టోకెన్', gu: 'હાલના દર્દી ટોકન', es: 'Ficha del paciente actual', fr: 'Numéro du patient actuel', de: 'Aktuelle Patientenmarke'
+  },
+  waitingPatients: {
+    en: 'Waiting Patients', hi: 'प्रतीक्षारत रोगी', hinglish: 'Waiting patients',
+    te: 'వేచి ఉన్న రోగులు', gu: 'પ્રતીક્ષા કરતા દર્દીઓ', es: 'Pacientes en espera', fr: 'Patients en attente', de: 'Wartende Patienten'
+  },
+  avgWaitTime: {
+    en: 'Est. Wait Time', hi: 'अनुमानित प्रतीक्षा समय', hinglish: 'Est. Wait Time',
+    te: 'అంచనా వేచి ఉండే సమయం', gu: 'અંદાજિત રાહ જોવાનો સમય', es: 'Tiempo de espera est.', fr: "Temps d'attente est.", de: 'Geschätzte Wartezeit'
+  },
 };

@@ -31,6 +31,7 @@ import AIMoodCompanionPage from './pages/AIMoodCompanionPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import EmergencyContactsPage from './pages/EmergencyContactsPage';
 import WelcomePage from './pages/WelcomePage';
+import AIDoctorBookingPage from './pages/AIDoctorBookingPage';
 
 const AppRoutes: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -82,6 +83,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/ai-assistant" element={<ProtectedRoute><PageTransition><AIAssistantPage /></PageTransition></ProtectedRoute>} />
           <Route path="/ai-mood-companion" element={<ProtectedRoute><PageTransition><AIMoodCompanionPage /></PageTransition></ProtectedRoute>} />
           <Route path="/emergency-contacts" element={<ProtectedRoute><PageTransition><EmergencyContactsPage /></PageTransition></ProtectedRoute>} />
+          <Route path="/doctor-booking" element={<ProtectedRoute><PageTransition><AIDoctorBookingPage /></PageTransition></ProtectedRoute>} />
 
           {/* Public */}
           <Route path="/deployment" element={<PageTransition><LiveDeploymentPage /></PageTransition>} />

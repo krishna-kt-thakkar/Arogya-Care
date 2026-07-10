@@ -160,6 +160,14 @@ const Dashboard: React.FC = () => {
       color: 'from-red-500 to-rose-700',
       bgColor: 'rgba(239, 68, 68, 0.25)',
       route: '/nearby'
+    },
+    {
+      title: t('doctorBooking'),
+      description: 'Book slots with specialists and check live clinic queue wait times in real time',
+      icon: Calendar,
+      color: 'from-purple-500 to-indigo-600',
+      bgColor: 'rgba(124, 58, 237, 0.25)',
+      route: '/doctor-booking'
     }
   ];
 

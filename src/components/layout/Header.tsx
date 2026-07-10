@@ -1,19 +1,34 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Heart, LogOut } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, LogOut, Globe } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Language } from '../../types';
 
 const Header: React.FC = () => {
-  const { t } = useLanguage();
+  const { language, changeLanguage, t } = useLanguage();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [showLanguageMenu, setShowLanguageMenu] = React.useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
+
+  const languageOptions = [
+    { id: 'en' as Language, name: 'English', label: 'EN' },
+    { id: 'hi' as Language, name: 'हिन्दी', label: 'HI' },
+    { id: 'hinglish' as Language, name: 'Hinglish', label: 'HING' },
+    { id: 'te' as Language, name: 'తెలుగు', label: 'TE' },
+    { id: 'gu' as Language, name: 'ગુજરાતી', label: 'GU' },
+    { id: 'es' as Language, name: 'Español', label: 'ES' },
+    { id: 'fr' as Language, name: 'Français', label: 'FR' },
+    { id: 'de' as Language, name: 'Deutsch', label: 'DE' }
+  ];
+
+  const currentLanguageLabel = languageOptions.find(opt => opt.id === language)?.label || 'EN';
 
   return (
     <header className="bg-card-surface/80 border-b border-card-custom backdrop-blur-xl transition-colors duration-300 sticky top-0 z-40 shadow-md">
@@ -36,11 +51,66 @@ const Header: React.FC = () => {
 
           <div className="flex items-center space-x-2 sm:space-x-4">
             {user && (
-              <span className="hidden sm:inline text-sm text-secondary-custom font-semibold">
+              <span className="hidden sm:inline text-sm text-secondary-custom font-semibold mr-1">
                 {t('welcomeBack')}, {user.name}
               </span>
             )}
             
+            {/* Language Selector Dropdown */}
+            <div className="relative">
+              <motion.button
+                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                className="flex items-center space-x-2 px-3 py-2 rounded-full bg-white/5 border border-card-custom hover:bg-white/10 text-primary-custom transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Globe className="h-4 w-4 text-secondary-custom" />
+                <span className="text-sm font-semibold text-secondary-custom">
+                  {currentLanguageLabel}
+                </span>
+              </motion.button>
+
+              <AnimatePresence>
+                {showLanguageMenu && (
+                  <>
+                    {/* Overlay to close menu */}
+                    <div 
+                      className="fixed inset-0 z-40" 
+                      onClick={() => setShowLanguageMenu(false)}
+                    />
+                    <motion.div
+                      className="absolute right-0 mt-2 w-44 rounded-2xl bg-card-surface border border-card-custom shadow-2xl p-2 z-50 overflow-hidden"
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="grid grid-cols-1 gap-1 max-h-56 overflow-y-auto pr-1">
+                        {languageOptions.map((opt) => (
+                          <button
+                            key={opt.id}
+                            onClick={() => {
+                              changeLanguage(opt.id);
+                              setShowLanguageMenu(false);
+                            }}
+                            className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                              language === opt.id
+                                ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md'
+                                : 'text-secondary-custom hover:bg-white/5 hover:text-primary-custom dark:hover:text-white'
+                            }`}
+                          >
+                            <div className="flex justify-between items-center">
+                              <span>{opt.name}</span>
+                              <span className="opacity-60 uppercase text-[10px]">{opt.label}</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
 
             {user && (
               <motion.button
