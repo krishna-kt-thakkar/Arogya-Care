@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Target, Clock, Utensils, Dumbbell, Camera, Type, Calculator, X, Calendar, Plus, Trash2, Edit3, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Target, Clock, Utensils, Dumbbell, Camera, Type, Calculator, X, Calendar, Plus, Trash2, Edit3, ChevronLeft, ChevronRight, TrendingDown, TrendingUp, Activity, Leaf, Egg, Beef, ChefHat, GraduationCap, Briefcase, Home, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 import Header from '../components/layout/Header';
@@ -518,26 +518,31 @@ const WorkoutPage: React.FC = () => {
       case 0:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">What's your fitness goal?</h2>
+            <h2 className="text-2xl font-black text-primary-custom mb-6">What's your fitness goal?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { value: 'lose', label: 'Lose Weight', icon: '⬇️', color: 'bg-red-50 border-red-200 text-red-800' },
-                { value: 'gain', label: 'Gain Weight', icon: '⬆️', color: 'bg-green-50 border-green-200 text-green-800' },
-                { value: 'maintain', label: 'Maintain Weight', icon: '⚖️', color: 'bg-blue-50 border-blue-200 text-blue-800' }
-              ].map((option) => (
-                <motion.button
-                  key={option.value}
-                  onClick={() => setQuizData({...quizData, goal: option.value as any})}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    quizData.goal === option.value ? option.color : 'bg-white border-gray-200 hover:border-gray-300'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="text-4xl mb-2">{option.icon}</div>
-                  <div className="font-semibold">{option.label}</div>
-                </motion.button>
-              ))}
+                { value: 'lose', label: 'Lose Weight', icon: TrendingDown, color: 'text-red-500' },
+                { value: 'gain', label: 'Gain Weight', icon: TrendingUp, color: 'text-emerald-500' },
+                { value: 'maintain', label: 'Maintain Weight', icon: Activity, color: 'text-blue-500' }
+              ].map((option) => {
+                const IconComponent = option.icon;
+                return (
+                  <motion.button
+                    key={option.value}
+                    onClick={() => setQuizData({...quizData, goal: option.value as any})}
+                    className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center cursor-pointer ${
+                      quizData.goal === option.value 
+                        ? 'border-brand-from bg-brand-from/15 text-primary-custom shadow-md' 
+                        : 'border-card-custom hover:border-brand-from/30 bg-card-surface/40 text-secondary-custom'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <IconComponent className={`h-10 w-10 mb-3 ${option.color}`} />
+                    <div className="font-bold text-primary-custom">{option.label}</div>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         );
@@ -577,27 +582,32 @@ const WorkoutPage: React.FC = () => {
       case 2:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">What is your dietary preference?</h2>
+            <h2 className="text-2xl font-black text-primary-custom mb-6">What is your dietary preference?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { value: 'vegetarian', label: 'Vegetarian', icon: '🥬' },
-                { value: 'eggitarian', label: 'Eggitarian', icon: '🥚' },
-                { value: 'non-veg-chicken-mutton', label: 'Non-Veg (Chicken & Mutton)', icon: '🍗' },
-                { value: 'non-veg-all', label: 'Non-Veg (All types)', icon: '🍖' }
-              ].map((option) => (
-                <motion.button
-                  key={option.value}
-                  onClick={() => setQuizData({...quizData, dietaryPreference: option.value as any})}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    quizData.dietaryPreference === option.value ? 'bg-teal-50 border-teal-200 text-teal-800' : 'bg-white border-gray-200 hover:border-gray-300'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="text-2xl mb-2">{option.icon}</div>
-                  <div className="font-semibold">{option.label}</div>
-                </motion.button>
-              ))}
+                { value: 'vegetarian', label: 'Vegetarian', icon: Leaf, color: 'text-emerald-500' },
+                { value: 'eggitarian', label: 'Eggitarian', icon: Egg, color: 'text-amber-500' },
+                { value: 'non-veg-chicken-mutton', label: 'Non-Veg (Chicken & Mutton)', icon: Beef, color: 'text-rose-500' },
+                { value: 'non-veg-all', label: 'Non-Veg (All types)', icon: ChefHat, color: 'text-red-500' }
+              ].map((option) => {
+                const IconComponent = option.icon;
+                return (
+                  <motion.button
+                    key={option.value}
+                    onClick={() => setQuizData({...quizData, dietaryPreference: option.value as any})}
+                    className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center justify-center cursor-pointer ${
+                      quizData.dietaryPreference === option.value 
+                        ? 'border-brand-from bg-brand-from/15 text-primary-custom shadow-md' 
+                        : 'border-card-custom hover:border-brand-from/30 bg-card-surface/40 text-secondary-custom'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <IconComponent className={`h-8 w-8 mb-2 ${option.color}`} />
+                    <div className="font-bold text-primary-custom">{option.label}</div>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         );
@@ -605,7 +615,7 @@ const WorkoutPage: React.FC = () => {
       case 3:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            <h2 className="text-2xl font-black text-primary-custom mb-6">
               {quizData.dietaryPreference === 'eggitarian' 
                 ? 'Are there particular days you don\'t eat eggs?' 
                 : quizData.dietaryPreference?.includes('non-veg')
@@ -614,9 +624,9 @@ const WorkoutPage: React.FC = () => {
             </h2>
             
             {quizData.dietaryPreference === 'vegetarian' ? (
-              <div className="text-center">
-                <div className="text-6xl mb-4">🥬</div>
-                <p className="text-gray-600">This question doesn't apply to vegetarians. Click Next to continue.</p>
+              <div className="text-center py-8">
+                <Leaf className="h-16 w-16 text-emerald-500 mx-auto mb-4 animate-bounce" />
+                <p className="text-sm text-secondary-custom">This question doesn't apply to vegetarians. Click Next to continue.</p>
               </div>
             ) : (
               <div>
@@ -745,26 +755,31 @@ const WorkoutPage: React.FC = () => {
       case 6:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">What's your gender?</h2>
+            <h2 className="text-2xl font-black text-primary-custom mb-6">What's your gender?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { value: 'male', label: 'Male', icon: '👨' },
-                { value: 'female', label: 'Female', icon: '👩' },
-                { value: 'other', label: 'Other', icon: '👤' }
-              ].map((option) => (
-                <motion.button
-                  key={option.value}
-                  onClick={() => setQuizData({...quizData, gender: option.value as any})}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    quizData.gender === option.value ? 'bg-purple-50 border-purple-200 text-purple-800' : 'bg-white border-gray-200 hover:border-gray-300'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="text-4xl mb-2">{option.icon}</div>
-                  <div className="font-semibold">{option.label}</div>
-                </motion.button>
-              ))}
+                { value: 'male', label: 'Male', icon: User, color: 'text-blue-500' },
+                { value: 'female', label: 'Female', icon: User, color: 'text-pink-500' },
+                { value: 'other', label: 'Other', icon: User, color: 'text-purple-500' }
+              ].map((option) => {
+                const IconComponent = option.icon;
+                return (
+                  <motion.button
+                    key={option.value}
+                    onClick={() => setQuizData({...quizData, gender: option.value as any})}
+                    className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center cursor-pointer ${
+                      quizData.gender === option.value 
+                        ? 'border-brand-from bg-brand-from/15 text-primary-custom shadow-md' 
+                        : 'border-card-custom hover:border-brand-from/30 bg-card-surface/40 text-secondary-custom'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <IconComponent className={`h-10 w-10 mb-3 ${option.color}`} />
+                    <div className="font-bold text-primary-custom">{option.label}</div>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         );
@@ -803,27 +818,32 @@ const WorkoutPage: React.FC = () => {
       case 8:
         return (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">What describes you best?</h2>
+            <h2 className="text-2xl font-black text-primary-custom mb-6">What describes you best?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { value: 'student', label: 'Student', icon: '🎓', desc: 'Flexible schedule, budget-conscious' },
-                { value: 'professional', label: 'Working Professional', icon: '💼', desc: 'Busy schedule, time-efficient workouts' },
-                { value: 'homemaker', label: 'Homemaker', icon: '🏠', desc: 'Home-based routines, family-friendly' }
-              ].map((option) => (
-                <motion.button
-                  key={option.value}
-                  onClick={() => setQuizData({...quizData, userType: option.value as any})}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    quizData.userType === option.value ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-white border-gray-200 hover:border-gray-300'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="text-4xl mb-2">{option.icon}</div>
-                  <div className="font-semibold mb-1">{option.label}</div>
-                  <div className="text-sm text-gray-600">{option.desc}</div>
-                </motion.button>
-              ))}
+                { value: 'student', label: 'Student', icon: GraduationCap, color: 'text-indigo-500' },
+                { value: 'professional', label: 'Working Professional', icon: Briefcase, color: 'text-teal-500' },
+                { value: 'homemaker', label: 'Homemaker', icon: Home, color: 'text-orange-500' }
+              ].map((option) => {
+                const IconComponent = option.icon;
+                return (
+                  <motion.button
+                    key={option.value}
+                    onClick={() => setQuizData({...quizData, userType: option.value as any})}
+                    className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center cursor-pointer ${
+                      quizData.userType === option.value 
+                        ? 'border-brand-from bg-brand-from/15 text-primary-custom shadow-md' 
+                        : 'border-card-custom hover:border-brand-from/30 bg-card-surface/40 text-secondary-custom'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <IconComponent className={`h-10 w-10 mb-3 ${option.color}`} />
+                    <div className="font-bold text-primary-custom mb-1">{option.label}</div>
+                    <div className="text-xs text-secondary-custom leading-tight">{option.desc}</div>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         );
@@ -925,7 +945,7 @@ const WorkoutPage: React.FC = () => {
         >
           <div className="flex items-center mb-6">
             <Dumbbell className="h-8 w-8 text-orange-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">🏋️ Weekly Workout Plan</h2>
+            <h2 className="text-2xl font-black text-primary-custom">Weekly Workout Plan</h2>
           </div>
           
           <div className="space-y-6">
@@ -1446,7 +1466,7 @@ const WorkoutPage: React.FC = () => {
                 <ArrowLeft className="h-6 w-6 text-gray-600" />
               </button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-800">🏋️ AI Workout & Diet Plans</h1>
+                <h1 className="text-3xl font-black text-primary-custom">AI Workout & Diet Plans</h1>
                 <p className="text-gray-600 mt-1">Your personalized fitness and nutrition plan</p>
               </div>
             </div>
@@ -1491,7 +1511,7 @@ const WorkoutPage: React.FC = () => {
               <ArrowLeft className="h-6 w-6 text-gray-600" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">🏋️ AI Workout & Diet Plans</h1>
+              <h1 className="text-3xl font-black text-primary-custom">AI Workout & Diet Plans</h1>
               <p className="text-gray-600 mt-1">Get your personalized fitness and nutrition plan</p>
             </div>
           </div>

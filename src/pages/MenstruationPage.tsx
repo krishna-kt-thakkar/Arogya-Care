@@ -289,13 +289,13 @@ const MenstruationPage: React.FC = () => {
   // Comfort screen component
   const ComfortScreen = () => (
     <motion.div
-      className="fixed inset-0 bg-gradient-to-br from-pink-100 via-purple-50 to-pink-100 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl"
+        className="glass-card p-8 border border-card-custom max-w-md w-full shadow-2xl text-left"
         initial={{ scale: 0.8, y: 50 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.8, y: 50 }}
@@ -314,27 +314,27 @@ const MenstruationPage: React.FC = () => {
               ease: "easeInOut"
             }}
           >
-            <div className="bg-gradient-to-br from-pink-200 to-purple-200 rounded-full p-6 w-24 h-24 mx-auto flex items-center justify-center">
-              <Heart className="h-12 w-12 text-pink-600" />
+            <div className="bg-brand-gradient/10 border border-brand-from/20 rounded-full p-6 w-24 h-24 mx-auto flex items-center justify-center">
+              <Heart className="h-12 w-12 text-brand-from" />
             </div>
           </motion.div>
 
           <motion.h2
-            className="text-2xl font-bold text-gray-800 mb-4"
+            className="text-2xl font-black text-primary-custom mb-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            Take Care of Yourself 💛
+            Take Care of Yourself
           </motion.h2>
 
           <motion.p
-            className="text-gray-600 mb-6 leading-relaxed"
+            className="text-sm text-secondary-custom mb-6 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            We know this time can be tough. Take it slow, rest, hydrate, and breathe. You're doing great.
+            Take it slow, rest, hydrate, and breathe. You're doing great.
           </motion.p>
 
           {/* Self-care tips */}
@@ -344,23 +344,23 @@ const MenstruationPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
           >
-            <div className="flex items-center space-x-3 p-3 bg-pink-50 rounded-xl">
-              <Wind className="h-5 w-5 text-pink-600" />
-              <span className="text-gray-700">Try gentle breathing exercises</span>
+            <div className="flex items-center space-x-3 p-3 bg-white/5 border border-card-custom rounded-xl">
+              <Wind className="h-5 w-5 text-brand-from" />
+              <span className="text-sm font-semibold text-primary-custom">Try gentle breathing exercises</span>
             </div>
-            <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-xl">
-              <Coffee className="h-5 w-5 text-purple-600" />
-              <span className="text-gray-700">Sip some herbal tea</span>
+            <div className="flex items-center space-x-3 p-3 bg-white/5 border border-card-custom rounded-xl">
+              <Coffee className="h-5 w-5 text-brand-to" />
+              <span className="text-sm font-semibold text-primary-custom">Sip some herbal tea</span>
             </div>
-            <div className="flex items-center space-x-3 p-3 bg-pink-50 rounded-xl">
-              <Moon className="h-5 w-5 text-pink-600" />
-              <span className="text-gray-700">Rest and take it easy</span>
+            <div className="flex items-center space-x-3 p-3 bg-white/5 border border-card-custom rounded-xl">
+              <Moon className="h-5 w-5 text-brand-from" />
+              <span className="text-sm font-semibold text-primary-custom">Rest and take it easy</span>
             </div>
           </motion.div>
 
           <motion.button
             onClick={() => setShowComfortScreen(false)}
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-xl font-semibold shadow-lg"
+            className="w-full bg-brand-gradient text-white py-3 rounded-xl font-bold shadow-lg cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             initial={{ opacity: 0, y: 20 }}
@@ -509,7 +509,7 @@ const MenstruationPage: React.FC = () => {
               <ArrowLeft className="h-6 w-6 text-gray-600" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Menstruation Tracker 🌸</h1>
+              <h1 className="text-3xl font-black text-primary-custom">Menstruation Tracker</h1>
               <p className="text-gray-600 mt-1">Track your cycle with care and comfort</p>
             </div>
           </div>
@@ -766,10 +766,10 @@ const MenstruationPage: React.FC = () => {
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
               {/* Comfort Tips */}
-              <div className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100">
+              <div className="glass-card p-6 border border-card-custom">
                 <div className="flex items-center mb-4">
-                  <Heart className="h-6 w-6 text-pink-600 mr-3" />
-                  <h3 className="text-lg font-semibold text-gray-800">Self-Care Tips</h3>
+                  <Heart className="h-6 w-6 text-brand-from mr-3 animate-pulse" />
+                  <h3 className="text-lg font-black text-primary-custom">Self-Care Tips</h3>
                 </div>
                 <div className="space-y-4">
                   {[
@@ -780,15 +780,15 @@ const MenstruationPage: React.FC = () => {
                   ].map((tip, index) => (
                     <motion.div
                       key={tip.title}
-                      className="flex items-start space-x-3 p-3 bg-pink-50 rounded-xl"
+                      className="flex items-start space-x-3 p-3 bg-white/5 border border-card-custom rounded-xl"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <tip.icon className="h-5 w-5 text-pink-600 mt-1" />
+                      <tip.icon className="h-5 w-5 text-brand-from mt-1" />
                       <div>
-                        <p className="font-medium text-gray-800">{tip.title}</p>
-                        <p className="text-sm text-gray-600">{tip.desc}</p>
+                        <p className="font-semibold text-primary-custom">{tip.title}</p>
+                        <p className="text-xs text-secondary-custom">{tip.desc}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -796,7 +796,7 @@ const MenstruationPage: React.FC = () => {
               </div>
 
               {/* Comfort Button */}
-              <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl p-6 border border-pink-200">
+              <div className="glass-card p-6 border border-card-custom">
                 <div className="text-center">
                   <motion.div
                     className="mb-6"
@@ -810,23 +810,23 @@ const MenstruationPage: React.FC = () => {
                       ease: "easeInOut"
                     }}
                   >
-                    <div className="bg-white rounded-full p-6 w-20 h-20 mx-auto flex items-center justify-center shadow-lg">
-                      <Heart className="h-10 w-10 text-pink-600" />
+                    <div className="bg-brand-gradient/10 border border-brand-from/20 rounded-full p-6 w-20 h-20 mx-auto flex items-center justify-center shadow-lg">
+                      <Heart className="h-10 w-10 text-brand-from" />
                     </div>
                   </motion.div>
                   
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">Need Some Comfort?</h3>
-                  <p className="text-gray-600 mb-6">
+                  <h3 className="text-xl font-black text-primary-custom mb-3">Need Some Comfort?</h3>
+                  <p className="text-sm text-secondary-custom mb-6">
                     Having a tough day? We're here to support you with gentle reminders and care.
                   </p>
                   
                   <motion.button
                     onClick={() => setShowComfortScreen(true)}
-                    className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-xl font-semibold shadow-lg"
+                    className="w-full bg-brand-gradient text-white py-3 rounded-xl font-bold shadow-lg cursor-pointer"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    Show Me Some Love 💕
+                    Enter Comfort Space
                   </motion.button>
                 </div>
               </div>
