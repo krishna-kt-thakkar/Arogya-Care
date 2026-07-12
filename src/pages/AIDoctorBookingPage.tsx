@@ -65,9 +65,9 @@ interface Doctor {
   services: string[];
   reviews: PatientReview[];
   gallery: { url: string; label: string }[];
-}
-
-/* ═══════════ Doctors Master Data ═══════════ */
+  youtube: string;
+  instagram: string;
+}/* ═══════════ Doctors Master Data ═══════════ */
 const DOCTORS_DB: Doctor[] = [
   {
     id: 'doc-1',
@@ -93,9 +93,9 @@ const DOCTORS_DB: Doctor[] = [
     assistantWhatsapp: '919876500002',
     personality: 'Warm, patient, child-friendly. Known for making children comfortable during checkups. Always explains procedures to parents in simple language.',
     aboutDoctor: 'Dr. Neha Sharma is a nationally acclaimed Pediatrician who completed her MBBS from AIIMS Delhi and earned her MD in Pediatrics as a gold medalist. She further specialized with a DCH diploma from the Royal College of Pediatrics, London. With over 16 years of hands-on clinical experience, she has successfully treated more than 2,400 children across immunization programs, neonatal intensive care, and developmental pediatric assessments.',
-    docPhoto: '/doctors/dr_neha.png',
+    docPhoto: '/doctors/dr_neha/01_profile.png',
     assistantName: 'Amit Kumar (Compounder)',
-    assistantPhoto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80',
+    assistantPhoto: '/doctors/dr_neha/10_assistant.png',
     languages: ['Hindi', 'English', 'Punjabi'],
     consultFee: '₹500 — ₹800',
     services: ['Childhood Immunizations', 'Growth & Nutrition Assessment', 'Newborn Screening', 'Developmental Delay Therapy'],
@@ -105,19 +105,19 @@ const DOCTORS_DB: Doctor[] = [
       { name: 'Ananya S.', rating: 4, comment: 'Good experience overall. Slight wait but the consultation was worth it.', date: '01 Jun 2026' },
     ],
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=500&h=350&q=80', label: 'Clinic Reception & Lobby' },
-      { url: 'https://images.unsplash.com/photo-1589330273594-fade1ee91647?auto=format&fit=crop&w=500&h=350&q=80', label: 'MBBS Degree Certificate' },
-      { url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&h=350&q=80', label: 'Degree Convocation Ceremony' },
-      { url: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=500&h=350&q=80', label: 'Patient Checkup in Progress' },
-      { url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=500&h=350&q=80', label: 'Consultation Room Interior' },
-      { url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=500&h=350&q=80', label: 'OPD Waiting Area' },
-      { url: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Hospital Building Exterior' },
-      { url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Doctor Examining Child' },
-      { url: 'https://images.unsplash.com/photo-1581056771107-24247a7e6794?auto=format&fit=crop&w=500&h=350&q=80', label: 'Medical Lab & Equipment' },
-      { url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=500&h=350&q=80', label: 'Nursing Station & ICU Wing' },
-      { url: 'https://images.unsplash.com/photo-1551190822-a9ce113ac100?auto=format&fit=crop&w=500&h=350&q=80', label: 'Pharmacy Counter' },
-      { url: 'https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=500&h=350&q=80', label: 'Pediatric Play Area' },
-    ]
+      { url: '/doctors/dr_neha/01_profile.png', label: 'Official Headshot Portrait' },
+      { url: '/doctors/dr_neha/02_degree.png', label: 'MBBS Convocation Ceremony' },
+      { url: '/doctors/dr_neha/03_certificate.png', label: 'Degree Certificate Wall Display' },
+      { url: '/doctors/dr_neha/04_exam.png', label: 'Child Patient Examination' },
+      { url: '/doctors/dr_neha/05_consult.png', label: 'Parent Consultation Discussion' },
+      { url: '/doctors/dr_neha/06_rounds.png', label: 'Ward Rounds Walk' },
+      { url: '/doctors/dr_neha/07_lobby.png', label: 'Clinic Lobby & Waiting Lounge' },
+      { url: '/doctors/dr_neha/08_bed.png', label: 'Examination Bed Station' },
+      { url: '/doctors/dr_neha/09_tools.png', label: 'Medical Tools Close Up' },
+      { url: '/doctors/dr_neha/10_assistant.png', label: 'Assigned Coordinator / Assistant' },
+    ],
+    youtube: 'https://www.youtube.com/results?search_query=pediatrician+tips+neha+sharma',
+    instagram: 'https://www.instagram.com/explore/tags/pediatrician/'
   },
   {
     id: 'doc-2',
@@ -143,9 +143,9 @@ const DOCTORS_DB: Doctor[] = [
     assistantWhatsapp: '919876500004',
     personality: 'Extremely analytical, composed under critical situations, committed to cardiac rehabilitation. Talks to patients with clarity and confidence.',
     aboutDoctor: 'Dr. Rajesh Iyer is one of the most distinguished Cardiologists in Eastern India. He holds an MBBS and MD from BHU Varanasi, with a super-specialization DM in Cardiology. He is a Fellow of the American College of Cardiology (FACC). Over 22 years, he has performed more than 4,000 cardiac catheterizations and complex angioplasty procedures. He actively trains junior cardiologists at national conferences.',
-    docPhoto: '/doctors/dr_rajesh.png',
+    docPhoto: '/doctors/dr_rajesh/01_profile.png',
     assistantName: 'Joy Dutta (Head Assistant)',
-    assistantPhoto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80',
+    assistantPhoto: '/doctors/dr_rajesh/10_assistant.png',
     languages: ['Hindi', 'English', 'Bengali'],
     consultFee: '₹1,200 — ₹1,800',
     services: ['Coronary Angiography & Angioplasty', '2D Echocardiography (ECG)', 'Hypertension & Cholesterol Control', 'Post-Bypass Cardiac Rehabilitation'],
@@ -155,19 +155,19 @@ const DOCTORS_DB: Doctor[] = [
       { name: 'Debashis R.', rating: 5, comment: 'Best cardiologist in Kolkata. His ECG analysis is incredibly thorough.', date: '02 Jun 2026' },
     ],
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=500&h=350&q=80', label: 'Cardiac Surgery Theater' },
-      { url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&h=350&q=80', label: 'MBBS & Fellowship Certificates' },
-      { url: 'https://images.unsplash.com/photo-1589330273594-fade1ee91647?auto=format&fit=crop&w=500&h=350&q=80', label: 'DM Cardiology Degree' },
-      { url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=500&h=350&q=80', label: 'ECG & Heart Monitoring Room' },
-      { url: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Hospital Main Building' },
-      { url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Doctor With Patient Consult' },
-      { url: 'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=500&h=350&q=80', label: 'Reception & Help Desk' },
-      { url: 'https://images.unsplash.com/photo-1581056771107-24247a7e6794?auto=format&fit=crop&w=500&h=350&q=80', label: 'Cath Lab Equipment' },
-      { url: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=500&h=350&q=80', label: 'Cardiac Checkup Room' },
-      { url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=500&h=350&q=80', label: 'Intensive Care Unit' },
-      { url: 'https://images.unsplash.com/photo-1551190822-a9ce113ac100?auto=format&fit=crop&w=500&h=350&q=80', label: 'In-House Pharmacy' },
-      { url: 'https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=500&h=350&q=80', label: 'Patient Recovery Ward' },
-    ]
+      { url: '/doctors/dr_rajesh/01_profile.png', label: 'Official Headshot Portrait' },
+      { url: '/doctors/dr_rajesh/02_degree.png', label: 'DM Cardiology Convocation Ceremony' },
+      { url: '/doctors/dr_rajesh/03_certificate.png', label: 'Cardiology Certificate Wall Display' },
+      { url: '/doctors/dr_rajesh/04_exam.png', label: 'Heart Patient Examination' },
+      { url: '/doctors/dr_rajesh/05_consult.png', label: 'ECG Report Review' },
+      { url: '/doctors/dr_rajesh/06_rounds.png', label: 'ICU Corridor Ward Round' },
+      { url: '/doctors/dr_rajesh/07_lobby.png', label: 'Hospital Cardiology Lobby' },
+      { url: '/doctors/dr_rajesh/08_bed.png', label: 'ECG Monitoring Bed Setup' },
+      { url: '/doctors/dr_rajesh/09_tools.png', label: 'Defibrillator Monitors Close Up' },
+      { url: '/doctors/dr_rajesh/10_assistant.png', label: 'Head Assistant Coordinator' },
+    ],
+    youtube: 'https://www.youtube.com/results?search_query=cardiologist+health+rajesh+iyer',
+    instagram: 'https://www.instagram.com/explore/tags/cardiologist/'
   },
   {
     id: 'doc-3',
@@ -193,9 +193,9 @@ const DOCTORS_DB: Doctor[] = [
     assistantWhatsapp: '919876500006',
     personality: 'Friendly, empathetic, excellent listener. Takes time to explain diagnoses in local languages. Very popular among elderly patients and families.',
     aboutDoctor: 'Dr. Amit Verma graduated with an MBBS from Kasturba Medical College, Manipal — one of India\'s top medical institutions. He completed his MD in General Medicine and has been practicing for 12+ years. He specializes in chronic disease management, infectious disease treatment, and preventive health screening. He runs weekly free health camps in rural Bengaluru communities and has been awarded the Karnataka Health Excellence Award in 2024.',
-    docPhoto: '/doctors/dr_amit.png',
+    docPhoto: '/doctors/dr_amit/01_profile.png',
     assistantName: 'Rahul Singh (Receptionist)',
-    assistantPhoto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&h=400&q=80',
+    assistantPhoto: '/doctors/dr_amit/10_assistant.png',
     languages: ['Hindi', 'English', 'Kannada'],
     consultFee: '₹400 — ₹600',
     services: ['Chronic Disease Management', 'Preventive Health Checkups', 'Infectious Disease Therapy', 'Diabetes & BP Control'],
@@ -205,19 +205,19 @@ const DOCTORS_DB: Doctor[] = [
       { name: 'Sanjay M.', rating: 4, comment: 'Good doctor, sometimes queue is long but consultation is thorough.', date: '05 Jun 2026' },
     ],
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=500&h=350&q=80', label: 'Family Clinic Interior' },
-      { url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=500&h=350&q=80', label: 'Medical Documents & Degrees' },
-      { url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&h=350&q=80', label: 'Convocation Photo' },
-      { url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=500&h=350&q=80', label: 'Consultation Desk Setup' },
-      { url: 'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=500&h=350&q=80', label: 'Waiting Area & Front Desk' },
-      { url: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=500&h=350&q=80', label: 'Doctor Examining Patient' },
-      { url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Blood Pressure Checkup' },
-      { url: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Clinic Building View' },
-      { url: 'https://images.unsplash.com/photo-1581056771107-24247a7e6794?auto=format&fit=crop&w=500&h=350&q=80', label: 'Lab & Diagnostics' },
-      { url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=500&h=350&q=80', label: 'Emergency Care Setup' },
-      { url: 'https://images.unsplash.com/photo-1551190822-a9ce113ac100?auto=format&fit=crop&w=500&h=350&q=80', label: 'Pharmacy & Medicines' },
-      { url: 'https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=500&h=350&q=80', label: 'Health Camp Photo' },
-    ]
+      { url: '/doctors/dr_amit/01_profile.png', label: 'Official Headshot Portrait' },
+      { url: '/doctors/dr_amit/02_degree.png', label: 'General Medicine Convocation' },
+      { url: '/doctors/dr_amit/03_certificate.png', label: 'General Medicine Certificate Display' },
+      { url: '/doctors/dr_amit/04_exam.png', label: 'General Throat Checkup' },
+      { url: '/doctors/dr_amit/05_consult.png', label: 'Prescription Explanation' },
+      { url: '/doctors/dr_amit/06_rounds.png', label: 'Rural Health Camp' },
+      { url: '/doctors/dr_amit/07_lobby.png', label: 'Family Clinic Lobby' },
+      { url: '/doctors/dr_amit/08_bed.png', label: 'Consultation Examination Bed' },
+      { url: '/doctors/dr_amit/09_tools.png', label: 'Clinical Desk Items Close Up' },
+      { url: '/doctors/dr_amit/10_assistant.png', label: 'General Clinic Receptionist' },
+    ],
+    youtube: 'https://www.youtube.com/results?search_query=family+doctor+verma+health',
+    instagram: 'https://www.instagram.com/explore/tags/generalphysician/'
   },
   {
     id: 'doc-4',
@@ -242,8 +242,8 @@ const DOCTORS_DB: Doctor[] = [
     receptionPhone: '+919876500007',
     assistantWhatsapp: '919876500008',
     personality: 'Professional, detail-oriented, empowers patients with skincare knowledge. Known for painless laser procedures and compassionate post-treatment follow-ups.',
-    aboutDoctor: 'Dr. Priya Patel is a leading Dermatologist from Mumbai with an MBBS and DDVL from Grant Medical College. She has 14 years of experience in clinical dermatology, cosmetic procedures, and advanced laser-based scar management. She regularly publishes in the Indian Journal of Dermatology and conducts skin health awareness workshops across Maharashtra.',
-    docPhoto: '/doctors/dr_priya.png',
+    aboutDoctor: 'Dr. Priya Patel is a leading Dermatologist from Mumbai with an MBBS and DDVL from Grant Medical College. She has 14 years of experience in clinical dermatology, cosmetic procedures, and advanced laser-based skin management. She regularly publishes in the Indian Journal of Dermatology.',
+    docPhoto: '/doctors/dr_priya/01_profile.png',
     assistantName: 'Sneha Shah (Clinical Associate)',
     assistantPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80',
     languages: ['Hindi', 'English', 'Gujarati', 'Marathi'],
@@ -255,19 +255,10 @@ const DOCTORS_DB: Doctor[] = [
       { name: 'Nisha A.', rating: 4, comment: 'Great results with PRP for hair fall. Clinic is very clean and modern.', date: '08 Jun 2026' },
     ],
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=500&h=350&q=80', label: 'Laser Treatment Room' },
-      { url: 'https://images.unsplash.com/photo-1589330273594-fade1ee91647?auto=format&fit=crop&w=500&h=350&q=80', label: 'MBBS Certificate Display' },
-      { url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&h=350&q=80', label: 'Graduation Ceremony Photo' },
-      { url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=500&h=350&q=80', label: 'Skin Consultation Room' },
-      { url: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Center Exterior View' },
-      { url: 'https://images.unsplash.com/photo-1586773860418-d3b3de97e99f?auto=format&fit=crop&w=500&h=350&q=80', label: 'Reception & Waiting Hall' },
-      { url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=500&h=350&q=80', label: 'Skin Examination Session' },
-      { url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=500&h=350&q=80', label: 'Procedure Setup Area' },
-      { url: 'https://images.unsplash.com/photo-1581056771107-24247a7e6794?auto=format&fit=crop&w=500&h=350&q=80', label: 'Advanced Laser Equipment' },
-      { url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=500&h=350&q=80', label: 'Treatment Recovery Room' },
-      { url: 'https://images.unsplash.com/photo-1551190822-a9ce113ac100?auto=format&fit=crop&w=500&h=350&q=80', label: 'Skincare Products Counter' },
-      { url: 'https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=500&h=350&q=80', label: 'PRP Therapy Station' },
-    ]
+      { url: '/doctors/dr_priya/01_profile.png', label: 'Official Headshot Profile' },
+    ],
+    youtube: 'https://www.youtube.com/results?search_query=dermatologist+skincare+priya+patel',
+    instagram: 'https://www.instagram.com/explore/tags/dermatologist/'
   }
 ];
 
@@ -510,6 +501,25 @@ const AIDoctorBookingPage: React.FC = () => {
                 <div><span className="block text-[8px] text-secondary-custom font-black uppercase tracking-wider mb-1">Full Education</span><p className="font-bold text-primary-custom">{selectedDoctor.qualifications}</p></div>
                 <div className="border-t border-card-custom pt-3"><span className="block text-[8px] text-secondary-custom font-black uppercase tracking-wider mb-1">About {selectedDoctor.name}</span><p className="text-secondary-custom leading-relaxed">{selectedDoctor.aboutDoctor}</p></div>
                 <div className="border-t border-card-custom pt-3"><span className="block text-[8px] text-secondary-custom font-black uppercase tracking-wider mb-1">Doctor Nature & Personality</span><p className="text-secondary-custom italic">"{selectedDoctor.personality}"</p></div>
+                <div className="border-t border-card-custom pt-3">
+                  <span className="block text-[8px] text-secondary-custom font-black uppercase tracking-wider mb-2">Social & Educational Channels</span>
+                  <div className="flex gap-3">
+                    <a href={selectedDoctor.youtube} target="_blank" rel="noopener noreferrer" className="flex-1 py-2 bg-red-600/10 hover:bg-red-600/20 text-red-600 dark:text-red-400 border border-red-500/20 font-bold rounded-xl text-[10px] uppercase flex items-center justify-center gap-1.5 transition-all">
+                      <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.107C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.388.511a3.002 3.002 0 0 0-2.11 2.107C0 8.053 0 12 0 12s0 3.947.502 5.837a3.003 3.003 0 0 0 2.11 2.107C4.495 20.455 12 20.455 12 20.455s7.505 0 9.388-.511a3.002 3.002 0 0 0 2.11-2.107C24 15.947 24 12 24 12s0-3.947-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      </svg>
+                      YouTube Channel
+                    </a>
+                    <a href={selectedDoctor.instagram} target="_blank" rel="noopener noreferrer" className="flex-1 py-2 bg-pink-600/10 hover:bg-pink-600/20 text-pink-600 dark:text-pink-400 border border-pink-500/20 font-bold rounded-xl text-[10px] uppercase flex items-center justify-center gap-1.5 transition-all">
+                      <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                      </svg>
+                      Instagram Profile
+                    </a>
+                  </div>
+                </div>
               </div>
 
               {/* Services */}

@@ -241,6 +241,17 @@
             <span class="opacity-30">|</span>
             <span id="headerDoctorFee"></span>
           </div>
+          <!-- Doctor Social Media Handles -->
+          <div class="flex items-center gap-2 mt-2">
+            <a id="headerDoctorYoutube" href="#" target="_blank" class="px-2.5 py-1 bg-red-600/10 hover:bg-red-600/20 text-red-500 border border-red-500/20 text-[9px] font-black uppercase rounded-lg flex items-center gap-1 transition-all">
+              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.107C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.388.511a3.002 3.002 0 0 0-2.11 2.107C0 8.053 0 12 0 12s0 3.947.502 5.837a3.003 3.003 0 0 0 2.11 2.107C4.495 20.455 12 20.455 12 20.455s7.505 0 9.388-.511a3.002 3.002 0 0 0 2.11-2.107C24 15.947 24 12 24 12s0-3.947-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              <span>YouTube</span>
+            </a>
+            <a id="headerDoctorInstagram" href="#" target="_blank" class="px-2.5 py-1 bg-pink-600/10 hover:bg-pink-600/20 text-pink-500 border border-pink-500/20 text-[9px] font-black uppercase rounded-lg flex items-center gap-1 transition-all">
+              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              <span>Instagram</span>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -353,10 +364,10 @@
 
     // Static Doctors definitions (matching AIDoctorBookingPage.tsx database)
     const doctorsData = {
-      'doc-1': { name: 'Dr. Neha Sharma', specialty: 'Pediatrician (Child Specialist)', timing: '10:00 AM - 05:00 PM', slotsLeft: 4, activeToken: 5, waitingPatients: 2, fee: '₹500', docPhoto: '/doctors/dr_neha.png', assistantPhoto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Amit Kumar (Compounder)' },
-      'doc-2': { name: 'Dr. Rajesh Iyer', specialty: 'Cardiologist (Heart Specialist)', timing: '02:00 PM - 07:00 PM', slotsLeft: 0, activeToken: 0, waitingPatients: 0, fee: '₹1200', docPhoto: '/doctors/dr_rajesh.png', assistantPhoto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Joy Dutta (Head Assistant)' },
-      'doc-3': { name: 'Dr. Amit Verma', specialty: 'General Physician (Family Doctor)', timing: '09:00 AM - 04:00 PM', slotsLeft: 5, activeToken: 12, waitingPatients: 4, fee: '₹400', docPhoto: '/doctors/dr_amit.png', assistantPhoto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Rahul Singh (Receptionist)' },
-      'doc-4': { name: 'Dr. Priya Patel', specialty: 'Dermatologist (Skin Specialist)', timing: '11:00 AM - 03:00 PM', slotsLeft: 6, activeToken: 8, waitingPatients: 1, fee: '₹700', docPhoto: '/doctors/dr_priya.png', assistantPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Sneha Shah (Clinical Associate)' },
+      'doc-1': { name: 'Dr. Neha Sharma', specialty: 'Pediatrician (Child Specialist)', timing: '10:00 AM - 05:00 PM', slotsLeft: 4, activeToken: 5, waitingPatients: 2, fee: '₹500', docPhoto: '/doctors/dr_neha/01_profile.png', assistantPhoto: '/doctors/dr_neha/10_assistant.png', assistantName: 'Amit Kumar (Compounder)', youtube: 'https://www.youtube.com/results?search_query=pediatrician+tips+neha+sharma', instagram: 'https://www.instagram.com/explore/tags/pediatrician/' },
+      'doc-2': { name: 'Dr. Rajesh Iyer', specialty: 'Cardiologist (Heart Specialist)', timing: '02:00 PM - 07:00 PM', slotsLeft: 0, activeToken: 0, waitingPatients: 0, fee: '₹1200', docPhoto: '/doctors/dr_rajesh/01_profile.png', assistantPhoto: '/doctors/dr_rajesh/10_assistant.png', assistantName: 'Joy Dutta (Head Assistant)', youtube: 'https://www.youtube.com/results?search_query=cardiologist+health+rajesh+iyer', instagram: 'https://www.instagram.com/explore/tags/cardiologist/' },
+      'doc-3': { name: 'Dr. Amit Verma', specialty: 'General Physician (Family Doctor)', timing: '09:00 AM - 04:00 PM', slotsLeft: 5, activeToken: 12, waitingPatients: 4, fee: '₹400', docPhoto: '/doctors/dr_amit/01_profile.png', assistantPhoto: '/doctors/dr_amit/10_assistant.png', assistantName: 'Rahul Singh (Receptionist)', youtube: 'https://www.youtube.com/results?search_query=family+doctor+verma+health', instagram: 'https://www.instagram.com/explore/tags/generalphysician/' },
+      'doc-4': { name: 'Dr. Priya Patel', specialty: 'Dermatologist (Skin Specialist)', timing: '11:00 AM - 03:00 PM', slotsLeft: 6, activeToken: 8, waitingPatients: 1, fee: '₹700', docPhoto: '/doctors/dr_priya/01_profile.png', assistantPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Sneha Shah (Clinical Associate)', youtube: 'https://www.youtube.com/results?search_query=dermatologist+skincare+priya+patel', instagram: 'https://www.instagram.com/explore/tags/dermatologist/' },
     };
 
     let activeDoctorId = 'doc-1';
@@ -417,6 +428,8 @@
       document.getElementById('headerDoctorActiveToken').innerText = doc.activeToken;
       document.getElementById('headerDoctorWaiting').innerText = doc.waitingPatients;
       document.getElementById('headerDoctorPhoto').src = doc.docPhoto;
+      document.getElementById('headerDoctorYoutube').href = doc.youtube;
+      document.getElementById('headerDoctorInstagram').href = doc.instagram;
     }
 
     function switchDoctor() {
