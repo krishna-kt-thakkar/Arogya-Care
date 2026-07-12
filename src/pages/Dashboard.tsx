@@ -464,39 +464,69 @@ const Dashboard: React.FC = () => {
                   <h3 className="text-lg font-black uppercase tracking-wider text-primary-custom">Upcoming Updates (Beta Preview)</h3>
                 </div>
 
-                <motion.div 
-                  onClick={() => navigate('/doctor-booking')}
-                  className="glass-card p-6 border border-orange-500/20 hover:border-orange-500/40 relative flex flex-col md:flex-row items-center justify-between overflow-hidden cursor-pointer gap-6 transition-all"
-                  whileHover={{ y: -3, scale: 1.01 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="absolute inset-0 bg-orange-500/[0.02] pointer-events-none" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between md:justify-start gap-4 mb-3">
-                      <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20">
-                        <Calendar className="h-6 w-6 text-orange-500" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  {/* Option 1: WhatsApp Sync */}
+                  <motion.div 
+                    onClick={() => navigate('/doctor-booking')}
+                    className="glass-card p-6 border border-orange-500/20 hover:border-orange-500/40 relative flex flex-col justify-between overflow-hidden cursor-pointer gap-4 transition-all"
+                    whileHover={{ y: -3, scale: 1.01 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="absolute inset-0 bg-orange-500/[0.01] pointer-events-none" />
+                    <div>
+                      <div className="flex items-center justify-between gap-4 mb-3">
+                        <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/20">
+                          <Calendar className="h-5 w-5 text-orange-500" />
+                        </div>
+                        <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/25">
+                          WhatsApp Sync
+                        </span>
                       </div>
-                      <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/25">
-                        Development Preview
-                      </span>
+                      <h4 className="text-lg font-black text-primary-custom flex items-center gap-2 font-display">
+                        AI Doctor Booking (WhatsApp Online)
+                      </h4>
+                      <p className="text-xs text-secondary-custom mt-2 leading-relaxed">
+                        Secure slots with top specialists, view live waiting lists, and dispatch confirmation updates straight to patient lines automatically.
+                      </p>
                     </div>
-
-                    <h4 className="text-xl font-black text-primary-custom flex items-center gap-2">
-                      AI Doctor Booking & Clinic Queue
-                    </h4>
-                    <p className="text-xs text-secondary-custom mt-1.5 leading-relaxed max-w-2xl">
-                      Book clinic slots with top specialists, view live patient waiting tokens, check lunch hours, and get WhatsApp appointment confirmation redirections automatically.
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs font-bold text-orange-500 border-t md:border-t-0 md:border-l border-card-custom pt-4 md:pt-0 md:pl-6 flex-shrink-0 w-full md:w-auto">
-                    <span className="md:hidden">Check booking availability preview</span>
-                    <div className="flex items-center space-x-2">
-                      <span className="hidden md:inline font-extrabold uppercase tracking-wide text-[10px]">Configure Slots Preview</span>
-                      <ArrowRight className="h-4.5 w-4.5" />
+                    <div className="flex items-center justify-between text-xs font-bold text-orange-500 border-t border-card-custom pt-3 mt-2">
+                      <span className="font-extrabold uppercase tracking-wide text-[9px]">Launch WhatsApp Flow</span>
+                      <ArrowRight className="h-4 w-4" />
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+
+                  {/* Option 2: Payment Gateway Checkout */}
+                  <motion.div 
+                    onClick={() => window.open('/doctor-portal.html', '_blank')}
+                    className="glass-card p-6 border border-indigo-500/20 hover:border-indigo-500/40 relative flex flex-col justify-between overflow-hidden cursor-pointer gap-4 transition-all"
+                    whileHover={{ y: -3, scale: 1.01 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="absolute inset-0 bg-indigo-500/[0.01] pointer-events-none" />
+                    <div>
+                      <div className="flex items-center justify-between gap-4 mb-3">
+                        <div className="p-2.5 bg-indigo-500/10 rounded-xl border border-indigo-500/20">
+                          <svg className="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                        </div>
+                        <span className="text-[9px] font-black text-indigo-500 uppercase tracking-widest bg-indigo-500/10 px-2.5 py-1 rounded-full border border-indigo-500/25">
+                          Payment Gateway
+                        </span>
+                      </div>
+                      <h4 className="text-lg font-black text-primary-custom flex items-center gap-2 font-display">
+                        AI Doctor Booking (Direct Checkout)
+                      </h4>
+                      <p className="text-xs text-secondary-custom mt-2 leading-relaxed">
+                        Test direct in-app checkouts. Instantly process mock card or UPI payments and view generated transaction invoice receipts on confirmation.
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between text-xs font-bold text-indigo-500 border-t border-card-custom pt-3 mt-2">
+                      <span className="font-extrabold uppercase tracking-wide text-[9px]">Launch Direct Flow</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             )}
 

@@ -337,7 +337,7 @@ const AIDoctorBookingPage: React.FC = () => {
     setDoctors(p => p.map(d => d.name === dn ? { ...d, slotsLeft: Math.min(8, d.slotsLeft + 1), waitingPatients: Math.max(0, d.waitingPatients - 1) } : d));
   };
 
-  const openWA = (num: string, msg: string) => window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+  const openWA = (num: string, msg: string) => window.open(`https://wa.me/919201103611?text=${encodeURIComponent(msg)}`, '_blank');
 
   const dates7 = () => {
     const d = []; const o: Intl.DateTimeFormatOptions = { weekday: 'short', day: 'numeric', month: 'short' };
