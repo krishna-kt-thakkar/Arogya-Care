@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AarogyaCare Doctor Portal</title>
+  
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              violet: '#8b5cf6',
+              blue: '#3b82f6',
+              purple: '#a78bfa',
+              dark: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS for Premium 3D & Razorpay-style Mock Checkout -->
+  <style>
+    body {
+      background: radial-gradient(120% 120% at 50% 10%, #030712 40%, #0f172a 75%, #090d16 100%);
+    }
+    
+    .light body {
+      background: radial-gradient(120% 120% at 50% 10%, #f8fafc 40%, #e2e8f0 75%, #cbd5e1 100%);
+    }
+
+    /* Glassmorphism & Depth shadow styles */
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    
+    .light .glass-panel {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .card-3d {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .light .card-3d {
+      border: 1px solid rgba(15, 23, 42, 0.05);
+    }
+
+    .card-3d:hover {
+      transform: translateY(-4px) rotateX(1.5deg) rotateY(-1.5deg);
+      box-shadow: 0 20px 35px -5px rgba(139, 92, 246, 0.15), 0 0 25px rgba(139, 92, 246, 0.04);
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    /* Device Mockup Wrapper */
+    .phone-mockup {
+      border: 12px solid #1e293b;
+      border-radius: 44px;
+      box-shadow: 0 30px 65px -15px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .light .phone-mockup {
+      border: 12px solid #cbd5e1;
+      box-shadow: 0 30px 65px -15px rgba(15, 23, 42, 0.12);
+    }
+
+    /* Glossy Elements */
+    .glossy-dot {
+      box-shadow: inset 0 1.5px 3px rgba(255, 255, 255, 0.15), 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .light .glossy-dot {
+      box-shadow: inset 0 1.5px 3px rgba(255, 255, 255, 0.5), 0 6px 12px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Real World Card visual representation */
+    .credit-card-preview {
+      background: linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #03001e 100%);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Barcode line generation rules */
+    .barcode-line {
+      height: 28px;
+      display: inline-block;
+      background-color: #0f172a;
+    }
+    
+    .dark .barcode-line {
+      background-color: #cbd5e1;
+    }
+
+    /* Dynamic pulse for alert items */
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 0 0px rgba(139, 92, 246, 0.35);
+        border-color: rgba(139, 92, 246, 0.15);
+      }
+      50% {
+        box-shadow: 0 0 20px 4px rgba(139, 92, 246, 0.2);
+        border-color: rgba(139, 92, 246, 0.5);
+      }
+    }
+    
+    .new-request-glow {
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    /* Hide default scrollbars */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="text-slate-900 dark:text-slate-100 font-sans min-h-screen transition-all duration-500 antialiased selection:bg-brand-violet/30 selection:text-white">
+
+  <!-- Header Navigation -->
+  <header class="border-b border-slate-200 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md sticky top-0 z-40 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center space-x-3">
+        <!-- Shield Cross SVG Logo -->
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-brand-violet to-brand-blue p-0.5 flex items-center justify-center shadow-lg shadow-brand-violet/25 transform rotate-3 hover:rotate-0 transition-transform">
+          <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.952 11.952 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <div>
+          <span class="text-lg font-black tracking-tight bg-gradient-to-r from-brand-violet to-brand-blue bg-clip-text text-transparent uppercase font-display">AarogyaCare</span>
+          <span class="ml-2 text-[9px] font-black uppercase tracking-wider text-brand-violet bg-brand-violet/10 px-2.5 py-0.5 rounded-full border border-brand-violet/20 align-middle">Doctor Portal</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center space-x-4">
+        <!-- Active Doctor Select Dropdown -->
+        <div class="relative">
+          <select id="doctorSelector" onchange="switchDoctor()" class="appearance-none bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold py-2 pl-3.5 pr-9 rounded-2xl focus:outline-none focus:ring-1 focus:ring-brand-violet cursor-pointer transition-all">
+            <option value="doc-1">Dr. Neha Sharma (Pediatrician)</option>
+            <option value="doc-2">Dr. Rajesh Iyer (Cardiologist)</option>
+            <option value="doc-3">Dr. Amit Verma (Family Doctor)</option>
+            <option value="doc-4">Dr. Priya Patel (Dermatologist)</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-500 border-l border-slate-200 dark:border-slate-800/80 my-1">
+            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Light/Dark Mode Switcher -->
+        <button onclick="toggleDarkMode()" class="p-2 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-brand-violet transition-all cursor-pointer">
+          <svg id="themeIcon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Workspace Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Active Profile Card Banner -->
+    <div class="glass-panel rounded-3xl p-6 mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6 shadow-xl relative overflow-hidden">
+      <!-- Glow lighting effect -->
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-brand-violet/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="flex items-center space-x-4 relative z-10">
+        <img id="headerDoctorPhoto" src="" alt="Doctor" class="w-16 h-16 rounded-2xl object-cover object-top border-2 border-brand-violet/30 shadow-lg shadow-brand-violet/10">
+        <div>
+          <h2 id="headerDoctorName" class="text-xl font-extrabold text-slate-900 dark:text-white font-display"></h2>
+          <p id="headerDoctorSpecialty" class="text-xs text-brand-violet font-black uppercase tracking-wider"></p>
+          <div class="flex items-center space-x-2 mt-1.5 text-xs text-slate-500 dark:text-slate-400 font-semibold">
+            <svg class="h-4 w-4 text-brand-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span id="headerDoctorTiming"></span>
+            <span class="opacity-30">|</span>
+            <span id="headerDoctorFee"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live metrics -->
+      <div class="grid grid-cols-3 gap-3 relative z-10 w-full md:w-auto">
+        <div class="bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 px-4 py-2.5 rounded-2xl text-center shadow-inner">
+          <span class="block text-[8px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-black">Slots Remaining</span>
+          <span id="headerDoctorSlots" class="text-lg font-black text-emerald-500 font-display"></span>
+        </div>
+        <div class="bg-brand-violet/5 dark:bg-brand-violet/10 border border-brand-violet/20 px-4 py-2.5 rounded-2xl text-center shadow-inner">
+          <span class="block text-[8px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-black">Active Token</span>
+          <span id="headerDoctorActiveToken" class="text-lg font-black text-brand-violet font-display"></span>
+        </div>
+        <div class="bg-blue-500/5 dark:bg-blue-500/10 border border-blue-500/20 px-4 py-2.5 rounded-2xl text-center shadow-inner">
+          <span class="block text-[8px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-black">Waiting list</span>
+          <span id="headerDoctorWaiting" class="text-lg font-black text-blue-500 font-display"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workspace Tab Navigation -->
+    <div class="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 mb-8 pb-3">
+      <button onclick="switchTab(0)" id="tabBtn-0" class="px-5 py-2.5 text-xs font-black uppercase tracking-wider rounded-2xl transition-all flex items-center gap-2 border border-transparent bg-brand-gradient bg-gradient-to-r from-brand-violet to-brand-blue text-white shadow-md">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+        <span>Incoming Requests</span>
+        <span id="tabCount-0" class="text-[9px] bg-white/20 text-white px-2 py-0.5 rounded-full"></span>
+      </button>
+      <button onclick="switchTab(1)" id="tabBtn-1" class="px-5 py-2.5 text-xs font-black uppercase tracking-wider rounded-2xl transition-all flex items-center gap-2 border border-slate-200 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 hover:text-brand-violet">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        <span>Confirmed Schedule</span>
+      </button>
+      <button onclick="switchTab(2)" id="tabBtn-2" class="px-5 py-2.5 text-xs font-black uppercase tracking-wider rounded-2xl transition-all flex items-center gap-2 border border-slate-200 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 hover:text-brand-violet relative">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+        <span>Patient Simulator</span>
+        <span id="simulatorActiveIndicator" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-blue-500 rounded-full animate-ping hidden"></span>
+      </button>
+    </div>
+
+    <!-- Tab Sections Container -->
+    <div class="max-w-4xl mx-auto">
+
+      <!-- SECTION 0: Incoming requests queue -->
+      <div id="section-0" class="space-y-4">
+        <div id="incomingRequestsContainer" class="space-y-4 max-h-[62vh] overflow-y-auto pr-2 no-scrollbar">
+          <!-- Dynamically inserted cards -->
+        </div>
+      </div>
+
+      <!-- SECTION 1: Confirmed Timelines -->
+      <div id="section-1" class="space-y-4 hidden">
+        <div id="confirmedTimelineContainer" class="space-y-4 max-h-[62vh] overflow-y-auto pr-2 no-scrollbar">
+          <!-- Dynamically inserted confirmed lists -->
+        </div>
+      </div>
+
+      <!-- SECTION 2: Patient Device Simulator (Centered phone container) -->
+      <div id="section-2" class="flex justify-center hidden">
+        <div id="simulatorContainer" class="phone-mockup bg-slate-900 dark:bg-slate-950 rounded-[44px] p-6 shadow-2xl relative w-full max-w-[380px] min-h-[560px] flex flex-col justify-between overflow-hidden border border-slate-800">
+          <!-- Standby or payment step screens -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Decline reason selector Modal -->
+  <div id="declineModal" class="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 backdrop-blur-sm hidden">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-5 transform scale-95 transition-transform duration-300">
+      <div class="flex items-center space-x-3">
+        <div class="h-10 w-10 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center border border-red-500/25">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h4 class="text-base font-extrabold text-slate-900 dark:text-white font-display">Decline Appointment Slot</h4>
+      </div>
+      <p class="text-xs text-slate-500">Provide a reason so the patient gets clear context regarding the cancellation.</p>
+      
+      <div class="space-y-2">
+        <label class="block text-[8px] text-slate-400 uppercase font-black tracking-wider">Decline Reason</label>
+        <select id="declineReasonSelect" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold p-3 rounded-xl focus:outline-none text-slate-800 dark:text-slate-200">
+          <option value="Emergency Ward Rounds Duty">Emergency Ward Rounds Duty</option>
+          <option value="Requested Slot Already Reserved">Requested Slot Already Reserved</option>
+          <option value="Consultation Working Hours Concluded">Consultation Working Hours Concluded</option>
+          <option value="Doctor Not Available Today">Doctor Not Available Today</option>
+        </select>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="closeDeclineModal()" class="flex-1 py-2.5 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 text-xs font-black rounded-xl uppercase tracking-wider transition-all">Cancel</button>
+        <button onclick="confirmDeclineAction()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-black rounded-xl uppercase tracking-wider shadow-lg shadow-red-600/20 transition-all">Confirm Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript logic definitions -->
+  <script>
+    // In-memory Database representing requests queue
+    let incomingRequests = [
+      { id: 'req-1', doctorId: 'doc-1', name: 'Aarav Mehta', age: '8', symptoms: 'Mild dry cough and constant nasal congestion for 3 days.', phone: '+919830012345', date: 'Today', slot: '10:00 AM', type: 'in-app' },
+      { id: 'req-2', doctorId: 'doc-1', name: 'Riya Sen', age: '5', symptoms: 'Scheduled booster polio dose and routine development growth checkup.', phone: '+919830067890', date: 'Today', slot: '11:00 AM', type: 'whatsapp' },
+      { id: 'req-3', doctorId: 'doc-3', name: 'Sanjay Dutt', age: '45', symptoms: 'Stomach pain, nausea and acidity issues.', phone: '+919876012345', date: 'Today', slot: '09:00 AM', type: 'in-app' },
+      { id: 'req-4', doctorId: 'doc-4', name: 'Nisha Sharma', age: '28', symptoms: 'Acne outbreak on cheeks and dry skin patch consultations.', phone: '+919876543210', date: 'Today', slot: '11:00 AM', type: 'in-app' },
+    ];
+
+    let confirmedAppointments = [
+      { id: 'conf-1', doctorId: 'doc-1', name: 'Ishita Paul', age: '12', symptoms: 'Fever and viral cough', phone: '+919830055555', date: 'Today', slot: '09:00 AM', token: 3, estArrival: '09:15 AM', type: 'whatsapp', callStatus: 'completed' },
+      { id: 'conf-2', doctorId: 'doc-1', name: 'Kabir Lal', age: '6', symptoms: 'Vaccination check', phone: '+919830044444', date: 'Today', slot: '12:00 PM', token: 4, estArrival: '12:20 PM', type: 'in-app', callStatus: 'pending' },
+    ];
+
+    // Static Doctors definitions (matching AIDoctorBookingPage.tsx database)
+    const doctorsData = {
+      'doc-1': { name: 'Dr. Neha Sharma', specialty: 'Pediatrician (Child Specialist)', timing: '10:00 AM - 05:00 PM', slotsLeft: 4, activeToken: 5, waitingPatients: 2, fee: '₹500', docPhoto: '/doctors/dr_neha.png', assistantPhoto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Amit Kumar (Compounder)' },
+      'doc-2': { name: 'Dr. Rajesh Iyer', specialty: 'Cardiologist (Heart Specialist)', timing: '02:00 PM - 07:00 PM', slotsLeft: 0, activeToken: 0, waitingPatients: 0, fee: '₹1200', docPhoto: '/doctors/dr_rajesh.png', assistantPhoto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Joy Dutta (Head Assistant)' },
+      'doc-3': { name: 'Dr. Amit Verma', specialty: 'General Physician (Family Doctor)', timing: '09:00 AM - 04:00 PM', slotsLeft: 5, activeToken: 12, waitingPatients: 4, fee: '₹400', docPhoto: '/doctors/dr_amit.png', assistantPhoto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Rahul Singh (Receptionist)' },
+      'doc-4': { name: 'Dr. Priya Patel', specialty: 'Dermatologist (Skin Specialist)', timing: '11:00 AM - 03:00 PM', slotsLeft: 6, activeToken: 8, waitingPatients: 1, fee: '₹700', docPhoto: '/doctors/dr_priya.png', assistantPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80', assistantName: 'Sneha Shah (Clinical Associate)' },
+    };
+
+    let activeDoctorId = 'doc-1';
+    let selectedRequestForDecline = null;
+    let currentActivePaymentFlow = null;
+    let selectedPaymentMode = 'upi'; // 'upi' or 'card'
+    let upiValidationState = 'idle'; // 'idle', 'verifying', 'verified'
+
+    // Tab Navigation Logic
+    function switchTab(tabIndex) {
+      for (let i = 0; i < 3; i++) {
+        const sec = document.getElementById(`section-${i}`);
+        const btn = document.getElementById(`tabBtn-${i}`);
+        
+        if (i === tabIndex) {
+          sec.classList.remove('hidden');
+          btn.className = "px-5 py-2.5 text-xs font-black uppercase tracking-wider rounded-2xl transition-all flex items-center gap-2 border border-transparent bg-brand-gradient bg-gradient-to-r from-brand-violet to-brand-blue text-white shadow-md";
+        } else {
+          sec.classList.add('hidden');
+          btn.className = "px-5 py-2.5 text-xs font-black uppercase tracking-wider rounded-2xl transition-all flex items-center gap-2 border border-slate-200 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 hover:text-brand-violet";
+        }
+      }
+    }
+
+    // Toggle Dark Mode
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        themeIcon.innerHTML = `<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z" /></svg>`;
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        themeIcon.innerHTML = `<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Initialize Theme settings
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const themeIcon = document.getElementById('themeIcon');
+      if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+        themeIcon.innerHTML = `<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z" /></svg>`;
+      }
+    })();
+
+    // Update Banner layout details
+    function updateHeaderDashboard() {
+      const doc = doctorsData[activeDoctorId];
+      document.getElementById('headerDoctorName').innerText = doc.name;
+      document.getElementById('headerDoctorSpecialty').innerText = doc.specialty;
+      document.getElementById('headerDoctorTiming').innerText = doc.timing;
+      document.getElementById('headerDoctorFee').innerText = `Consultation Fee: ${doc.fee}`;
+      document.getElementById('headerDoctorSlots').innerText = doc.slotsLeft;
+      document.getElementById('headerDoctorActiveToken').innerText = doc.activeToken;
+      document.getElementById('headerDoctorWaiting').innerText = doc.waitingPatients;
+      document.getElementById('headerDoctorPhoto').src = doc.docPhoto;
+    }
+
+    function switchDoctor() {
+      activeDoctorId = document.getElementById('doctorSelector').value;
+      updateHeaderDashboard();
+      renderIncomingRequests();
+      renderConfirmedTimeline();
+      resetSimulator();
+    }
+
+    // Render Incoming cards
+    function renderIncomingRequests() {
+      const container = document.getElementById('incomingRequestsContainer');
+      const countEl = document.getElementById('incomingCount');
+      const tabCount = document.getElementById('tabCount-0');
+      const filtered = incomingRequests.filter(r => r.doctorId === activeDoctorId);
+      
+      countEl.innerText = `${filtered.length} Pending`;
+      tabCount.innerText = filtered.length;
+      
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="glass-panel p-8 rounded-3xl text-center space-y-3 border border-slate-200 dark:border-slate-800">
+            <div class="h-10 w-10 bg-slate-100 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto text-slate-400 border border-slate-200 dark:border-slate-800/80">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h4 class="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider">Queue Cleared</h4>
+            <p class="text-[10px] text-slate-500">No new incoming requests requiring action.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map((req, i) => `
+        <div id="card-${req.id}" class="glass-card card-3d rounded-2xl p-4 cursor-pointer relative overflow-hidden transition-all flex flex-col justify-between select-none ${i === 0 ? 'new-request-glow border-brand-purple/20' : ''}" onclick="toggleExpandCard('${req.id}')">
+          
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-extrabold text-slate-900 dark:text-white font-display">${req.name}</span>
+                <span class="text-[9px] text-slate-500 font-bold bg-slate-100 dark:bg-slate-900/50 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800/80">Age: ${req.age}</span>
+              </div>
+              <p class="text-[11px] font-bold text-brand-violet mt-1.5 flex items-center gap-1">
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                ${req.date} at ${req.slot}
+              </p>
+            </div>
+            
+            <span class="text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${
+              req.type === 'whatsapp' 
+                ? 'bg-green-500/10 text-green-500 border-green-500/20' 
+                : 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+            }">
+              ${req.type === 'whatsapp' ? 'WhatsApp Sync' : 'In-App Pay'}
+            </span>
+          </div>
+
+          <!-- Collapsible symptoms note -->
+          <div id="notes-${req.id}" class="hidden mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-600 dark:text-slate-400 leading-normal space-y-2">
+            <div>
+              <span class="block text-[8px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 mb-0.5">Symptoms / Condition</span>
+              <p class="font-medium">${req.symptoms}</p>
+            </div>
+            <div>
+              <span class="block text-[8px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 mb-0.5">Contact Line</span>
+              <p class="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                ${req.phone}
+              </p>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="flex items-center gap-3 mt-4" onclick="event.stopPropagation()">
+            <button onclick="triggerDeclineModal('${req.id}')" class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 text-red-500 text-[10px] font-black rounded-xl uppercase tracking-wider transition-all cursor-pointer">
+              Decline
+            </button>
+            <button onclick="confirmIncomingRequest('${req.id}')" class="flex-1 py-2 bg-gradient-to-r from-brand-violet to-brand-blue text-white text-[10px] font-black rounded-xl uppercase tracking-wider shadow-md hover:shadow-lg transition-all cursor-pointer">
+              Confirm
+            </button>
+          </div>
+
+        </div>
+      `).join('');
+    }
+
+    function toggleExpandCard(reqId) {
+      const notes = document.getElementById(`notes-${reqId}`);
+      if (notes.classList.contains('hidden')) {
+        notes.classList.remove('hidden');
+      } else {
+        notes.classList.add('hidden');
+      }
+    }
+
+    function confirmIncomingRequest(reqId) {
+      const req = incomingRequests.find(r => r.id === reqId);
+      if (!req) return;
+
+      const card = document.getElementById(`card-${reqId}`);
+      if (card) {
+        card.style.transform = 'scale(0.95)';
+        card.style.opacity = '0.5';
+      }
+
+      setTimeout(() => {
+        incomingRequests = incomingRequests.filter(r => r.id !== reqId);
+        
+        if (req.type === 'in-app') {
+          triggerPatientPaymentSimulation(req);
+        } else {
+          // Direct confirmed path (WhatsApp booking)
+          const token = confirmedAppointments.length + 1;
+          const newConfirmed = {
+            id: 'conf-' + Date.now(),
+            doctorId: req.doctorId,
+            name: req.name,
+            age: req.age,
+            symptoms: req.symptoms,
+            phone: req.phone,
+            date: req.date,
+            slot: req.slot,
+            token: token,
+            estArrival: 'Estimated 15 mins wait',
+            type: 'whatsapp',
+            callStatus: 'pending'
+          };
+          confirmedAppointments.push(newConfirmed);
+          renderConfirmedTimeline();
+          renderIncomingRequests();
+          
+          // Switch to Confirmed Appointments tab to view it
+          switchTab(1);
+        }
+        renderIncomingRequests();
+      }, 350);
+    }
+
+    function triggerDeclineModal(reqId) {
+      selectedRequestForDecline = reqId;
+      document.getElementById('declineModal').classList.remove('hidden');
+    }
+
+    function closeDeclineModal() {
+      document.getElementById('declineModal').classList.add('hidden');
+      selectedRequestForDecline = null;
+    }
+
+    function confirmDeclineAction() {
+      if (!selectedRequestForDecline) return;
+      const reason = document.getElementById('declineReasonSelect').value;
+
+      incomingRequests = incomingRequests.filter(r => r.id !== selectedRequestForDecline);
+      renderIncomingRequests();
+      closeDeclineModal();
+
+      alert(`Booking request declined successfully. Reason description: "${reason}" has been dispatched to patient.`);
+    }
+
+    // Render Confirmed Timeline list
+    function renderConfirmedTimeline() {
+      const container = document.getElementById('confirmedTimelineContainer');
+      const filtered = confirmedAppointments.filter(c => c.doctorId === activeDoctorId);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="glass-panel p-8 rounded-3xl text-center space-y-3 border border-slate-200 dark:border-slate-800">
+            <div class="h-10 w-10 bg-slate-100 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto text-slate-400 border border-slate-200 dark:border-slate-800/80">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h4 class="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider">Timeline Empty</h4>
+            <p class="text-[10px] text-slate-500">No active bookings confirmed for this specialist today.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(app => {
+        let callBadgeColor = 'bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-900/50 dark:border-slate-800 text-slate-400';
+        let callBadgeText = 'Call Reminder: Pending';
+        let pulseClass = '';
+
+        if (app.callStatus === 'calling now') {
+          callBadgeColor = 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+          callBadgeText = 'Call Dialing Now...';
+          pulseClass = 'animate-pulse';
+        } else if (app.callStatus === 'completed') {
+          callBadgeColor = 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
+          callBadgeText = 'Call Completed';
+        }
+
+        return `
+          <div class="glass-card rounded-2xl p-4 border border-card-custom relative overflow-hidden transition-all flex flex-col justify-between">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-[9px] font-black text-brand-violet uppercase tracking-widest">Token #${app.token} &bull; ${app.slot}</span>
+                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white mt-0.5 font-display">${app.name}</h4>
+              </div>
+              
+              <span class="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center glossy-dot">
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </span>
+            </div>
+
+            <!-- Call Reminder trigger -->
+            <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+              <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500">Compounder Task (10m before slot)</span>
+              
+              <button onclick="simulateCallWorkflow('${app.id}')" class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg border text-[8px] font-black uppercase tracking-wider transition-all cursor-pointer ${callBadgeColor} ${pulseClass}">
+                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <span>${callBadgeText}</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function simulateCallWorkflow(appId) {
+      const app = confirmedAppointments.find(a => a.id === appId);
+      if (!app) return;
+
+      if (app.callStatus === 'pending') {
+        app.callStatus = 'calling now';
+        renderConfirmedTimeline();
+        setTimeout(() => {
+          app.callStatus = 'completed';
+          renderConfirmedTimeline();
+        }, 3000);
+      } else if (app.callStatus === 'completed') {
+        app.callStatus = 'pending';
+        renderConfirmedTimeline();
+      }
+    }
+
+    // Reset patient checkout device simulator
+    function resetSimulator() {
+      const container = document.getElementById('simulatorContainer');
+      document.getElementById('simulatorActiveIndicator').classList.add('hidden');
+      container.innerHTML = `
+        <div class="absolute inset-x-0 top-0 h-5 bg-slate-950 flex justify-between px-6 items-center text-[9px] text-slate-400 font-bold z-10">
+          <span>09:41 AM</span>
+          <div class="flex items-center space-x-1.5">
+            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <span>5G</span>
+          </div>
+        </div>
+        
+        <div class="h-full flex flex-col items-center justify-center text-center p-6 space-y-4 my-auto pt-8">
+          <div class="w-14 h-14 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center text-slate-400 shadow-md">
+            <svg class="h-7 w-7 text-brand-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest font-display">Simulator Standby</h4>
+          <p class="text-[10px] text-slate-500 leading-normal max-w-[190px]">Confirm an "In-App Pay" type request card on the left panel to launch the simulated checkout loop.</p>
+        </div>
+      `;
+    }
+
+    // Trigger Simulator Checkout with detailed payment modes
+    function triggerPatientPaymentSimulation(req) {
+      currentActivePaymentFlow = req;
+      const doc = doctorsData[req.doctorId];
+      
+      const consultVal = parseInt(doc.fee.replace('₹', ''));
+      const gstVal = Math.round(consultVal * 0.18);
+      const total = consultVal + gstVal + 40;
+
+      // Pulse simulation tab indicator
+      document.getElementById('simulatorActiveIndicator').classList.remove('hidden');
+      
+      // Auto-switch to Simulator Tab to show patient view
+      switchTab(2);
+
+      renderSimulatorPaymentScreen(total, doc, req);
+    }
+
+    function switchPaymentMode(mode, total, feeVal, reqId) {
+      selectedPaymentMode = mode;
+      const doc = doctorsData[activeDoctorId];
+      const req = currentActivePaymentFlow;
+      renderSimulatorPaymentScreen(total, doc, req);
+    }
+
+    function renderSimulatorPaymentScreen(total, doc, req) {
+      const container = document.getElementById('simulatorContainer');
+      
+      // Form content based on payment mode
+      let formContent = '';
+      if (selectedPaymentMode === 'upi') {
+        formContent = `
+          <div class="space-y-3 mt-3">
+            <div class="grid grid-cols-3 gap-1.5">
+              <button onclick="selectUpiApp('gpay')" class="py-2 px-1 border border-slate-800 rounded-xl bg-black/40 hover:bg-slate-800 flex flex-col items-center justify-center transition-all">
+                <span class="text-[8px] font-black uppercase text-slate-400 mb-0.5">Google Pay</span>
+                <span class="text-[9px] font-extrabold text-slate-200">GPay</span>
+              </button>
+              <button onclick="selectUpiApp('phonepe')" class="py-2 px-1 border border-slate-800 rounded-xl bg-black/40 hover:bg-slate-800 flex flex-col items-center justify-center transition-all">
+                <span class="text-[8px] font-black uppercase text-slate-400 mb-0.5">PhonePe</span>
+                <span class="text-[9px] font-extrabold text-slate-200">BHIM</span>
+              </button>
+              <button onclick="selectUpiApp('paytm')" class="py-2 px-1 border border-slate-800 rounded-xl bg-black/40 hover:bg-slate-800 flex flex-col items-center justify-center transition-all">
+                <span class="text-[8px] font-black uppercase text-slate-400 mb-0.5">Paytm</span>
+                <span class="text-[9px] font-extrabold text-slate-200">Wallet</span>
+              </button>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="block text-[8px] text-slate-500 uppercase font-black">UPI VPA ID</label>
+                <span id="upiVerificationBadge" class="text-[8px] font-bold text-slate-500">Unverified</span>
+              </div>
+              <div class="flex gap-2">
+                <input id="upiIdField" oninput="resetUpiVerification()" type="text" placeholder="username@okaxis" class="flex-1 bg-black/50 border border-slate-800 text-xs px-3 py-2 rounded-xl text-slate-200 focus:outline-none focus:border-brand-violet" />
+                <button onclick="verifyUpiId()" class="px-3 bg-brand-violet/20 border border-brand-violet/30 hover:bg-brand-violet/30 text-brand-violet text-[10px] font-black uppercase rounded-xl transition-all">Verify</button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        formContent = `
+          <div class="space-y-3 mt-3">
+            <!-- Simulated Credit Card visual layout -->
+            <div class="credit-card-preview rounded-2xl p-4 text-white space-y-4 relative overflow-hidden">
+              <div class="absolute right-4 top-4 h-6 w-8 bg-white/10 rounded flex items-center justify-center border border-white/15">
+                <span class="text-[8px] font-black uppercase">Card</span>
+              </div>
+              <div class="space-y-1">
+                <span class="block text-[7px] text-slate-400 uppercase tracking-widest">Card Number</span>
+                <span id="ccPreviewNumber" class="text-xs font-black tracking-widest font-display">•••• •••• •••• ••••</span>
+              </div>
+              <div class="flex justify-between items-end">
+                <div class="space-y-0.5">
+                  <span class="block text-[6px] text-slate-400 uppercase">Card Holder</span>
+                  <span id="ccPreviewName" class="text-[9px] font-bold uppercase truncate max-w-[140px] block">${req.name}</span>
+                </div>
+                <div class="space-y-0.5">
+                  <span class="block text-[6px] text-slate-400 uppercase">Expires</span>
+                  <span id="ccPreviewExpiry" class="text-[9px] font-bold">MM/YY</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Real form inputs -->
+            <div class="space-y-2">
+              <div>
+                <label class="block text-[8px] text-slate-500 uppercase font-black mb-0.5">Card Number</label>
+                <input id="cardNumberField" oninput="updateCardPreview('number')" type="text" maxlength="19" placeholder="4111 2222 3333 4444" class="w-full bg-black/50 border border-slate-800 text-xs px-3 py-2 rounded-xl text-slate-200 focus:outline-none focus:border-brand-violet" />
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[8px] text-slate-500 uppercase font-black mb-0.5">Expiry MM/YY</label>
+                  <input id="cardExpiryField" oninput="updateCardPreview('expiry')" type="text" maxlength="5" placeholder="12/28" class="w-full bg-black/50 border border-slate-800 text-xs px-3 py-2 rounded-xl text-slate-200 focus:outline-none focus:border-brand-violet" />
+                </div>
+                <div>
+                  <label class="block text-[8px] text-slate-500 uppercase font-black mb-0.5">CVV</label>
+                  <input id="cardCvvField" type="password" maxlength="3" placeholder="***" class="w-full bg-black/50 border border-slate-800 text-xs px-3 py-2 rounded-xl text-slate-200 focus:outline-none focus:border-brand-violet" />
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="absolute inset-x-0 top-0 h-5 bg-slate-950 flex justify-between px-6 items-center text-[9px] text-slate-400 font-bold z-10">
+          <span>09:41 AM</span>
+          <div class="flex items-center space-x-1.5">
+            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <span>5G</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 flex-1 flex flex-col justify-between h-full pt-6">
+          <div>
+            <div class="flex items-center space-x-2 pb-2.5 border-b border-slate-800 text-left">
+              <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+              <span class="text-[9px] font-black text-blue-500 uppercase tracking-widest font-display">AarogyaCare Checkout</span>
+            </div>
+
+            <!-- Tab select payment mode -->
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <button onclick="switchPaymentMode('upi', ${total}, '${doc.fee}', '${req.id}')" class="py-1.5 text-[9px] font-black uppercase rounded-lg border tracking-wider transition-all ${
+                selectedPaymentMode === 'upi' ? 'bg-brand-violet text-white border-transparent' : 'bg-black/20 border-slate-800 text-slate-400'
+              }">UPI App</button>
+              <button onclick="switchPaymentMode('card', ${total}, '${doc.fee}', '${req.id}')" class="py-1.5 text-[9px] font-black uppercase rounded-lg border tracking-wider transition-all ${
+                selectedPaymentMode === 'card' ? 'bg-brand-violet text-white border-transparent' : 'bg-black/20 border-slate-800 text-slate-400'
+              }">Card Pay</button>
+            </div>
+
+            ${formContent}
+
+            <!-- Total display breakdown -->
+            <div class="mt-4 pt-3 border-t border-slate-800 space-y-1.5 text-[9px] text-slate-400 leading-normal">
+              <div class="flex justify-between">
+                <span>Specialist Consultation</span>
+                <span class="font-bold text-slate-200">${doc.fee}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>GST (18%)</span>
+                <span class="font-bold text-slate-200">₹${Math.round(consultVal * 0.18)}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-brand-purple">Platform Fee</span>
+                <span class="font-bold text-slate-200">₹40</span>
+              </div>
+              <div class="flex justify-between border-t border-slate-800 pt-2 font-black text-slate-200 text-xs">
+                <span>Total Payable</span>
+                <span class="text-emerald-400">₹${total}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800">
+            <button onclick="executePaymentGatewayMock(${total})" class="w-full py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-600/10 cursor-pointer">
+              Complete Payment
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectUpiApp(app) {
+      const upiField = document.getElementById('upiIdField');
+      if (app === 'gpay') {
+        upiField.value = 'payment.aarogya@okaxis';
+      } else if (app === 'phonepe') {
+        upiField.value = 'aarogyacare@ybl';
+      } else {
+        upiField.value = 'paytm.care@paytm';
+      }
+      verifyUpiId();
+    }
+
+    function resetUpiVerification() {
+      upiValidationState = 'idle';
+      const badge = document.getElementById('upiVerificationBadge');
+      if (badge) {
+        badge.innerText = 'Unverified';
+        badge.className = 'text-[8px] font-bold text-slate-500';
+      }
+    }
+
+    function verifyUpiId() {
+      const upiField = document.getElementById('upiIdField');
+      const badge = document.getElementById('upiVerificationBadge');
+      if (!upiField || !badge) return;
+
+      if (!upiField.value.includes('@')) {
+        badge.innerText = 'Invalid ID';
+        badge.className = 'text-[8px] font-bold text-red-500';
+        return;
+      }
+
+      badge.innerText = 'Verifying...';
+      badge.className = 'text-[8px] font-bold text-amber-500 animate-pulse';
+
+      setTimeout(() => {
+        upiValidationState = 'verified';
+        badge.innerText = 'Verified Secure';
+        badge.className = 'text-[8px] font-bold text-emerald-500';
+      }, 1000);
+    }
+
+    function updateCardPreview(field) {
+      if (field === 'number') {
+        const input = document.getElementById('cardNumberField');
+        const preview = document.getElementById('ccPreviewNumber');
+        if (input && preview) {
+          // Format with spaces
+          let val = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+          let matches = val.match(/\d{4,16}/g);
+          let match = matches && matches[0] || '';
+          let parts = [];
+
+          for (let i = 0, len = match.length; i < len; i += 4) {
+            parts.push(match.substring(i, i + 4));
+          }
+
+          if (parts.length > 0) {
+            input.value = parts.join(' ');
+            preview.innerText = parts.join(' ');
+          } else {
+            preview.innerText = '•••• •••• •••• ••••';
+          }
+        }
+      } else if (field === 'expiry') {
+        const input = document.getElementById('cardExpiryField');
+        const preview = document.getElementById('ccPreviewExpiry');
+        if (input && preview) {
+          let val = input.value.replace(/\//g, '').replace(/[^0-9]/gi, '');
+          if (val.length >= 2) {
+            input.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+          }
+          preview.innerText = input.value || 'MM/YY';
+        }
+      }
+    }
+
+    function executePaymentGatewayMock(totalVal) {
+      // Validate payment method inputs before starting mock
+      if (selectedPaymentMode === 'upi' && upiValidationState !== 'verified') {
+        alert('Please verify your UPI ID first before proceeding.');
+        return;
+      }
+
+      const container = document.getElementById('simulatorContainer');
+      container.innerHTML = `
+        <div class="h-full flex flex-col items-center justify-center text-center p-6 space-y-4 my-auto">
+          <div class="relative w-10 h-10">
+            <div class="absolute inset-0 rounded-full border-4 border-slate-800"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-brand-violet border-t-transparent animate-spin"></div>
+          </div>
+          <h4 class="text-xs font-black text-slate-300 uppercase tracking-widest font-display">Processing transaction...</h4>
+          <p class="text-[9px] text-slate-500 leading-normal max-w-[170px]">Simulating payment gateway response, please do not close the window...</p>
+        </div>
+      `;
+
+      setTimeout(() => {
+        renderReceiptSuccess(totalVal);
+      }, 2000);
+    }
+
+    function renderReceiptSuccess(totalVal) {
+      const req = currentActivePaymentFlow;
+      const doc = doctorsData[req.doctorId];
+      const receiptId = 'TXN-' + Math.floor(100000 + Math.random() * 900000);
+
+      const consultVal = parseInt(doc.fee.replace('₹', ''));
+      const gstVal = Math.round(consultVal * 0.18);
+
+      const container = document.getElementById('simulatorContainer');
+      container.innerHTML = `
+        <div class="absolute inset-x-0 top-0 h-5 bg-slate-950 flex justify-between px-6 items-center text-[9px] text-slate-400 font-bold z-10">
+          <span>09:41 AM</span>
+          <div class="flex items-center space-x-1.5">
+            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <span>5G</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 flex-1 flex flex-col justify-between h-full pt-6 text-left">
+          <div>
+            <div class="flex items-center space-x-2 pb-2.5 border-b border-slate-800">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest font-display">Transaction Successful</span>
+            </div>
+
+            <!-- Receipt layout -->
+            <div id="printableReceiptArea" class="bg-black/20 border border-slate-800 p-3 rounded-2xl space-y-2.5 text-[10px] text-slate-400 mt-4 leading-normal font-semibold">
+              <div class="text-center pb-2 border-b border-slate-800">
+                <span class="block text-xs font-black text-slate-200 uppercase tracking-wider font-display">Clinic Receipt</span>
+                <span class="text-[8px] text-slate-500">${receiptId}</span>
+              </div>
+              <div class="flex justify-between"><span>Patient:</span><span class="text-slate-200">${req.name}</span></div>
+              <div class="flex justify-between"><span>Specialist:</span><span class="text-slate-200">${doc.name}</span></div>
+              <div class="flex justify-between"><span>Date/Time:</span><span class="text-slate-200">${req.date} &bull; ${req.slot}</span></div>
+              <div class="border-t border-slate-800 pt-2 space-y-1">
+                <div class="flex justify-between"><span>Consult Fee:</span><span class="text-slate-200">${doc.fee}</span></div>
+                <div class="flex justify-between"><span>GST:</span><span class="text-slate-200">₹${gstVal}</span></div>
+                <div class="flex justify-between"><span>Service Fee:</span><span class="text-slate-200">₹40</span></div>
+              </div>
+              <div class="flex justify-between border-t border-slate-800 pt-2 text-slate-200 font-black">
+                <span>Amount Paid:</span>
+                <span class="text-emerald-400">₹${totalVal}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-3 border-t border-slate-800">
+            <button onclick="downloadReceiptPdf('${receiptId}')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-[10px] font-black uppercase tracking-wider rounded-xl border border-slate-700 cursor-pointer">
+              Download Receipt
+            </button>
+            <button onclick="completePaymentWorkflow()" class="w-full py-2.5 bg-gradient-to-r from-brand-violet to-brand-blue text-white text-xs font-black uppercase tracking-widest rounded-xl cursor-pointer">
+              Finalize Slot
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function downloadReceiptPdf(txnId) {
+      const doc = doctorsData[activeDoctorId];
+      const consultVal = parseInt(doc.fee.replace('₹', ''));
+      const gstVal = Math.round(consultVal * 0.18);
+      const total = consultVal + gstVal + 40;
+
+      const text = `------------------------------------------
+         AAROGYACARE CLINIC RECEIPT
+------------------------------------------
+Receipt ID: ${txnId}
+Date: ${new Date().toLocaleDateString()}
+------------------------------------------
+Patient Name: ${currentActivePaymentFlow ? currentActivePaymentFlow.name : 'Patient'}
+Age: ${currentActivePaymentFlow ? currentActivePaymentFlow.age : 'N/A'}
+Stated Symptoms: ${currentActivePaymentFlow ? currentActivePaymentFlow.symptoms : 'N/A'}
+Consulting Specialist: ${doc.name}
+Specialization: ${doc.specialty}
+Date & Time Slot: ${currentActivePaymentFlow ? currentActivePaymentFlow.date : 'Today'} at ${currentActivePaymentFlow ? currentActivePaymentFlow.slot : 'N/A'}
+------------------------------------------
+Doctor Consultation Fee: ${doc.fee}
+GST (18%): ₹${gstVal}
+AarogyaCare Service Fee: ₹40
+------------------------------------------
+Grand Total Paid: ₹${total}
+------------------------------------------
+Thank you for using AarogyaCare Booking Services.`;
+
+      const blob = new Blob([text], { type: 'text/plain' });
+      const anchor = document.createElement('a');
+      anchor.download = `${txnId}_AarogyaCare_Receipt.txt`;
+      anchor.href = window.URL.createObjectURL(blob);
+      anchor.click();
+    }
+
+    function completePaymentWorkflow() {
+      const req = currentActivePaymentFlow;
+      const token = confirmedAppointments.length + 1;
+
+      const newConfirmed = {
+        id: 'conf-' + Date.now(),
+        doctorId: req.doctorId,
+        name: req.name,
+        age: req.age,
+        symptoms: req.symptoms,
+        phone: req.phone,
+        date: req.date,
+        slot: req.slot,
+        token: token,
+        estArrival: 'Estimated 10 mins wait',
+        type: 'in-app',
+        callStatus: 'pending'
+      };
+
+      confirmedAppointments.push(newConfirmed);
+      renderConfirmedTimeline();
+      
+      currentActivePaymentFlow = null;
+      resetSimulator();
+
+      // Automatically switch back to confirmed timeline to show the newly added slot
+      switchTab(1);
+    }
+
+    window.onload = function() {
+      updateHeaderDashboard();
+      renderIncomingRequests();
+      renderConfirmedTimeline();
+      resetSimulator();
+    }
+  </script>
+</body>
+</html>
