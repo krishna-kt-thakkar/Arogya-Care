@@ -4,7 +4,8 @@ import {
   ArrowLeft, ArrowRight, Calendar, Clock, Phone, MessageSquare, MapPin, 
   User, CheckCircle, AlertTriangle, ShieldAlert, Trash2, ShieldCheck, 
   Check, Star, Award, Briefcase, Heart, Image, 
-  Stethoscope, GraduationCap, Users, Activity, Zap, ThumbsUp, Globe, BadgeCheck
+  Stethoscope, GraduationCap, Users, Activity, Zap, ThumbsUp, Globe, BadgeCheck,
+  ChevronLeft, ChevronRight, X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
@@ -283,6 +284,7 @@ const AIDoctorBookingPage: React.FC = () => {
   const [appts, setAppts] = useState<Appointment[]>([]);
   const [lastBooked, setLastBooked] = useState<Appointment | null>(null);
   const [doctors, setDoctors] = useState<Doctor[]>(DOCTORS_DB);
+  const [activeLightboxIdx, setActiveLightboxIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const s = localStorage.getItem('arogya_doctor_appointments');
@@ -576,6 +578,7 @@ const AIDoctorBookingPage: React.FC = () => {
                 {selectedDoctor.gallery.map((img, i) => (
                   <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1, transition: { delay: i * 0.03 } }}
                     whileHover={{ scale: 1.06, rotateX: 3, rotateY: -3, zIndex: 10 }}
+                    onClick={() => setActiveLightboxIdx(i)}
                     className="relative rounded-2xl overflow-hidden border border-card-custom shadow-md h-28 md:h-36 cursor-pointer group">
                     <img src={img.url} alt={img.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
@@ -744,7 +747,76 @@ const AIDoctorBookingPage: React.FC = () => {
             </motion.div>
           )}
 
-        </AnimatePresence>
+         </AnimatePresence>
+
+          {/* ═══ LIGHTBOX IMAGE DIALOG ═══ */}
+          <AnimatePresence>
+            {activeLightboxIdx !== null && selectedDoctor && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-md"
+                onClick={() => setActiveLightboxIdx(null)}
+              >
+                {/* Close Button */}
+                <button 
+                  onClick={() => setActiveLightboxIdx(null)}
+                  className="absolute top-6 right-6 p-3 rounded-full bg-white/15 border border-white/20 text-white hover:bg-white/25 hover:scale-105 active:scale-95 transition-all cursor-pointer z-50 shadow-md"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+
+                {/* Main image container */}
+                <div 
+                  className="relative w-full max-w-4xl max-h-[80vh] flex flex-col items-center justify-center"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Left Navigation */}
+                  {selectedDoctor.gallery.length > 1 && (
+                    <button 
+                      onClick={() => setActiveLightboxIdx((prev) => prev !== null ? (prev - 1 + selectedDoctor.gallery.length) % selectedDoctor.gallery.length : 0)}
+                      className="absolute left-2 md:left-6 p-3 rounded-full bg-white/10 border border-white/15 text-white hover:bg-white/20 hover:scale-105 active:scale-95 transition-all cursor-pointer z-50 shadow-md animate-pulse"
+                    >
+                      <ChevronLeft className="h-6 w-6" />
+                    </button>
+                  )}
+
+                  {/* Image Screen */}
+                  <motion.img 
+                    key={activeLightboxIdx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.25 }}
+                    src={selectedDoctor.gallery[activeLightboxIdx].url} 
+                    alt={selectedDoctor.gallery[activeLightboxIdx].label} 
+                    className="max-w-full max-h-[72vh] object-contain rounded-3xl border border-white/10 shadow-2xl"
+                  />
+
+                  {/* Caption Text details */}
+                  <div className="text-center mt-6 space-y-1 select-none">
+                    <h4 className="text-lg font-black tracking-tight text-white font-display">
+                      {selectedDoctor.gallery[activeLightboxIdx].label}
+                    </h4>
+                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest bg-white/5 border border-white/10 px-3 py-1 rounded-full">
+                      Image {activeLightboxIdx + 1} of {selectedDoctor.gallery.length} &bull; {selectedDoctor.name}
+                    </span>
+                  </div>
+
+                  {/* Right Navigation */}
+                  {selectedDoctor.gallery.length > 1 && (
+                    <button 
+                      onClick={() => setActiveLightboxIdx((prev) => prev !== null ? (prev + 1) % selectedDoctor.gallery.length : 0)}
+                      className="absolute right-2 md:right-6 p-3 rounded-full bg-white/10 border border-white/15 text-white hover:bg-white/20 hover:scale-105 active:scale-95 transition-all cursor-pointer z-50 shadow-md"
+                    >
+                      <ChevronRight className="h-6 w-6" />
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
       </main>
     </div>
   );
